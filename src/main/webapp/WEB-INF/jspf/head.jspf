@@ -1,0 +1,29 @@
+<%@ include file="/WEB-INF/jspf/directive/page.jspf"%>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf"%>
+
+
+<head>
+
+<title>${title}</title>
+
+<link rel="stylesheet" type="text/css" media="screen"
+	href="style/stylesheet.css" />
+<link rel="stylesheet" type="text/css" media="screen"
+	href="style/gold/jquery-ui.css" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="js/jquery-1.11.2.js" type="text/javascript"></script>
+<script src="js/jquery.validate.js" type="text/javascript"></script>
+
+<script src="style/gold/jquery-ui.js" type="text/javascript"></script>
+
+<style>
+hr {
+	border: none;
+	background-color: red;
+	color: red;
+	height: 1px;
+	color: red;
+}
+</style>
+</head>

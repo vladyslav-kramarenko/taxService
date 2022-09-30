@@ -1,0 +1,42 @@
+<table>
+    <tr>
+        <td rowspan="4">1</td>
+        <td rowspan="4">ПОДАТКОВА ДЕКЛАРАЦІЯ ПЛАТНИКА ЄДИНОГО ПОДАТКУ -<br>
+            ФІЗИЧНОЇ ОСОБИ - ПІДПРИЄМЦЯ</td>
+        <td>01</td><td>HZ</td><td>Звітна</td>
+    </tr>
+    <tr>
+        <td>02</td><td>HZN</td><td>Звітна нова</td>
+    </tr>
+    <tr>
+        <td>03</td><td>HZU</td><td>Уточнююча</td>
+    </tr>
+    <tr>
+        <td>04</td><td>HD</td><td>Довідкова</td>
+    </tr>
+    <tr></tr>
+    <tr>
+        <td rowspan="3">2</td>
+        <td columnspan="14">Податковий (звітній) період:</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td>I квартал</td>
+        <td></td>
+        <td>півріччя</td>
+        <td></td>
+        <td>три квартали</td>
+        <td></td>
+        <td>рік</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>року</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>(Необхідне позначити)</td>
+    </tr>
+</table>

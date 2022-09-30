@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="windows-1251"?><DECLAR xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="F0134105.xsd">
+    <DECLARHEAD>
+        <TIN>3362103457</TIN>
+        <C_DOC>F01</C_DOC>
+        <C_DOC_SUB>341</C_DOC_SUB>
+        <C_DOC_VER>5</C_DOC_VER>
+        <C_DOC_TYPE>1</C_DOC_TYPE>
+        <C_DOC_CNT>1</C_DOC_CNT>
+        <C_REG>20</C_REG>
+        <C_RAJ>31</C_RAJ>
+        <PERIOD_MONTH>12</PERIOD_MONTH>
+        <PERIOD_TYPE>5</PERIOD_TYPE>
+        <PERIOD_YEAR>2022</PERIOD_YEAR>
+        <C_STI_ORIG>2031</C_STI_ORIG>
+        <C_DOC_STAN>1</C_DOC_STAN>
+        <LINKED_DOCS>
+            <DOC NUM="1" TYPE="2">
+                <C_DOC>F01</C_DOC>
+                <C_DOC_SUB>034</C_DOC_SUB>
+                <C_DOC_VER>5</C_DOC_VER>
+                <C_DOC_TYPE>0</C_DOC_TYPE>
+                <C_DOC_CNT>1</C_DOC_CNT>
+                <C_DOC_STAN>1</C_DOC_STAN>
+                <FILENAME>20313362103457F0103405100000000151220222031.XML</FILENAME>
+            </DOC>
+        </LINKED_DOCS>
+        <D_FILL>15092022</D_FILL>
+        <SOFTWARE>CABINET 0.5.0</SOFTWARE>
+    </DECLARHEAD>
+    <DECLARBODY>
+        <HZ>1</HZ>
+        <HTIN>3362103457</HTIN>
+        <HNAME>КРАМАРЕНКО ВЛАДИСЛАВ ІГОРОВИЧ</HNAME>
+        <HZY>2022</HZY>
+        <HKVED>16.29</HKVED>
+        <R081G1>6</R081G1>
+        <R091G2>100.00</R091G2>
+        <R091G3>1.00</R091G3>
+        <R091G4>1.00</R091G4>
+        <R092G2>200.00</R092G2>
+        <R092G3>2.00</R092G3>
+        <R092G4>4.00</R092G4>
+        <R093G2>300.00</R093G2>
+        <R093G3>3.00</R093G3>
+        <R093G4>9.00</R093G4>
+        <R094G2>400.00</R094G2>
+        <R094G3>4.00</R094G3>
+        <R094G4>16.00</R094G4>
+        <R095G2>500.00</R095G2>
+        <R095G3>5.00</R095G3>
+        <R095G4>25.00</R095G4>
+        <R096G2>600.00</R096G2>
+        <R096G3>6.00</R096G3>
+        <R096G4>36.00</R096G4>
+        <R097G2>700.00</R097G2>
+        <R097G3>7.00</R097G3>
+        <R097G4>49.00</R097G4>
+        <R098G2>800.00</R098G2>
+        <R098G3>8.00</R098G3>
+        <R098G4>64.00</R098G4>
+        <R099G2>900.00</R099G2>
+        <R099G3>9.00</R099G3>
+        <R099G4>81.00</R099G4>
+        <R0910G2>1000.00</R0910G2>
+        <R0910G3>10.00</R0910G3>
+        <R0910G4>100.00</R0910G4>
+        <R0911G2>1100.00</R0911G2>
+        <R0911G3>11.00</R0911G3>
+        <R0911G4>121.00</R0911G4>
+        <R0912G2>1200.00</R0912G2>
+        <R0912G3>12.00</R0912G3>
+        <R0912G4>144.00</R0912G4>
+        <R09G2>7800.00</R09G2>
+        <R09G4>650.00</R09G4>
+        <HBOS>КРАМАРЕНКО ВЛАДИСЛАВ ІГОРОВИЧ</HBOS>
+    </DECLARBODY>
+</DECLAR>

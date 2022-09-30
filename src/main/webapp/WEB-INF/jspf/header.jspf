@@ -1,0 +1,254 @@
+<%--=========================================================================== 
+Header (top area). 
+===========================================================================--%>
+
+<%@ page import="ua.nure.kramarenko.SummaryTask4.db.enums.Role"%>
+<%@ include file="/WEB-INF/jspf/directive/page.jspf"%>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf"%>
+
+<style>
+#toolbar {
+	padding: 4px;
+	display: inline-block;
+}
+/* support: IE7 */
+*+html #toolbar {
+	display: inline;
+}
+</style>
+<script>
+	$(function() {
+		$("#products").button({
+
+		});
+		$("#userProducts").button({
+
+		});
+		$("#users").button({
+			text : false,
+			icons : {
+				primary : "ui-icon-person"
+			}
+		});
+		$("#manufacturers").button({
+			text : false,
+			icons : {
+				primary : "ui-icon-wrench"
+			}
+		});
+		$("#characteristics").button({
+			text : false,
+			icons : {
+				primary : "ui-icon-script"
+			}
+		});
+		$("#orders").button({
+			text : false,
+			icons : {
+				primary : "ui-icon-note"
+			}
+
+		});
+
+		$("#cart").button({
+			text : false,
+			icons : {
+				primary : "ui-icon-cart"
+			}
+		});
+		$("#login").button({
+			text : false,
+			icons : {
+				primary : "ui-icon-power"
+			}
+		});
+		$("#logout").button({
+			text : false,
+			icons : {
+				primary : "ui-icon-power"
+			}
+		});
+		$("#register").button({
+			text : false,
+			icons : {
+				primary : "ui-icon-key"
+			}
+		});
+
+		$("#lang").buttonset();
+		$("#reg").buttonset();
+		$("#category").buttonset();
+	});
+</script>
+<div style="width: 99%; text-align: center; float: center" id="toolbar"
+	class="ui-widget-header ui-corner-all">
+
+	<a id="products" href="controller?command=productList&category=0">
+		<fmt:message key="header_jspf.anchor.products" />
+	</a> &nbsp;
+	<c:choose>
+		<c:when test="${userRole.name == 'admin' }">
+		<a href="controller?command=userProducts" id="userProducts"> <fmt:message
+					key="header_jspf.anchor.all_orders" />
+			</a> &nbsp;
+			<a href="controller?command=allOrders" id="orders"> <fmt:message
+					key="header_jspf.anchor.all_orders" />
+			</a> &nbsp;
+			<a href="controller?command=allUsers" id="users"> <fmt:message
+					key="header_jspf.anchor.all_users" />
+			</a> &nbsp;
+			<a href="controller?command=manufacturers" id="manufacturers"> <fmt:message
+					key="header_jspf.anchor.manufacturers" />
+			</a> &nbsp;
+			<a href="controller?command=characteristics" id="characteristics"> <fmt:message
+					key="header_jspf.anchor.characteristics" />
+			</a> &nbsp;
+		</c:when>
+
+		<c:when test="${userRole.name == 'client'}">
+
+			<a href="controller?command=listOrders" id="orders"> <fmt:message
+					key="header_jspf.anchor.orders" />
+			</a> &nbsp;
+								<a href="controller?command=viewSettings" id="users"> <fmt:message
+					key="header_jspf.anchor.settings" />
+			</a> &nbsp;
+							</c:when>
+	</c:choose>
+
+
+	<span id="lang"> <c:choose>
+			<%-- When user hasn't explicitly set language,
+                             render toggle according to browser's preferred locale --%>
+			<c:when
+				test="${empty sessionScope['javax.servlet.jsp.jstl.fmt.locale.session']}">
+				<c:choose>
+					<c:when test="${pageContext.request.locale.language eq 'en'}">
+						<button disabled id="en">
+							<fmt:message key="lang.en" />
+						</button>
+					</c:when>
+					<c:otherwise>
+						<c:url var="url" value="controller">
+							<c:param name="localeToSet" value="en" />
+
+							<c:param name="command" value="updateLocale" />
+						</c:url>
+						<a href="${url}"><fmt:message key="lang.en" /></a>
+					</c:otherwise>
+				</c:choose>
+
+				<c:choose>
+					<c:when test="${pageContext.request.locale.language eq 'ru'}">
+						<button disabled id="ru">
+							<fmt:message key="lang.ru" />
+						</button>
+					</c:when>
+					<c:otherwise>
+						<c:url var="url" value="controller">
+							<c:param name="localeToSet" value="ru" />
+
+							<c:param name="command" value="updateLocale" />
+						</c:url>
+						<a href="${url}"><fmt:message key="lang.ru" /></a>
+					</c:otherwise>
+				</c:choose>
+			</c:when>
+
+			<%-- Otherwise, render widget according to the set locale --%>
+			<c:otherwise>
+				<c:choose>
+					<c:when
+						test="${sessionScope['javax.servlet.jsp.jstl.fmt.locale.session'] ne 'ru'}">
+						<button disabled id="en">
+							<fmt:message key="lang.en" />
+						</button>
+					</c:when>
+					<c:otherwise>
+						<c:url var="url" value="controller">
+							<c:param name="localeToSet" value="en" />
+							<c:param name="command" value="updateLocale" />
+						</c:url>
+
+						<a href="${url}"><fmt:message key="lang.en" /></a>
+					</c:otherwise>
+				</c:choose>
+
+				<c:choose>
+
+					<c:when
+						test="${sessionScope['javax.servlet.jsp.jstl.fmt.locale.session'] eq 'ru'}">
+						<button disabled id="ru">
+							<fmt:message key="lang.ru" />
+						</button>
+
+					</c:when>
+					<c:otherwise>
+						<c:url var="url" value="controller">
+							<c:param name="localeToSet" value="ru" />
+							<c:param name="command" value="updateLocale" />
+						</c:url>
+						<a href="${url}"><fmt:message key="lang.ru" /></a>
+					</c:otherwise>
+				</c:choose>
+			</c:otherwise>
+		</c:choose>
+	</span>
+	<c:if test="${not empty user}">
+
+		<c:out value="${user.login}" />
+
+		<c:if test="${not empty userRole}">
+			<c:out value="(${userRole.name})" />
+		</c:if>
+
+		<a id="logout" href="controller?command=logout"> <fmt:message
+				key="header_jspf.anchor.logout" /></a>
+	</c:if>
+
+	<span id="reg"> <c:if test="${empty user}">
+
+			<a id="login" href="controller?command=login"> <fmt:message
+					key="header_jspf.anchor.login" /></a>
+			<a id="register" href="controller?command=registration"> <fmt:message
+					key="header_jspf.anchor.registration" />
+			</a>
+		</c:if>
+	</span> <a id="cart" href="controller?command=viewCart"> <fmt:message
+			key="header_jspf.anchor.cart" />
+	</a> <span> <c:choose>
+			<c:when test="${cart.total>0}">${cart.total}$</c:when>
+			<c:otherwise></c:otherwise>
+		</c:choose>
+	</span>
+</div>
+<br>
+<div align="center" id="categoryList">
+	<form action="controller" method="post">
+		<input type="hidden" name="command" value="productList" />
+		<div id="category">
+			<c:forEach var="category" items="${categoryItems}">
+				<c:choose>
+					<c:when test="${category.id == selectedCategory}">
+
+						<input type="radio" onClick="this.form.submit();"
+							id="category${category.id}" checked="checked" name="category"
+							value="${category.id}">
+						<label for="category${category.id}"> <fmt:message
+								key="products_jsp.button.category.${category.name}" />
+						</label>
+					</c:when>
+					<c:otherwise>
+						<input type="radio" onClick="this.form.submit();"
+							id="category${category.id}" name="category"
+							value="${category.id}">
+						<label for="category${category.id}"> <fmt:message
+								key="products_jsp.button.category.${category.name}" />
+						</label>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+		</div>
+	</form>
+</div>
+
