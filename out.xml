@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<DECLAR xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="F0103405.xsd">
+    <DECLARHEAD>
+        <TIN>3362103457</TIN>
+        <C_DOC>F01</C_DOC>
+        <C_DOC_SUB>034</C_DOC_SUB>
+        <C_DOC_VER>5</C_DOC_VER>
+        <C_DOC_TYPE>0</C_DOC_TYPE>
+        <C_DOC_CNT>1</C_DOC_CNT>
+        <C_REG>20</C_REG>
+        <C_RAJ>31</C_RAJ>
+        <PERIOD_MONTH>12</PERIOD_MONTH>
+        <PERIOD_TYPE>5</PERIOD_TYPE>
+        <PERIOD_YEAR>2022</PERIOD_YEAR>
+        <C_STI_ORIG>2031</C_STI_ORIG>
+        <C_DOC_STAN>1</C_DOC_STAN>
+        <LINKED_DOCS>
+            <DOC NUM="1" TYPE="1">
+                <C_DOC>F01</C_DOC>
+                <C_DOC_SUB>341</C_DOC_SUB>
+                <C_DOC_VER>5</C_DOC_VER>
+                <C_DOC_TYPE>1</C_DOC_TYPE>
+                <C_DOC_CNT>1</C_DOC_CNT>
+                <C_DOC_STAN>1</C_DOC_STAN>
+                <FILENAME>20313362103457F0134105101000000151220222031.XML</FILENAME>
+            </DOC>
+        </LINKED_DOCS>
+        <D_FILL>15092022</D_FILL>
+        <SOFTWARE>CABINET 0.5.0</SOFTWARE>
+    </DECLARHEAD>
+    <DECLARBODY>
+        <HTIN>3362103457</HTIN>
+        <HNAME>КРАМАРЕНКО ВЛАДИСЛАВ ІГОРОВИЧ</HNAME>
+        <HLOC>УКРАЇНА, 61168, ХАРКIВСЬКА ОБЛАСТЬ, М.ХАРКІВ, КИЇВСЬКИЙ Р-Н, ВУЛ. ВАЛЕНТИНІВСЬКА, БУД. 3-А, КВ.92</HLOC>
+        <HTEL>+38 (068)-368-86-23</HTEL>
+        <HBOS>КРАМАРЕНКО ВЛАДИСЛАВ ІГОРОВИЧ</HBOS>
+        <HKEXECUTOR>3362103457</HKEXECUTOR>
+        <HEMAIL>Razorvlad1992@gmail.com</HEMAIL>
+        <HFILL>07092022</HFILL>
+        <HZ>1</HZ>
+        <HZY>2022</HZY>
+        <HSTI>ГОЛОВНЕ УПРАВЛІННЯ ДПС У ХАРКІВСЬКІЙ ОБЛАСТІ,КИЇВСЬКА ДПІ (КИЇВСЬКИЙ РАЙОН М.ХАРКОВА)</HSTI>
+        <HNACTL>0</HNACTL>
+        <R03G1>2600.0</R03G1>
+        <R03G2>2600.0</R03G2>
+        <R03G3>2600.0</R03G3>
+        <R03G4>2600.0</R03G4>
+        <R003G3>100000.0</R003G3>
+        <R008G3>100000.0</R008G3>
+    </DECLARBODY>
+</DECLAR>
