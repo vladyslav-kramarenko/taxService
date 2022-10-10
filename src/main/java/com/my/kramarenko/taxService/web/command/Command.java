@@ -1,5 +1,7 @@
 package com.my.kramarenko.taxService.web.command;
 
+import com.my.kramarenko.taxService.db.DBException;
+import com.my.kramarenko.taxService.db.XmlException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,7 +24,7 @@ public abstract class Command implements Serializable {
 	 * @return Address to go once the command is executed.
 	 */
 	public abstract String execute(HttpServletRequest request,
-								   HttpServletResponse response) throws IOException, ServletException;
+								   HttpServletResponse response) throws IOException, ServletException, DBException, XmlException;
 
 	@Override
 	public final String toString() {

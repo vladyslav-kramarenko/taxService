@@ -1,7 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
+  <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/db/Fields.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/db/bean/StatusBean.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/db/entity/Entity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/db/entity/User.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/db/enums/Role.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/db/enums/SortType.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/db/mySQL/DBManager.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/db/mySQL/UserManager.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/Path.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/command/Command.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/command/CommandContainer.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/command/CompleteCommand.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/command/LastPage.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/command/NoCommand.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/command/admin/AllUsersCommand.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/command/common/LogoutCommand.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/command/common/ViewSettingsCommand.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/command/outOfControl/LoginCommand.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/command/outOfControl/RegistrationCommand.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/command/outOfControl/UpdateLocaleCommand.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/filter/CommandAccessFilter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/filter/EncodingFilter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/listener/ContextListener.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/mail/MailCreator.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/mail/MailHelper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/tags/MyTag.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/resources.properties" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/resources_en.properties" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/resources_ru.properties" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/resources_ua.properties" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/style/style.css" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/zvit_add.XML" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/zvit_main.XML" charset="UTF-8" />
   </component>
 </project>

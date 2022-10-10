@@ -1,10 +1,10 @@
-package com.my.kramarenko.taxService.web.command.user;
+package com.my.kramarenko.taxService.web.command.common;
 
 import com.my.kramarenko.taxService.db.DBException;
 import com.my.kramarenko.taxService.db.XmlException;
 import com.my.kramarenko.taxService.db.entity.Report;
 import com.my.kramarenko.taxService.db.entity.User;
-import com.my.kramarenko.taxService.db.enums.Status;
+import com.my.kramarenko.taxService.db.entity.Status;
 import com.my.kramarenko.taxService.db.enums.Role;
 import com.my.kramarenko.taxService.db.mySQL.ReportManager;
 import com.my.kramarenko.taxService.web.command.Command;
@@ -13,6 +13,7 @@ import com.my.kramarenko.taxService.xml.ReadXmlDOMController;
 import com.my.kramarenko.taxService.xml.ReportForm;
 import com.my.kramarenko.taxService.xml.ReportFormContainer;
 import com.my.kramarenko.taxService.xml.TaxForm;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -40,50 +41,68 @@ public class ReportCommand extends Command {
 
         LOG.trace("Command starts");
         String forward = Path.PAGE_REPORT;
-        Status reportStatus = Status.DRAFT;
 
+        ServletContext sc = request.getServletContext();
+//        List<Status> statuses = (List<Status>) sc.getAttribute("allStatuses");
+        Map<Integer, Status> statusMap = (Map<Integer, Status>) sc.getAttribute("statusMap");
+
+        User user=(User) request.getSession().getAttribute("user");
+
+        Status status = statusMap.get(1);//Status.DRAFT;
+        String typeId = request.getParameter("reportTypeId");
         String reportIdParameter = request.getParameter("reportId");
         LOG.trace(request.getRequestURI());
+
         if (reportIdParameter != null && !reportIdParameter.isEmpty()) {
             int reportId = Integer.parseInt(reportIdParameter);
-
-            ReportManager rm = new ReportManager();
-            Report report = rm.getReport(reportId);
-            String fileName = report.getXmlPath();
-            reportStatus = Status.getStatus(report.getStatusId());
-
-            ReadXmlDOMController domController = new ReadXmlDOMController();
-
-            String reportTypeId = report.getTypeId();
-            ReportForm reportForm = ReportFormContainer.getForm(reportTypeId);
-
-            TaxForm taxForm = domController.loadFile(reportForm, fileName);
-            setParameters(taxForm, request);
-            request.setAttribute("reportId", reportId);
-            request.setAttribute("reportStatusId", report.getStatusId());
+            Report report = openSavedReport(reportId, request);
+            typeId = report.getTypeId();
+            status = statusMap.get(report.getStatusId());//Status.getStatus(report.getStatusId());
+        }else{
+            request.setAttribute("HTEL",user.getPhone());
         }
 
-        if (Role.getRole((User) request.getSession().getAttribute("user")).equals(Role.INSPECTOR)) {
-            request.setAttribute("statusTypes", Status.values());
-            LOG.trace("set report statuses to request attribute: \n" + Arrays.toString(Status.values()));
+        request.setAttribute("reportStatus", status);
+
+        if (Role.getRole(user).equals(Role.INSPECTOR)) {
+            Status[] statusValues = {statusMap.get(2), statusMap.get(3), statusMap.get(4)};
+//            Status[] statusValues = {Status.SENT, Status.ACCEPTED, Status.REFUSED};
+            request.setAttribute("statusTypes", statusValues);
+            LOG.trace("set report statuses to request attribute: \n" + Arrays.toString(statusValues));
         }
-        request.setAttribute("reportStatus", reportStatus);
+
+        LOG.trace("reportTypeId = " + typeId);
+        request.setAttribute("reportTypeId", typeId);
         request.getSession().setAttribute("page", Path.PAGE_REPORT);
         LOG.trace("Command finished");
         return forward;
     }
 
+    private Report openSavedReport(int reportId, HttpServletRequest request) throws XmlException, DBException {
+        ReportManager rm = new ReportManager();
+        Report report = rm.getReport(reportId);
+        String fileName = report.getXmlPath();
+
+        ReadXmlDOMController domController = new ReadXmlDOMController();
+
+
+        String reportTypeId = report.getTypeId();
+        ReportForm reportForm = ReportFormContainer.getForm(reportTypeId);
+
+        TaxForm taxForm = domController.loadFile(reportForm, fileName);
+        setParameters(taxForm, request);
+        request.setAttribute("reportId", reportId);
+        request.setAttribute("reportStatusId", report.getStatusId());
+        return report;
+    }
+
     private void setParameters(TaxForm taxForm, HttpServletRequest request) {
         for (Map.Entry<String, List> entry : taxForm.getDeclarHead().getEntrySet()) {
-//            LOG.debug(entry.getKey() + ": " + entry.getValue().get(0));
             request.setAttribute(entry.getKey(), entry.getValue().get(0));
-//            request.getSession().setAttribute(entry.getKey(), entry.getValue().get(0));
         }
         LOG.trace("Declarhead parameters are set");
         for (Map.Entry<String, List> entry : taxForm.getDeclarBody().getEntrySet()) {
-//            LOG.debug(entry.getKey() + ": " + entry.getValue().get(0));
             request.setAttribute(entry.getKey(), entry.getValue().get(0));
-//            request.getSession().setAttribute(entry.getKey(), entry.getValue().get(0));
         }
         LOG.trace("Declarbody parameters are set");
     }

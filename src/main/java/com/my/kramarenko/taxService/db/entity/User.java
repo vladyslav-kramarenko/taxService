@@ -1,5 +1,9 @@
 package com.my.kramarenko.taxService.db.entity;
 
+import com.my.kramarenko.taxService.db.enums.Role;
+
+import java.io.Serial;
+
 /**
  * User entity.
  *
@@ -7,9 +11,10 @@ package com.my.kramarenko.taxService.db.entity;
  */
 public class User extends Entity {
 
+    @Serial
     private static final long serialVersionUID = -6889036256149495388L;
 
-    private String login;
+//    private String login;
 
     private String password;
 
@@ -22,6 +27,18 @@ public class User extends Entity {
     private String lastName;
 
     private int roleId;
+
+    public User() {
+    }
+
+    public User(String email, String password, String name, String surname, String phone) {
+        this.firstName = name;
+        this.lastName = surname;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.roleId = Role.USER.getId();
+    }
 
     /**
      * @return the email
@@ -49,17 +66,6 @@ public class User extends Entity {
      */
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    /**
-     * @return the city
-     */
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public String getPassword() {
@@ -96,7 +102,9 @@ public class User extends Entity {
 
     @Override
     public String toString() {
-        return "User [login=" + login + ", firstName=" + firstName
+        return "User [" +
+//                "login=" + login + ", " +
+                "firstName=" + firstName
                 + ", lastName=" + lastName + ", roleId=" + roleId + ", e-mail="
                 + email + ", phone=" + phone + "]";
     }

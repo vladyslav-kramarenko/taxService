@@ -54,14 +54,14 @@ function doCompletion() {
 	req.send(null);
 }
 
-function doManufacturerCompletion() {
-	var url = "controller?command=completeManufacturer&action=complete&id="
-			+ escape(completeField.value);
-	req = initRequest();
-	req.open("GET", url, true);
-	req.onreadystatechange = callback;
-	req.send(null);
-}
+// function doManufacturerCompletion() {
+// 	var url = "controller?command=completeManufacturer&action=complete&id="
+// 			+ escape(completeField.value);
+// 	req = initRequest();
+// 	req.open("GET", url, true);
+// 	req.onreadystatechange = callback;
+// 	req.send(null);
+// }
 
 function initRequest() {
 	if (window.XMLHttpRequest) {
@@ -85,36 +85,36 @@ function callback() {
 
 
 
-function appendManufacturer(name, itemId) {
+// function appendManufacturer(name, itemId) {
+//
+// 	var row;
+// 	var cell;
+// 	if (isIE) {
+// 		completeTable.style.display = 'block';
+// 		row = completeTable.insertRow(completeTable.rows.length);
+// 		cell = row.insertCell(0);
+// 	} else {
+// 		completeTable.style.display = 'table';
+// 		row = document.createElement("tr");
+// 		cell = document.createElement("td");
+// 		row.appendChild(cell);
+// 		completeTable.appendChild(row);
+// 	}
+//
+// 	cell.className = "popupCell";
+// 	linkElement = document.createElement("div");
+// 	linkElement.className = "popupItem";
+// 	linkElement.onclick = function() {
+// 		var man = name;
+// 		completeField.value = man;
+// 		clearTable();
+// 	};
+// 	linkElement.appendChild(document.createTextNode(name));
+//
+// 	cell.appendChild(linkElement);
+// }
 
-	var row;
-	var cell;
-	if (isIE) {
-		completeTable.style.display = 'block';
-		row = completeTable.insertRow(completeTable.rows.length);
-		cell = row.insertCell(0);
-	} else {
-		completeTable.style.display = 'table';
-		row = document.createElement("tr");
-		cell = document.createElement("td");
-		row.appendChild(cell);
-		completeTable.appendChild(row);
-	}
-
-	cell.className = "popupCell";
-	linkElement = document.createElement("div");
-	linkElement.className = "popupItem";
-	linkElement.onclick = function() {
-		var man = name;
-		completeField.value = man;
-		clearTable();
-	};
-	linkElement.appendChild(document.createTextNode(name));
-
-	cell.appendChild(linkElement);
-}
-
-function appendProduct(manufacturer, name, itemId) {
+function appendProduct(date,name, itemId,reportName,statusName,) {
 
 	var row;
 	var cell;

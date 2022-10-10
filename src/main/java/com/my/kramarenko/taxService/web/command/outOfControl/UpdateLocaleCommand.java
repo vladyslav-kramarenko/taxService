@@ -1,4 +1,4 @@
-package com.my.kramarenko.taxService.web.command.common;
+package com.my.kramarenko.taxService.web.command.outOfControl;
 
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.Path;

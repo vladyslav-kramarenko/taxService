@@ -1,0 +1,105 @@
+<span id="lang">
+        <c:choose>
+            <%-- When user hasn't explicitly set language,
+                             render toggle according to browser's preferred locale --%>
+            <c:when test="${empty sessionScope['jakarta.servlet.jsp.jstl.fmt.locale.session']}">
+                <c:choose>
+                    <c:when test="${pageContext.request.locale.language eq 'en'}">
+						<button disabled id="en">
+							<fmt:message key="lang.en"/>
+						</button>
+                    </c:when>
+                    <c:otherwise>
+                        <c:url var="url" value="controller">
+                            <c:param name="localeToSet" value="en"/>
+
+                            <c:param name="command" value="updateLocale"/>
+                        </c:url>
+                        <a href="${url}"><fmt:message key="lang.en"/></a>
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${pageContext.request.locale.language eq 'ru'}">
+						<button disabled id="ru">
+							<fmt:message key="lang.ru"/>
+						</button>
+                    </c:when>
+                    <c:otherwise>
+                        <c:url var="url" value="controller">
+                            <c:param name="localeToSet" value="ru"/>
+
+                            <c:param name="command" value="updateLocale"/>
+                        </c:url>
+                        <a href="${url}"><fmt:message key="lang.ru"/></a>
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${pageContext.request.locale.language eq 'ua'}">
+						<button disabled id="ua">
+							<fmt:message key="lang.ua"/>
+						</button>
+                    </c:when>
+                    <c:otherwise>
+                        <c:url var="url" value="controller">
+                            <c:param name="localeToSet" value="ua"/>
+
+                            <c:param name="command" value="updateLocale"/>
+                        </c:url>
+                        <a href="${url}"><fmt:message key="lang.ua"/></a>
+                    </c:otherwise>
+                </c:choose>
+            </c:when>
+
+            <%-- Otherwise, render widget according to the set locale --%>
+            <c:otherwise>
+                <c:choose>
+                    <c:when
+                            test="${sessionScope['jakarta.servlet.jsp.jstl.fmt.locale.session'] eq 'en'}">
+						<button disabled id="en">
+							<fmt:message key="lang.en"/>
+						</button>
+                    </c:when>
+                    <c:otherwise>
+                        <c:url var="url" value="controller">
+                            <c:param name="localeToSet" value="en"/>
+                            <c:param name="command" value="updateLocale"/>
+                        </c:url>
+
+                        <a href="${url}"><fmt:message key="lang.en"/></a>
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when
+                            test="${sessionScope['jakarta.servlet.jsp.jstl.fmt.locale.session'] eq 'ru'}">
+						<button disabled id="ru">
+							<fmt:message key="lang.ru"/>
+						</button>
+
+                    </c:when>
+                    <c:otherwise>
+                        <c:url var="url" value="controller">
+                            <c:param name="localeToSet" value="ru"/>
+                            <c:param name="command" value="updateLocale"/>
+                        </c:url>
+                        <a href="${url}"><fmt:message key="lang.ru"/></a>
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when
+                            test="${sessionScope['jakarta.servlet.jsp.jstl.fmt.locale.session'] eq 'ua'}">
+						<button disabled id="ua">
+							<fmt:message key="lang.ua"/>
+						</button>
+
+                    </c:when>
+                    <c:otherwise>
+                        <c:url var="url" value="controller">
+                            <c:param name="localeToSet" value="ua"/>
+                            <c:param name="command" value="updateLocale"/>
+                        </c:url>
+                        <a href="${url}"><fmt:message key="lang.ua"/></a>
+                    </c:otherwise>
+                </c:choose>
+            </c:otherwise>
+        </c:choose>
+	</span>

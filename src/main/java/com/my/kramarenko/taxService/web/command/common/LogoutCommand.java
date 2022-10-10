@@ -1,5 +1,7 @@
-package com.my.kramarenko.taxService.web.command;
+package com.my.kramarenko.taxService.web.command.common;
 
+import com.my.kramarenko.taxService.web.command.Command;
+import com.my.kramarenko.taxService.web.Path;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -7,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.io.Serial;
 
 /**
  * Logout command.
@@ -16,6 +19,7 @@ import java.io.IOException;
  */
 public class LogoutCommand extends Command {
 
+	@Serial
 	private static final long serialVersionUID = -2785976616686657267L;
 
 	private static final Logger LOG = Logger.getLogger(LogoutCommand.class);

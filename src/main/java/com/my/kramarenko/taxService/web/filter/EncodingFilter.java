@@ -1,9 +1,9 @@
-package ua.nure.kramarenko.SummaryTask4.web.filter;
-
-import org.apache.log4j.Logger;
+package com.my.kramarenko.taxService.web.filter;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.log4j.Logger;
+
 import java.io.IOException;
 
 /**
@@ -23,26 +23,27 @@ public class EncodingFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response,
 			FilterChain chain) throws IOException, ServletException {
 		
-		LOG.debug("Filter starts");
+		LOG.trace("Filter starts");
 		
 		HttpServletRequest httpRequest = (HttpServletRequest)request;
 		LOG.trace("Request uri --> " + httpRequest.getRequestURI());
-		
+
+
 		String requestEncoding = request.getCharacterEncoding();
 		if (requestEncoding == null) {
-			LOG.trace("Request encoding = null, set encoding --> " + encoding);
+			LOG.debug("Request encoding = null, set encoding --> " + encoding);
 			request.setCharacterEncoding(encoding);
 		}
 		
-		LOG.debug("Filter finished");		
+		LOG.trace("Filter finished");
 		chain.doFilter(request, response);
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
-		LOG.debug("Filter initialization starts");
+		LOG.trace("Filter initialization starts");
 		encoding = fConfig.getInitParameter("encoding");
-		LOG.trace("Encoding from web.xml --> " + encoding);
-		LOG.debug("Filter initialization finished");
+		LOG.debug("Encoding from web.xml --> " + encoding);
+		LOG.trace("Filter initialization finished");
 	}
 
 }

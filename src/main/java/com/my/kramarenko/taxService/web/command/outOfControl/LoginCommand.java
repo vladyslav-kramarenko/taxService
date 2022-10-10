@@ -1,4 +1,4 @@
-package com.my.kramarenko.taxService.web.command.common;
+package com.my.kramarenko.taxService.web.command.outOfControl;
 
 import com.my.kramarenko.taxService.db.DBException;
 import com.my.kramarenko.taxService.db.PasswordCreator;
@@ -42,7 +42,7 @@ public class LoginCommand extends Command {
             request.getSession().setAttribute("page", Path.PAGE_LOGIN);
         }
         if (email == null || email.isEmpty()) {
-            error("Email is emty", request);
+//            error("Email is emty", request);
             return Path.PAGE_LOGIN;
         } else if (password == null || password.isEmpty()) {
             error("Pasword is emty", request);

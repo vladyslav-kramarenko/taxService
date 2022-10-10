@@ -1,0 +1,48 @@
+table {
+	border-collapse: collapse;
+}
+
+td {
+	border: 1px solid black;
+	margin: 0px;
+}
+
+td.title {
+	text-align: center;
+	font-weight: bold;
+}
+
+tr {
+	/*border-bottom: 1pt solid black;*/
+}
+
+tr.bottomLine {
+	border-bottom: 1pt solid black;
+}
+
+tr.upperLine {
+	border-top: 1pt solid black;
+}
+
+td.rowNumber {
+	border: 1px solid black;
+	text-align: center;
+	width: 30px;
+	min-height: 30px;
+}
+
+td.emptyRow {
+	border: 0px
+}
+
+td.emptyBox {
+	border: 0px;
+	border-collapse: unset;
+}
+
+td.comment {
+	border: 0px
+}
+input[type=text] {
+	width: 100%;
+}

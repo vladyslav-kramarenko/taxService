@@ -1,13 +1,23 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ include file="/WEB-INF/jspf/directive/page.jspf"%>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf"%>
+
 <html>
-<head>
-    <title>JSP - Hello World</title>
-</head>
+
+<c:set var="title" value="Error" scope="page" />
+<%@ include file="/WEB-INF/jspf/head.jspf"%>
+
 <body>
-<h1><%= "Hello World!" %>
-</h1>
-<br/>
-<a href="hello-servlet">Hello Servlet</a>
+<table style="width: 100%" id="main-container">
+
+    <%@ include file="/WEB-INF/jspf/header.jspf"%>
+    <%
+        String site = new String("controller?command=login");
+        response.setStatus(response.SC_MOVED_TEMPORARILY);
+        response.setHeader("Location", site);
+    %>
+
+</table>
+<%@ include file="/WEB-INF/jspf/footer.jspf"%>
 </body>
 </html>

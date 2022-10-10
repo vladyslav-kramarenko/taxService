@@ -1,7 +1,5 @@
-package com.my.kramarenko.taxService.web.command;
+package com.my.kramarenko.taxService.xml;
 
-import com.my.kramarenko.taxService.web.command.common.*;
-import com.my.kramarenko.taxService.xml.ReportForm;
 import com.my.kramarenko.taxService.xml.forms.F0103405;
 import org.apache.log4j.Logger;
 

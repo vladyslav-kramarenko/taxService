@@ -1,25 +1,22 @@
 package com.my.kramarenko.taxService.db.mySQL;
 
 import com.my.kramarenko.taxService.db.DBException;
-import com.my.kramarenko.taxService.db.Fields;
 import com.my.kramarenko.taxService.db.dao.UserDao;
 import com.my.kramarenko.taxService.db.entity.User;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
-import java.util.LinkedList;
 import java.util.List;
-
-import static com.my.kramarenko.taxService.db.requestFields.*;
+import java.util.Optional;
 
 /**
  * Work with user entity in dataBase
  *
  * @author Vlad Kramarenko
  */
-public class UserDb implements UserDao {
+public class UserManager implements UserDao {
 
-    private static final Logger LOG = Logger.getLogger(UserDb.class);
+    private static final Logger LOG = Logger.getLogger(UserManager.class);
 
     /**
      * Search for all users
@@ -29,27 +26,14 @@ public class UserDb implements UserDao {
      */
     @Override
     public List<User> getAllUsers() throws DBException {
-        List<User> usersList = null;
-        Statement stmt = null;
-        ResultSet rs = null;
-        Connection con = null;
-        try {
-            con = DBManager.getInstance().getConnection();
-            stmt = con.createStatement();
-            rs = stmt.executeQuery(SQL_SELECT_ALL_USERS);
-            usersList = parseResultSet(rs);
-            con.commit();
+        try (Connection con = DBManager.getInstance().getConnection()) {
+            con.setAutoCommit(true);
+            return LowLevelUserManager.getAllUsers(con);
         } catch (SQLException e) {
-            DBManager.getInstance().rollback(con);
             String message = "Cannot obtain all users";
             LOG.error(message, e);
             throw new DBException(message, e);
-        } finally {
-            DBManager.getInstance().close(rs);
-            DBManager.getInstance().close(stmt);
-            DBManager.getInstance().close(con);
         }
-        return usersList;
     }
 
     /**
@@ -61,27 +45,14 @@ public class UserDb implements UserDao {
      */
     @Override
     public User getUser(int userId) throws DBException {
-        User user = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        Connection con = null;
-        try {
+        try (Connection con = DBManager.getInstance().getConnection()) {
             con.setAutoCommit(true);
-            con = DBManager.getInstance().getConnection();
-            pstmt = con.prepareStatement(SQL_SELECT_USER_BY_ID);
-            pstmt.setInt(1, userId);
-            rs = pstmt.executeQuery();
-            user = parseResultSet(rs).get(0);
+            return LowLevelUserManager.getUser(con, userId);
         } catch (SQLException e) {
             String message = "Cannot obtain user by id";
             LOG.error(message, e);
             throw new DBException(message, e);
-        } finally {
-            DBManager.getInstance().close(rs);
-            DBManager.getInstance().close(pstmt);
-            DBManager.getInstance().close(con);
         }
-        return user;
     }
 
     /**
@@ -92,19 +63,15 @@ public class UserDb implements UserDao {
      */
     @Override
     public void updateUser(User user) throws DBException {
-        Connection con = null;
+        LOG.trace(user);
         DBManager dbManager = DBManager.getInstance();
-        try {
-            con = dbManager.getConnection();
-            updateUser(con, user);
-            con.commit();
+        try (Connection con = dbManager.getConnection()) {
+            con.setAutoCommit(true);
+            LowLevelUserManager.updateUser(con, user);
         } catch (SQLException e) {
-            dbManager.rollback(con);
             String message = "Cannot update a user";
             LOG.error(message, e);
             throw new DBException(message, e);
-        } finally {
-            dbManager.close(con);
         }
     }
 
@@ -117,55 +84,17 @@ public class UserDb implements UserDao {
      */
     @Override
     public void updateUserRole(int userId, int roleId) throws DBException {
-        Connection con = null;
-        try {
-            con = DBManager.getInstance().getConnection();
-            PreparedStatement pstmt = null;
-            try {
-                pstmt = con.prepareStatement(SQL_UPDATE_USER_ROLE);
-                int k = 1;
-                pstmt.setInt(k++, roleId);
-                pstmt.setInt(k, userId);
-                pstmt.executeUpdate();
-            } finally {
-                DBManager.getInstance().close(pstmt);
-            }
-            con.commit();
+        LOG.trace("start update");
+        try (Connection con = DBManager.getInstance().getConnection()) {
+            con.setAutoCommit(true);
+            LowLevelUserManager.updateUserRole(con, userId, roleId);
         } catch (SQLException e) {
-            DBManager.getInstance().rollback(con);
-            String message = "Cannot update a user role";
+            String message = "Cannot update user's role";
             LOG.error(message, e);
             throw new DBException(message, e);
-
-        } finally {
-            DBManager.getInstance().close(con);
         }
     }
 
-    /**
-     * Update user
-     *
-     * @param con  database connection
-     * @param user user to update
-     * @throws SQLException
-     */
-    private void updateUser(Connection con, User user) throws SQLException {
-        PreparedStatement pstmt = null;
-        try {
-            pstmt = con.prepareStatement(SQL_UPDATE_USER);
-            int k = 1;
-            pstmt.setString(k++, user.getPassword());
-            pstmt.setString(k++, user.getFirstName());
-            pstmt.setString(k++, user.getLastName());
-            pstmt.setInt(k++, user.getRoleId());
-            pstmt.setString(k++, user.getPhone());
-            pstmt.setString(k++, user.getEmail());
-            pstmt.setInt(k, user.getId());
-            pstmt.executeUpdate();
-        } finally {
-            DBManager.getInstance().close(pstmt);
-        }
-    }
 
     /**
      * Delete user
@@ -175,52 +104,14 @@ public class UserDb implements UserDao {
      */
     @Override
     public void deleteUser(User user) throws DBException {
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        Connection con = null;
-        try {
-            con = DBManager.getInstance().getConnection();
-            pstmt = con.prepareStatement(SQL_DELETE_USER);
-            pstmt.setInt(1, user.getId());
-            pstmt.executeUpdate();
-            con.commit();
+        try (Connection con = DBManager.getInstance().getConnection()) {
+            con.setAutoCommit(true);
+            LowLevelUserManager.deleteUser(con, user.getId());
         } catch (SQLException ex) {
-            DBManager.getInstance().rollback(con);
             String message = "Cannot delete a user";
             LOG.error(message, ex);
             throw new DBException(message, ex);
-        } finally {
-            DBManager.getInstance().close(rs);
-            DBManager.getInstance().close(pstmt);
-            DBManager.getInstance().close(con);
         }
-    }
-
-    /**
-     * Parse resultSet for select query
-     *
-     * @param rs ResultSEt
-     * @return list of users
-     * @throws SQLException
-     */
-    private static List<User> parseResultSet(ResultSet rs) throws SQLException {
-        LinkedList<User> result = new LinkedList<>();
-        while (rs.next()) {
-            User user = new User();
-            user.setId(rs.getInt(Fields.ENTITY_ID));
-            user.setFirstName(rs.getString(Fields.USER_FIRST_NAME));
-            user.setLastName(rs.getString(Fields.USER_LAST_NAME));
-//			user.setLogin(rs.getString(Fields.USER_LOGIN));
-            user.setPassword(rs.getString(Fields.USER_PASSWORD));
-            user.setPhone(rs.getString(Fields.USER_PHONE));
-            user.setEmail(rs.getString(Fields.USER_EMAIL));
-//			user.setCity(rs.getString(Fields.USER_CITY));
-//			user.setAddress(rs.getString(Fields.USER_ADDRESS));
-            user.setRoleId(rs.getInt(Fields.USER_ROLE_ID));
-            result.add(user);
-            System.out.println(user);
-        }
-        return result;
     }
 
     /**
@@ -231,46 +122,13 @@ public class UserDb implements UserDao {
      */
     @Override
     public void addUser(User user) throws DBException {
-        Connection con = null;
-        try {
-            con = DBManager.getInstance().getConnection();
-            addUser(con, user);
-            con.commit();
+        try (Connection con = DBManager.getInstance().getConnection()) {
+            con.setAutoCommit(true);
+            LowLevelUserManager.addUser(con, user);
         } catch (SQLException e) {
-            DBManager.getInstance().rollback(con);
             String message = "Cannot create a user";
             LOG.error(message, e);
             throw new DBException(message, e);
-        } finally {
-            DBManager.getInstance().close(con);
-        }
-    }
-
-    /**
-     * Add new user
-     *
-     * @param con  database connection
-     * @param user user to add
-     * @throws SQLException
-     */
-    private void addUser(Connection con, User user) throws SQLException {
-        PreparedStatement pstmt = null;
-        try {
-            pstmt = con.prepareStatement(SQL_INSERT_INTO_USERS,
-                    Statement.RETURN_GENERATED_KEYS);
-            int k = 1;
-            pstmt.setString(k++, user.getEmail());
-            pstmt.setString(k++, user.getPassword());
-            pstmt.setString(k++, user.getFirstName());
-            pstmt.setString(k++, user.getLastName());
-            pstmt.setInt(k++, user.getRoleId());
-            pstmt.executeUpdate();
-
-            ResultSet keys = pstmt.getGeneratedKeys();
-            keys.next();
-            user.setId(keys.getInt(1));
-        } finally {
-            DBManager.getInstance().close(pstmt);
         }
     }
 
@@ -281,33 +139,14 @@ public class UserDb implements UserDao {
      * @return User entity.
      */
     @Override
-    public User findUserByEmail(String email) {
-        User user = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        Connection con = null;
-        try {
-            con = DBManager.getInstance().getConnection();
+    public Optional<User> findUserByEmail(String email) throws DBException {
+        try (Connection con = DBManager.getInstance().getConnection()) {
             con.setAutoCommit(true);
-            pstmt = con.prepareStatement(SQL_FIND_USER_BY_EMAIL);
-            pstmt.setString(1, email);
-            LOG.debug(pstmt);
-            rs = pstmt.executeQuery();
-            List<User> users = parseResultSet(rs);
-            if (users.size() > 0) {
-                user = users.get(0);
-                LOG.debug("Found user in DB: " + user);
-            } else {
-                LOG.debug("User not founded in DB: " + email);
-            }
+            return LowLevelUserManager.findUserByEmail(con, email);
         } catch (SQLException ex) {
             String message = "Cannot obtain a user by its e-mail (" + email + ")";
             LOG.error(message, ex);
-        } finally {
-            DBManager.getInstance().close(rs);
-            DBManager.getInstance().close(pstmt);
-            DBManager.getInstance().close(con);
+            throw new DBException(message, ex);
         }
-        return user;
     }
 }

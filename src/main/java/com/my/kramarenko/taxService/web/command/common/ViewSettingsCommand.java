@@ -1,4 +1,4 @@
-package com.my.kramarenko.taxService.web.command.user;
+package com.my.kramarenko.taxService.web.command.common;
 
 import com.my.kramarenko.taxService.db.DBException;
 import com.my.kramarenko.taxService.db.dao.UserDao;
@@ -24,47 +24,62 @@ public class ViewSettingsCommand extends Command {
 
     private static final long serialVersionUID = -3071536593627692473L;
 
-    private static final Logger LOG = Logger
-            .getLogger(ViewSettingsCommand.class);
+    private static final Logger LOG = Logger.getLogger(ViewSettingsCommand.class);
 
     @Override
     public String execute(HttpServletRequest request,
                           HttpServletResponse response) throws IOException, ServletException, DBException {
         LOG.debug("Command starts");
 
-        if (request.getMethod().equals("post")) {
+        if (request.getMethod().equals("POST")) {
             String save = request.getParameter("save");
+            LOG.trace("save = " + save);
             if (save.equals("true")) {
-                setNewUserSettings(request);
+                if (setNewUserSettings(request)) {
+                    response.sendRedirect(Path.COMMAND_SETTINGS);
+                    return null;
+                }
             }
         }
+        request.getSession().setAttribute("page", Path.PAGE_SETTINGS);
         LOG.debug("Command finished");
         return Path.PAGE_SETTINGS;
     }
 
-    private void setNewUserSettings(HttpServletRequest request) throws DBException {
+    private boolean setNewUserSettings(HttpServletRequest request) {
         HttpSession session = request.getSession();
         User userInSession = (User) session.getAttribute("user");
-
+        LOG.trace("user in session: " + userInSession);
         String password = request.getParameter("password");
         String currentPassword = request
                 .getParameter("currentPassword");
+        LOG.debug("current pas: " + currentPassword);
+        LOG.debug("user pas: " + userInSession.getPassword());
+        LOG.debug("new pas: " + password);
 
 //        request.setAttribute("user", user);
         if (PasswordCreator.getPassword(currentPassword).equals(userInSession.getPassword())) {
-            User newUser = userInSession;
-            newUser.setEmail(request.getParameter("email"));
-            newUser.setFirstName(request.getParameter("first_name"));
-            newUser.setLastName(request.getParameter("last_name"));
-            newUser.setPhone(request.getParameter("phone"));
-            if (password != null && password.length() > 0) {
-                newUser.setPassword(PasswordCreator.getPassword(password));
-            } else {
-                newUser.setPassword(userInSession.getPassword());
+            try {
+                LOG.trace("current password == user password");
+                userInSession.setEmail(request.getParameter("email"));
+                userInSession.setFirstName(request.getParameter("first_name"));
+                userInSession.setLastName(request.getParameter("last_name"));
+                userInSession.setPhone(request.getParameter("phone"));
+                if (password != null && password.length() > 0) {
+                    userInSession.setPassword(PasswordCreator.getPassword(password));
+                } else {
+                    userInSession.setPassword(userInSession.getPassword());
+                }
+                UserDao userManager = new UserManager();
+                userManager.updateUser(userInSession);
+                session.setAttribute("user", userInSession);
+            } catch (DBException e) {
+                LOG.error(e.getMessage());
+                request.setAttribute("error", e.getMessage());
             }
-            UserDao userDb = new UserManager();
-            userDb.updateUser(newUser);
-            session.setAttribute("user", newUser);
+        } else {
+            request.setAttribute("errorMessage", "Wrong current password");
         }
+        return true;
     }
 }

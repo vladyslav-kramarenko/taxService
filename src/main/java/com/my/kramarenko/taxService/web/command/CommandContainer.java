@@ -1,54 +1,53 @@
 package com.my.kramarenko.taxService.web.command;
 
+import com.my.kramarenko.taxService.web.command.admin.AllUsersCommand;
+import com.my.kramarenko.taxService.web.command.common.*;
+import com.my.kramarenko.taxService.web.command.inspector.UpdateReportStatus;
+import com.my.kramarenko.taxService.web.command.outOfControl.LoginCommand;
+import com.my.kramarenko.taxService.web.command.outOfControl.RegistrationCommand;
+import com.my.kramarenko.taxService.web.command.outOfControl.UpdateLocaleCommand;
+import com.my.kramarenko.taxService.web.command.user.*;
+import com.my.kramarenko.taxService.web.command.common.ReportCommand;
+import com.my.kramarenko.taxService.web.command.common.ReportListCommand;
 import org.apache.log4j.Logger;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class CommandContainer {
 
     private static final Logger LOG = Logger.getLogger(CommandContainer.class);
 
-    private static Map<String, Command> commands = new TreeMap<String, Command>();
+    private static final Map<String, Command> commands = new HashMap<>();
 
     static {
         // common commands
         commands.put("login", new LoginCommand());
+        commands.put("info", new InfoCommand());
         commands.put("registration", new RegistrationCommand());
         commands.put("logout", new LogoutCommand());
-
         commands.put("noCommand", new NoCommand());
-
         commands.put("updateLocale", new UpdateLocaleCommand());
+//        commands.put("complete", new CompleteCommand());
+        commands.put("viewSettings", new ViewSettingsCommand());
 
-//		commands.put("addToCart", new AddToCartCommand());
-//		commands.put("deleteFromCart", new AddToCartCommand());
-//		commands.put("viewCart", new CartCommand());
-//
-//		commands.put("productList", new ProductListCommand());
-//		commands.put("productInfo", new ProductInfoCommand());
+        // user commands
+        commands.put("loadXML", new LoadXMLCommand());
+        commands.put("submitReport", new SendReportCommand());
+		commands.put("reportList", new ReportListCommand());
 
-        commands.put("complete", new CompleteCommand());
+        // inspector commands
+		commands.put("updateReportStatus", new UpdateReportStatus());
 
-        // client commands
-//		commands.put("viewSettings", new ViewSettingsCommand());
-//		commands.put("confirmOrder", new CartCommand());
-//		commands.put("orderCheckout", new CartCommand());
-//		commands.put("listOrders", new ClientOrdersCommand());
+        //user & inspector commands
+        commands.put("editReport", new ReportCommand());
+        commands.put("viewReport", new ReportCommand());
 
         // admin commands
-//		commands.put("completeManufacturer", new CompleteManufacturerCommand());
-//		commands.put("allUsers", new AllUsersCommand());
-//		commands.put("changeUserRole", new AllUsersCommand());
-//		commands.put("allOrders", new AllOrdersCommand());
-//		commands.put("changeOrderStatus", new AllOrdersCommand());
-//		commands.put("editProduct", new ProductEditCommand());
-//		commands.put("saveProduct", new ProductSaveCommand());
-//		commands.put("manufacturers", new ManufacturersCommand());
-//		commands.put("characteristics", new CharacteristicsCommand());
-//		commands.put("userProducts", new UsersProductsCommand());
+		commands.put("allUsers", new AllUsersCommand());
+		commands.put("changeUserRole", new AllUsersCommand());
 
-        LOG.debug("Command container was successfully initialized");
+        LOG.trace("Command container was successfully initialized");
         LOG.trace("Number of commands --> " + commands.size());
     }
 
@@ -58,13 +57,12 @@ public class CommandContainer {
      * @param commandName Name of the command.
      * @return Command object.
      */
-    public static Command get(String commandName) {
+    public static Command getCommand(String commandName) {
         if (commandName == null || !commands.containsKey(commandName)) {
-            LOG.trace("Command not found, name --> " + commandName);
+            LOG.debug("Command not found, name --> " + commandName);
             return commands.get("noCommand");
         }
-        System.out.println("command get");
+        LOG.debug("Obtained command: " + commandName);
         return commands.get(commandName);
     }
-
 }

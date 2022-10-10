@@ -1,5 +1,6 @@
 package com.my.kramarenko.taxService.db.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -9,6 +10,7 @@ import java.io.Serializable;
  */
 public abstract class Entity implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 8466257860808346236L;
 
     private int id;

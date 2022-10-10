@@ -1,10 +1,10 @@
 package com.my.kramarenko.taxService.web.command;
 
+import com.my.kramarenko.taxService.web.Path;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
-import ua.nure.kramarenko.SummaryTask4.db.Path;
 
 import java.io.IOException;
 

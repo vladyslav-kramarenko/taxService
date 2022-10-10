@@ -1,10 +1,17 @@
-package com.my.kramarenko.taxService.xml.taxDeclFop;
+package com.my.kramarenko.taxService.xml;
 
 public class LinkedDoc {
 
     String doc;
     String docSub;
     String docVer;
+    String docType;
+    String docCnt;
+    String docStan;
+    String filename;
+    //attributes
+    String num;
+    String typeLinkDOC;
 
     public String getDoc() {
         return doc;
@@ -78,13 +85,6 @@ public class LinkedDoc {
         this.typeLinkDOC = typeLinkDOC;
     }
 
-    String docType;
-    String docCnt;
-    String docStan;
-    String filename;
-    //attributes
-    String num;
-    String typeLinkDOC;
 
     @Override
     public String toString() {

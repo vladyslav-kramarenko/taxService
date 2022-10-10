@@ -1,4 +1,4 @@
-package com.my.kramarenko.taxService.web.command.common;
+package com.my.kramarenko.taxService.web.command.outOfControl;
 
 import com.my.kramarenko.taxService.db.DBException;
 import com.my.kramarenko.taxService.db.PasswordCreator;

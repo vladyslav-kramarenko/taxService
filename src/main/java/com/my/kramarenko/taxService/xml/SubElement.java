@@ -1,15 +1,12 @@
-package com.my.kramarenko.taxService.xml.taxDeclFop;
+package com.my.kramarenko.taxService.xml;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class SubElement {
     private Map<String, List> parameters;
 
     public SubElement() {
-        parameters = new HashMap<>();
+        parameters = new TreeMap<>();
     }
 
     public List getParameter(String parameterName) {
@@ -32,7 +29,16 @@ public class SubElement {
         return result.toString();
     }
 
+    public Map<String, List> getParameters() {
+        return parameters;
+    }
+
+    public boolean containsKey(String key){
+        return parameters.containsKey(key);
+    }
+
     public Set<Map.Entry<String, List>> getEntrySet() {
         return parameters.entrySet();
     }
+
 }

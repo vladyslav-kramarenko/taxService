@@ -15,20 +15,14 @@
 
 		<tr>
 			<td>
-				<%-- CONTENT --%>
-
-
 				<table style="width: 100%">
 					<thead>
 						<tr>
 							<td>№</td>
 							<td align="center"><fmt:message key="user.first_name" /></td>
 							<td align="center"><fmt:message key="user.last_name" /></td>
-							<td align="center"><fmt:message key="user.login" /></td>
 							<td align="center"><fmt:message key="user.phone" /></td>
 							<td align="center"><fmt:message key="user.email" /></td>
-							<td align="center"><fmt:message key="user.city" /></td>
-							<td align="center"><fmt:message key="user.address" /></td>
 							<td align="center"><fmt:message key="user.role" /></td>
 						</tr>
 					</thead>
@@ -41,17 +35,15 @@
 							<td align="center">${bean.id}</td>
 							<td align="center">${bean.firstName}</td>
 							<td align="center">${bean.lastName}</td>
-							<td align="center">${bean.login}</td>
 							<td align="center">${bean.phone}</td>
 							<td align="center">${bean.email}</td>
-							<td align="center">${bean.city}</td>
-							<td align="center">${bean.address}</td>
 							<c:choose>
 								<c:when test="${bean.id!=user.id}">
 									<td align="center">
 										<form action="controller">
 											<input type="hidden" name="command" value="changeUserRole" />
-											<input type="hidden" name="user_id" value="${bean.id}" /> <select
+											<input type="hidden" name="user_id" value="${bean.id}" />
+											<select
 												name="role_id" onChange="this.form.submit();">
 												<c:forEach var="role" items="${roleTypes}" varStatus="loop">
 													<c:choose>
@@ -77,14 +69,10 @@
 								</c:otherwise>
 							</c:choose>
 						</tr>
-
 					</c:forEach>
 				</table> <%-- CONTENT --%>
 			</td>
 		</tr>
-
-
-
 	</table>
 </body>
 <%@ include file="/WEB-INF/jspf/footer.jspf"%>

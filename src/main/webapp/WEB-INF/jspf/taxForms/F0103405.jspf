@@ -1,42 +1,412 @@
-<table>
-    <tr>
-        <td rowspan="4">1</td>
-        <td rowspan="4">РџРћР”РђРўРљРћР’Рђ Р”Р•РљР›РђР РђР¦Р†РЇ РџР›РђРўРќРРљРђ Р„Р”РРќРћР“Рћ РџРћР”РђРўРљРЈ -<br>
-            Р¤Р†Р—РР§РќРћР‡ РћРЎРћР‘Р - РџР†Р”РџР РР„РњР¦РЇ</td>
-        <td>01</td><td>HZ</td><td>Р—РІС–С‚РЅР°</td>
-    </tr>
-    <tr>
-        <td>02</td><td>HZN</td><td>Р—РІС–С‚РЅР° РЅРѕРІР°</td>
-    </tr>
-    <tr>
-        <td>03</td><td>HZU</td><td>РЈС‚РѕС‡РЅСЋСЋС‡Р°</td>
-    </tr>
-    <tr>
-        <td>04</td><td>HD</td><td>Р”РѕРІС–РґРєРѕРІР°</td>
-    </tr>
-    <tr></tr>
-    <tr>
-        <td rowspan="3">2</td>
-        <td columnspan="14">РџРѕРґР°С‚РєРѕРІРёР№ (Р·РІС–С‚РЅС–Р№) РїРµСЂС–РѕРґ:</td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td>I РєРІР°СЂС‚Р°Р»</td>
-        <td></td>
-        <td>РїС–РІСЂС–С‡С‡СЏ</td>
-        <td></td>
-        <td>С‚СЂРё РєРІР°СЂС‚Р°Р»Рё</td>
-        <td></td>
-        <td>СЂС–Рє</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>СЂРѕРєСѓ</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>(РќРµРѕР±С…С–РґРЅРµ РїРѕР·РЅР°С‡РёС‚Рё)</td>
-    </tr>
-</table>
+<%@ taglib prefix="mylib" tagdir="/WEB-INF/tags" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="windows-1251" %>
+<link rel="stylesheet" type="text/css" media="screen" href="style/reportForm.css" />
+
+<form class="cmxform" id="report_form" action="controller" method="post">
+    <input type="hidden" name="reportId" value="${reportId}"/>
+    <input type="hidden" name="command" value="submitReport"/>
+    <input type="hidden" name="reportName" value="F0103405"/>
+    <table>
+        <tr>
+            <td class="rowNumber" rowspan="4">1</td>
+            <td class="title" rowspan="4" colspan="10">
+                ПОДАТКОВА ДЕКЛАРАЦІЯ ПЛАТНИКА ЄДИНОГО ПОДАТКУ -
+                <br>
+                ФІЗИЧНОЇ ОСОБИ - ПІДПРИЄМЦЯ
+            </td>
+            <td>01</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="HZ" propertyType="checkbox" propertyClass="formType"/>
+                <label for="HZ">Звітна</label>
+            </td>
+        </tr>
+        <tr>
+            <td>02</td>
+            <td colspan="3"><mylib:formProperty propertyName="HZN" propertyType="checkbox" propertyClass="formType"/>Звітна
+                нова
+            </td>
+        </tr>
+        <tr>
+            <td>03</td>
+            <td colspan="3"><mylib:formProperty propertyName="HZU" propertyType="checkbox" propertyClass="formType"/>Уточнююча</td>
+        </tr>
+        <tr>
+            <td>04</td>
+            <td colspan="3"><mylib:formProperty propertyName="HD" propertyType="checkbox"/>Довідкова</td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr class="upperLine">
+            <td class="parameter" rowspan="3">2</td>
+            <td class="parameter" colspan="14">Податковий (звітній) період:</td>
+        </tr>
+        <tr>
+            <td class="parameter"></td>
+            <td><input name="" type="checkbox"></td>
+            <td>I квартал</td>
+            <td><input name="" type="checkbox"></td>
+            <td>півріччя</td>
+            <td><input name="" type="checkbox"></td>
+            <td>три квартали</td>
+            <td><input name="" type="checkbox"></td>
+            <td>рік</td>
+            <td><mylib:formProperty propertyName="HMONTH" propertyType="text"/></td>
+            <td class="emptyBox"></td>
+            <td><mylib:formProperty propertyName="HZY" propertyType="text"/></td>
+            <td class="comment">року</td>
+            <td class="emptyBox"></td>
+        </tr>
+
+        <tr class="bottomLine">
+            <td class="emptyBox"></td>
+            <td class="comment" colspan="7">(Необхідне позначити)</td>
+            <td class="emptyBox"></td>
+            <td class="comment" colspan="2">(місяць)</td>
+            <td class="emptyBox" colspan="3"></td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr class="upperLine">
+            <td class="rowNumber" rowspan="3">3</td>
+            <td class="comment" colspan="14">Податковий (звітній) період, який уточнююється:</td>
+        </tr>
+        <tr>
+            <td class="emptyBox"></td>
+            <td><input name="" type="checkbox"></td>
+            <td>I квартал</td>
+            <td><input name="" type="checkbox"></td>
+            <td>півріччя</td>
+            <td><input name="" type="checkbox"></td>
+            <td>три квартали</td>
+            <td><input name="" type="checkbox"></td>
+            <td colspan="2">рік</td>
+            <td class="emptyBox"></td>
+            <td><mylib:formProperty propertyName="HZYP" propertyType="text"/></td>
+            <td class="comment">року</td>
+            <td class="emptyBox"></td>
+        </tr>
+        <tr class="bottomLine">
+            <td class="emptyBox"></td>
+            <td class="comment" colspan="13">(Необхідне позначити)</td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td class="rowNumber" rowspan="2">4</td>
+            <td colspan="14"><mylib:formProperty propertyName="HSTI" propertyType="text"/></td>
+        </tr>
+        <tr class="bottomLine">
+            <td class="comment" colspan="15">(Найменування контролюючого органу, до яког подається звітність)</td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td class="rowNumber" rowspan="3">5</td>
+            <td rowspan="2">Платник</td>
+            <td colspan="13"><mylib:formProperty propertyName="HNAME" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="13"></td>
+        </tr>
+        <tr class="bottomLine">
+            <td class="comment" colspan="15">(призвище, ім'я, по батькові (за наявності) платника податків згідно з
+                реєстраційними
+                документами)
+            </td>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td class="rowNumber" rowspan="4">6</td>
+            <td rowspan="3">Податкова адреса</td>
+            <td colspan="13"><mylib:formProperty propertyName="HLOC" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="13"></td>
+        </tr>
+        <tr>
+            <td class="comment" colspan="13">(Податкова адреса (місце проживання) платника податку)</td>
+        </tr>
+        <tr>
+            <td>Електронна адреса</td>
+            <td colspan="8"><mylib:formProperty propertyName="HEMAIL" propertyType="text"/></td>
+            <td>Телефон</td>
+            <td colspan="4"><mylib:formProperty propertyName="HTEL" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td class="rowNumber">7</td>
+            <td colspan="10">Реєстраційний номер облікової картри платника податків або серія (за наявності) та номер
+                паспорту
+            </td>
+            <td></td>
+            <td colspan="3"><mylib:formProperty propertyName="HTIN" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td class="rowNumber" rowspan="3">8</td>
+            <td colspan="14">Особливі відмітки</td>
+        </tr>
+        <tr>
+            <td>8.1</td>
+            <td><mylib:formProperty propertyName="M081" propertyType="text"/></td>
+            <td colspan="12">платника податку, що подає декларацію за останній податковий (звітний) період, на який
+                припадає
+                дата державної реєстрації припинення
+            </td>
+        </tr>
+        <tr>
+            <td>8.2</td>
+            <td><mylib:formProperty propertyName="M082" propertyType="text"/></td>
+            <td colspan="12">платника податку, що подає декларацію за останній податковий (звітний) період, в якому
+                здійснено перехід на сплату інших податків і зборів
+            </td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td class="title" colspan="15">I. ЗАГАЛЬНІ ПОКАЗНИКИ ПІДПРИЄМНИЦЬКОЇ ДІЯЛЬНОСТІ</td>
+        </tr>
+        <tr>
+            <td class="rowNumber">9</td>
+            <td colspan="11">Фактична чисельність найманих робітників у звітному періоді (осіб)</td>
+            <td colspan="3"><mylib:formProperty propertyName="HNACTL" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td class="rowNumber" rowspan="8">10</td>
+            <td colspan="14">Види рідприємницької діяльності у звітному періоді:</td>
+        </tr>
+        <tr>
+            <td colspan="3">Код згідно з КВЕД</td>
+            <td colspan="11">Назва згідно з КВЕД</td>
+        </tr>
+        <tr>
+            <td colspan="3"><input name="T1RXXXXG1S" type="text" value="T1RXXXXG1S"></td>
+            <td colspan="11"><input name="T1RXXXXG2S" type="text" value="T1RXXXXG2S"></td>
+        </tr>
+        <tr>
+            <td colspan="3"><input name="T1RXXXXG1S" type="text" value="T1RXXXXG1S"></td>
+            <td colspan="11"><input name="T1RXXXXG2S" type="text" value="T1RXXXXG2S"></td>
+        </tr>
+        <tr>
+            <td colspan="3"><input name="T1RXXXXG1S" type="text" value="T1RXXXXG1S"></td>
+            <td colspan="11"><input name="T1RXXXXG2S" type="text" value="T1RXXXXG2S"></td>
+        </tr>
+        <tr>
+            <td colspan="3"><input name="T1RXXXXG1S" type="text" value="T1RXXXXG1S"></td>
+            <td colspan="11"><input name="T1RXXXXG2S" type="text" value="T1RXXXXG2S"></td>
+        </tr>
+        <tr>
+            <td colspan="3"><input name="T1RXXXXG1S" type="text" value="T1RXXXXG1S"></td>
+            <td colspan="11"><input name="T1RXXXXG2S" type="text" value="T1RXXXXG2S"></td>
+        </tr>
+        <tr>
+            <td colspan="3"><input name="T1RXXXXG1S" type="text" value="T1RXXXXG1S"></td>
+            <td colspan="11"><input name="T1RXXXXG2S" type="text" value="T1RXXXXG2S"></td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td class="title" colspan="15">ІІ. ПОКАЗНИКИ ГОСПОДАРСЬКОЇ ДІЯЛЬНОСТІ ДЛЯ ПЛАТНИКІВ ЄДИНОГО ПОДАТКУ ПЕРШОЇ
+                ГРУПИ
+            </td>
+        </tr>
+        <tr>
+            <td colspan="15">Щомісячні авансові внески, грн.</td>
+        </tr>
+        <tr>
+            <td colspan="4">І квартал</td>
+            <td colspan="4">ІI квартал</td>
+            <td colspan="4">ІII квартал</td>
+            <td colspan="3">ІV квартал</td>
+        </tr>
+        <tr>
+            <td colspan="4"><mylib:formProperty propertyName="R02G1" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R02G2" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R02G3" propertyType="text"/></td>
+            <td colspan="3"><mylib:formProperty propertyName="R02G4" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="11">Назва показника</td>
+            <td colspan="1">Код рядка</td>
+            <td colspan="3">Обсяг (грн., коп.)</td>
+        </tr>
+        <tr>
+            <td colspan="11">Обсяг доходу за звітний (податковий) період відповідно до статті 292 глави 1 розділу XIV
+                Податкового кодексу України (згідно
+                з підпунктом 1 пункту 291.4 статті 291 глави 1 розділу XIV Податкового кодексу України)
+            </td>
+            <td colspan="1">01</td>
+            <td colspan="3"><mylib:formProperty propertyName="R001G3" propertyType="number"/></td>
+        </tr>
+        <tr>
+            <td colspan="11">Обсяг доходу, що оподаткований за ставкою 15 відсотків (згідно з пунктом 293.4 статті 293
+                глави
+                1 розділу XIV Податкового
+                кодексу України), у звітному (податковому) періоді
+            </td>
+            <td colspan="1">02</td>
+            <td colspan="3"><mylib:formProperty propertyName="R002G3" propertyType="number"/></td>
+        </tr>
+        <tr>
+            <td class="title" colspan="15">ІІІ. ПОКАЗНИКИ ГОСПОДАРСЬКОЇ ДІЯЛЬНОСТІ ДЛЯ ПЛАТНИКІВ ЄДИНОГО ПОДАТКУ ДРУГОЇ
+                ГРУПИ
+            </td>
+        </tr>
+        <tr>
+            <td colspan="15">Щомісячні авансові внески, грн.</td>
+        </tr>
+        <tr>
+            <td colspan="4">І квартал</td>
+            <td colspan="4">ІI квартал</td>
+            <td colspan="4">ІII квартал</td>
+            <td colspan="3">ІV квартал</td>
+        </tr>
+        <tr>
+            <td colspan="4"><mylib:formProperty propertyName="R03G1" propertyType="number"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R03G2" propertyType="number"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R03G3" propertyType="number"/></td>
+            <td colspan="3"><mylib:formProperty propertyName="R03G4" propertyType="number"/></td>
+        </tr>
+        <tr>
+            <td colspan="11">Назва показника</td>
+            <td colspan="1">Код рядка</td>
+            <td colspan="3">Обсяг (грн., коп.)</td>
+        </tr>
+        <tr>
+            <td colspan="11">Обсяг доходу за звітний (податковий) період відповідно до статті 292 глави 1 розділу XIV
+                Податкового кодексу України (згідно
+                з підпунктом 1 пункту 291.4 статті 291 глави 1 розділу XIV Податкового кодексу України)
+            </td>
+            <td colspan="1">03</td>
+            <td colspan="3"><mylib:formProperty propertyName="R003G3" propertyType="number"/></td>
+        </tr>
+        <tr>
+            <td colspan="11">Обсяг доходу, що оподаткований за ставкою 15 відсотків (згідно з пунктом 293.4 статті 293
+                глави
+                1 розділу XIV Податкового
+                кодексу України), у звітному (податковому) періоді
+            </td>
+            <td colspan="1">04</td>
+            <td colspan="3"><mylib:formProperty propertyName="R004G3" propertyType="number"/></td>
+        </tr>
+        <tr>
+            <td class="title" colspan="15">ІV. ПОКАЗНИКИ ГОСПОДАРСЬКОЇ ДІЯЛЬНОСТІ ДЛЯ ПЛАТНИКІВ ЄДИНОГО ПОДАТКУ ТРЕТЬОЇ
+                ГРУПИ
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Назва показника</td>
+            <td colspan="1">Код рядка</td>
+            <td colspan="3">Обсяг (грн., коп.</td>
+        </tr>
+        <tr>
+            <td colspan="11">Обсяг доходу за звітний (податковий) період, що оподатковується за ставкою 3 %</td>
+            <td colspan="1">05</td>
+            <td colspan="3"><mylib:formProperty propertyName="R005G3" propertyType="number"/></td>
+        </tr>
+        <tr>
+            <td colspan="11">Обсяг доходу за звітний (податковий) період, що оподатковується за ставкою 5 %</td>
+            <td colspan="1">06</td>
+            <td colspan="3"><mylib:formProperty propertyName="R006G3" propertyType="number"/></td>
+        </tr>
+        <tr>
+            <td colspan="11">Обсяг доходу, що оподаткований за ставкою 15 відсотків (згідно з пунктом 293.4 статті 293
+                глави
+                1 розділу
+                XIV Податкового
+                кодексу України), у звітному (податковому) періоді
+            </td>
+            <td colspan="1">07</td>
+            <td colspan="3"><mylib:formProperty propertyName="R007G3" propertyType="number"/></td>
+        </tr>
+        <tr>
+            <td class="title" colspan="15">V. ВИЗНАЧЕННЯ ПОДАТКОВИХ ЗОБОВ'ЯЗАНЬ ПО ЄДИНОМУ ПОДАТКУ</td>
+        </tr>
+        <tr>
+            <td colspan="11">Назва показника</td>
+            <td colspan="1">Код рядка</td>
+            <td colspan="3">Обсяг (грн., коп.</td>
+        </tr>
+        <tr>
+            <td colspan="11">Загальна сума доходу за звітний (податковий) період (сума значень
+                рядків 01 + 02 + 03 + 04 + 05 + 06 + 07)
+            </td>
+            <td colspan="1">08</td>
+            <td colspan="3"><mylib:formProperty propertyName="R008G3" propertyType="number"/></td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума податку за ставкою 15 % ((рядок 02 + рядок 04 + рядок 07) * 15 %)</td>
+            <td colspan="1">09</td>
+            <td colspan="3"><mylib:formProperty propertyName="R009G3" propertyType="number"/></td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума податку за ставкою 3 % (рядок 05 * 3 %)</td>
+            <td colspan="1">10</td>
+            <td colspan="3"><mylib:formProperty propertyName="R010G3" propertyType="number"/></td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума податку за ставкою 5 % (рядок 06 * 5 %)</td>
+            <td colspan="1">11</td>
+            <td colspan="3"><mylib:formProperty propertyName="R011G3" propertyType="number"/></td>
+        </tr>
+        <tr>
+            <td colspan="11">Нараховано всього за звітний (податковий) період (рядок 9 + рядок 10 + рядок 11)</td>
+            <td colspan="1">12</td>
+            <td colspan="3"><mylib:formProperty propertyName="R012G3" propertyType="number"/></td>
+        </tr>
+        <tr>
+            <td colspan="11">Нараховано за попередній звітний (податковий) період (значення рядка 12 декларації
+                попереднього
+                звітного (податкового) періоду)
+            </td>
+            <td colspan="1">13</td>
+            <td colspan="3"><mylib:formProperty propertyName="R013G3" propertyType="number"/></td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума єдиного податку, яка підлягає нарахуванню та сплаті в бюджет за підсумками поточного
+                звітного (податкового) періоду (рядок 12 - рядок 13)
+            </td>
+            <td colspan="1">14</td>
+            <td colspan="3"><mylib:formProperty propertyName="R014G3" propertyType="number"/></td>
+        </tr>
+        <tr>
+            <td class="title" colspan="15">VІ. ВИЗНАЧЕННЯ ПОДАТКОВИХ ЗОБОВ'ЯЗАНЬ У ЗВ'ЯЗКУ З ВИПРАВЛЕННЯМ САМОСТІЙНО
+                ВИЯВЛЕНИХ ПОМИЛОК
+            </td>
+        </tr>
+        <tr>
+            <td class="title" colspan="15">VІІ. ВИЗНАЧЕННЯ ЗОБОВ'ЯЗАНЬ ІЗ СПЛАТИ ЄДИНОГО ВНЕСКУ ЗА ДАНИМИ ЗВІТНОГО
+                (ПОДАТКОВОГО) ПЕРІОДУ
+            </td>
+        </tr>
+    </table>
+    <c:if test="${userRole.name=='user'}">
+        <input type="submit" name="save" id="saveReportBtn" value='Save report'>
+        <input type="submit" name="send" id="sendReportBtn" value='Send report'>
+    </c:if>
+
+</form>
+<script src="js/f0103405.js"/>
+<script>
+    onload = function () {
+        document.getElementById('R001G3').addEventListener('input', calculate8);
+        document.getElementById('R002G3').addEventListener('input', listener247);
+        document.getElementById('R003G3').addEventListener('input', calculate8);
+        document.getElementById('R004G3').addEventListener('input', listener247);
+        document.getElementById('R005G3').addEventListener('input', listener5);
+        document.getElementById('R006G3').addEventListener('input', listener6);
+        document.getElementById('R007G3').addEventListener('input', listener247);
+        document.getElementById('R013G3').addEventListener('input', calculate14);
+    }
+</script>

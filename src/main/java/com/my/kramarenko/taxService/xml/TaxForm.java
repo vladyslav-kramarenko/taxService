@@ -1,6 +1,6 @@
-package com.my.kramarenko.taxService.xml.taxDeclFop;
+package com.my.kramarenko.taxService.xml;
 
-public class TaxDeclFOP {
+public class TaxForm {
     private SubElement declarHead;
     private SubElement declarBody;
 
@@ -11,9 +11,6 @@ public class TaxDeclFOP {
     public SubElement getDeclarHead() {
         return declarHead;
     }
-
-
-
     public void setDeclarHead(SubElement declarHead) {
         this.declarHead = declarHead;
     }

@@ -13,152 +13,131 @@ import java.sql.Statement;
 
 /**
  * Create and control database connection
- * 
- * @author Vlad Kramarenko
  *
+ * @author Vlad Kramarenko
  */
 public final class DBManager {
+    private final String dbName = "taxService";
+    private final DataSource ds;
+    private final ReportManager reportManager;
+    private final StatusManager statusManager;
+    private final TypeManager typeManager;
 
-	private DBManager() {
-	}
+    private final UserManager userManager;
+    public ReportManager getReportManager() {
+        return reportManager;
+    }
 
-	private static final Logger LOG = Logger.getLogger(DBManager.class);
+    public StatusManager getStatusManager() {
+        return statusManager;
+    }
 
-	private static DBManager instance;
+    public TypeManager getTypeManager() {
+        return typeManager;
+    }
 
-	/**
-	 * Return instance of DBManager
-	 * 
-	 * @return DBManager object
-	 */
-	public static synchronized DBManager getInstance() {
-		if (instance == null) {
-			instance = new DBManager();
-		}
-		return instance;
-	}
+    public UserManager getUserManager() {
+        return userManager;
+    }
 
-	/**
-	 * Returns a DB connection from the Pool Connections. Before using this
-	 * method you must configure the Date Source and the Connections Pool in
-	 * your WEB_APP_ROOT/META-INF/context.xml file.
-	 * 
-	 * @return A DB connection.
-	 */
-	public Connection getConnection() throws SQLException {
-		Connection con = null;
-		try {
-			Context initContext = new InitialContext();
-			Context envContext = (Context) initContext.lookup("java:/comp/env");
 
-			String dbName = "taxService";
+    private DBManager() {
+        try {
+            Context initContext = new InitialContext();
+            Context envContext = (Context) initContext.lookup("java:/comp/env");
+            ds = (DataSource) envContext.lookup("jdbc/" + dbName);
+            reportManager = new ReportManager();
+            statusManager = new StatusManager();
+            typeManager = new TypeManager();
+            userManager = new UserManager();
+        } catch (NamingException e) {
+            throw new IllegalStateException("Cannot obtain a datasource", e);
+        }
+    }
 
-			DataSource ds = (DataSource) envContext.lookup("jdbc/" + dbName);
-			con = ds.getConnection();
+    private static final Logger LOG = Logger.getLogger(DBManager.class);
 
-		} catch (NamingException ex) {
-			LOG.error("Cannot obtain a connection from the pool", ex);
-		}
-		return con;
-	}
+    private static DBManager instance;
 
-	/**
-	 * Rollbacks the given connection.
-	 * 
-	 * @param con
-	 *            Connection to be rollbacked.
-	 */
-	void rollback(Connection con) {
-		if (con != null) {
-			try {
-				con.rollback();
-			} catch (SQLException ex) {
-				LOG.error("Cannot rollback transaction", ex);
-			}
-		}
-	}
+    /**
+     * Return instance of DBManager
+     *
+     * @return DBManager object
+     */
+    public static synchronized DBManager getInstance() {
+        if (instance == null) {
+            instance = new DBManager();
 
-	/**
-	 * Close the given connection.
-	 * 
-	 * @param con
-	 *            Connection to be committed and closed.
-	 */
-	void close(Connection con) {
-		if (con != null) {
-			try {
-				con.close();
-			} catch (SQLException ex) {
-				LOG.error("Cannot commit transaction and close connection", ex);
-			}
-		}
-	}
+        }
+        return instance;
+    }
 
-	/**
-	 * Close resultSet
-	 * 
-	 * @param rs
-	 *            ResultSet
-	 */
-	void close(ResultSet rs) {
-		if (rs != null) {
-			try {
-				rs.close();
-			} catch (SQLException ex) {
-				LOG.error("Cannot close a result set", ex);
-			}
-		}
-	}
+    /**
+     * Returns a DB connection from the Pool Connections.
+     *
+     * @return A DB connection.
+     */
+    public Connection getConnection() throws SQLException {
+        return ds.getConnection();
+    }
 
-	/**
-	 * Close statement
-	 * 
-	 * @param stmt
-	 *            statement
-	 */
-	void close(Statement stmt) {
-		if (stmt != null) {
-			try {
-				stmt.close();
-			} catch (SQLException ex) {
-				LOG.error("Cannot close a statement", ex);
-			}
-		}
-	}
+    /**
+     * Rollbacks the given connection.
+     *
+     * @param con Connection to rollback.
+     */
+    void rollback(Connection con) {
+        if (con != null) {
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                LOG.error("Cannot rollback transaction", ex);
+            }
+        }
+    }
 
-	/**
-	 * Return max id from table with sql
-	 * 
-	 * @param con
-	 *            database connection
-	 * @param sql
-	 *            sql query
-	 * @return max identificator
-	 * @throws SQLException
-	 */
-	public int getMaxId(Connection con, String sql) throws SQLException {
-		Statement stmt = null;
-		ResultSet rs = null;
-		int maxId = -1;
-		DBManager dbManager = DBManager.getInstance();
-		try {
-			stmt = con.createStatement();
-			rs = stmt.executeQuery(sql);
-			rs.next();
-			maxId = rs.getInt("id");
-			con.commit();
-			LOG.trace("Obtain max id = " + maxId);
-		} finally {
-			dbManager.close(rs);
-			dbManager.close(stmt);
-		}
-		return maxId;
-	}
+    /**
+     * Close the given connection.
+     *
+     * @param con Connection to be committed and closed.
+     */
+    void close(Connection con) {
+        if (con != null) {
+            try {
+                con.close();
+            } catch (SQLException ex) {
+                LOG.error("Cannot commit transaction and close connection", ex);
+            }
+        }
+    }
 
-	public static void main(String[] args) throws SQLException {
-		DBManager manager=new DBManager();
-		Connection con=manager.getConnection();
-		System.out.println(manager.getMaxId(con,"SELECT * FROM user"));
-	}
+    /**
+     * Close resultSet
+     *
+     * @param rs ResultSet
+     */
+    void close(ResultSet rs) {
+        if (rs != null) {
+            try {
+                rs.close();
+            } catch (SQLException ex) {
+                LOG.error("Cannot close a result set", ex);
+            }
+        }
+    }
 
+    /**
+     * Close statement
+     *
+     * @param stmt statement
+     */
+    void close(Statement stmt) {
+        if (stmt != null) {
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                LOG.error("Cannot close a statement", ex);
+            }
+        }
+    }
 }

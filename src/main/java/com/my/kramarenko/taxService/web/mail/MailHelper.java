@@ -1,4 +1,4 @@
-package ua.nure.kramarenko.SummaryTask4.web.mail;
+package com.my.kramarenko.taxService.web.mail;
 
 import javax.mail.*;
 import javax.mail.internet.AddressException;
@@ -20,7 +20,7 @@ public class MailHelper {
     }
     private static Session getSession() {
         Session session = Session.getDefaultInstance(getProperties(),
-                new javax.mail.Authenticator() {
+                new Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(USERNAME, PASSWORD);
                     }

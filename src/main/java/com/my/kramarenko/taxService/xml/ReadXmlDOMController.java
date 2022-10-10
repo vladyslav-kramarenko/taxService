@@ -1,5 +1,8 @@
-package com.my.kramarenko.taxService.xml.taxDeclFop;
+package com.my.kramarenko.taxService.xml;
 
+import com.my.kramarenko.taxService.db.XmlException;
+import com.my.kramarenko.taxService.xml.forms.F0103405;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -9,228 +12,117 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Controller for DOM parser.
  */
 public class ReadXmlDOMController {
+    private static final Logger LOG = Logger.getLogger(ReadXmlDOMController.class);
+    private DocumentBuilderFactory documentBuilderFactory;
+    private DocumentBuilder documentBuilder;
 
-    public TaxDeclFOP loadFile(ReportForm reportForm, String xmlFileName) throws ParserConfigurationException, IOException, SAXException {
-        File inputFile = new File(xmlFileName);
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-        Document doc = documentBuilder.parse(inputFile);
-        return load(reportForm, doc);
+    public ReadXmlDOMController() throws XmlException {
+
+        documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        try {
+            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            throw new XmlException("Can't create a documentBuilder",e);
+        }
     }
 
-//    public TaxDeclFOP loadInputStream(InputStream inputStream) throws ParserConfigurationException, IOException, SAXException {
-//        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-//        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-//        Document doc = documentBuilder.parse(inputStream);
-//        return load(doc);
-//    }
+    public TaxForm loadFile(ReportForm reportForm, String xmlFileName) throws XmlException {
+        try {
+            LOG.trace("Try to load file: "+xmlFileName);
+            File inputFile = new File(xmlFileName);
 
-    public TaxDeclFOP loadInputStream(ReportForm reportForm, InputStream inputStream) throws ParserConfigurationException, IOException, SAXException {
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-        Document doc = documentBuilder.parse(inputStream);
-        return load(reportForm, doc);
+            Document doc = documentBuilder.parse(inputFile);
+            return load(reportForm, doc);
+        } catch (ParserConfigurationException | IOException | SAXException e) {
+            LOG.error(e.getMessage());
+            throw new XmlException("Can't open this XML file", e);
+        }
     }
 
-    public TaxDeclFOP load(ReportForm reportForm, Document doc) throws ParserConfigurationException, IOException, SAXException {
+    public TaxForm loadInputStream(ReportForm reportForm, InputStream inputStream) throws XmlException {
+        try {
+            Document doc = documentBuilder.parse(inputStream);
+            return load(reportForm, doc);
+        } catch (ParserConfigurationException | IOException | SAXException e) {
+            LOG.error(e.getMessage());
+            throw new XmlException("Can't load this input stream", e);
+        }
+    }
+
+    private static TaxForm load(ReportForm reportForm, Document doc) throws ParserConfigurationException, IOException, SAXException {
         doc.getDocumentElement().normalize();
         NodeList nodeList = doc.getElementsByTagName("DECLAR");
         return getTaxDeclFOP(reportForm, nodeList.item(0));
     }
 
-//    public TaxDeclFOP load(Document doc) throws ParserConfigurationException, IOException, SAXException {
-//        doc.getDocumentElement().normalize();
-//        NodeList nodeList = doc.getElementsByTagName("DECLAR");
-//        return getTaxDeclFOP(nodeList.item(0));
-//    }
+    private static TaxForm getTaxDeclFOP(ReportForm reportForm, Node node) {
+        TaxForm taxForm = new TaxForm();
+        Element element = (Element) node;
 
-    private static void setDeclarElement(Map<String, String> map, SubElement subElement, Element parameters) {
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            switch (entry.getValue()) {
+        taxForm.setDeclarHead(getDeclarHead(reportForm.getHead(), element));
+        taxForm.setDeclarBody(getDeclarBody(reportForm.getBody(), element));
+
+        return taxForm;
+    }
+
+    private static SubElement getDeclarHead(List<ReportValue> headMap, Element element) {
+        NodeList nodeList = element.getElementsByTagName("DECLARHEAD");
+        Element declarHeadElement = (Element) nodeList.item(0);
+        return setDeclarElement(headMap, declarHeadElement);
+    }
+
+    private static SubElement getDeclarBody(List<ReportValue> bodyMap, Element element) {
+        NodeList visParamsList = element.getElementsByTagName("DECLARBODY");
+        Element declarbodyParameters = (Element) visParamsList.item(0);
+        return setDeclarElement(bodyMap, declarbodyParameters);
+    }
+
+    private static SubElement setDeclarElement(List<ReportValue> map, Element parameters) {
+        SubElement subElement = new SubElement();
+        for (ReportValue entry : map) {
+            switch (entry.type) {
                 case "String":
-                    addStringParameter(subElement, parameters, entry.getKey());
+                    addStringParameter(subElement, parameters, entry.name);
                     break;
                 case "Long":
-                    addLongParameter(subElement, parameters, entry.getKey());
+                    addLongParameter(subElement, parameters, entry.name);
                     break;
                 case "Int":
-                    addIntParameter(subElement, parameters, entry.getKey());
+                    addIntParameter(subElement, parameters, entry.name);
                     break;
                 case "Double":
-                    addDoubleParameter(subElement, parameters, entry.getKey());
+                    addDoubleParameter(subElement, parameters, entry.name);
                     break;
-                case "LinkedDock":
+                case "LinkedDoc":
                     setLinkedDocs(subElement, parameters);
                     break;
             }
         }
+        return subElement;
     }
-
-    private static SubElement getDeclarBody(Map<String, String> bodyMap, Element element) {
-        NodeList visParamsList = element.getElementsByTagName("DECLARBODY");
-        Element declarbodyParameters = (Element) visParamsList.item(0);
-        SubElement declarbody = new SubElement();
-        setDeclarElement(bodyMap, declarbody, declarbodyParameters);
-        return declarbody;
-    }
-
-//    private static SubElement getDeclarBody(Element element) {
-//        NodeList visParamsList = element.getElementsByTagName("DECLARBODY");
-//
-//        Element declarbodyParameters = (Element) visParamsList.item(0);
-//
-//        SubElement declarbody = new SubElement();
-//
-//        addLongParameter(declarbody, declarbodyParameters, "HTIN");
-//        addStringParameter(declarbody, declarbodyParameters, "HNAME");
-//        addStringParameter(declarbody, declarbodyParameters, "HF");
-//        addStringParameter(declarbody, declarbodyParameters, "HLOC");
-//        addStringParameter(declarbody, declarbodyParameters, "HTEL");
-//        addIntParameter(declarbody, declarbodyParameters, "HKSTI");
-//        addIntParameter(declarbody, declarbodyParameters, "HKBOS");
-//        addStringParameter(declarbody, declarbodyParameters, "HBOS");
-//        addStringParameter(declarbody, declarbodyParameters, "HKVED");
-//        addStringParameter(declarbody, declarbodyParameters, "HKEXECUTOR");
-//        addIntParameter(declarbody, declarbodyParameters, "HZIP");
-//        addStringParameter(declarbody, declarbodyParameters, "HREG");
-//        addStringParameter(declarbody, declarbodyParameters, "HRAJ");
-//        addStringParameter(declarbody, declarbodyParameters, "HCITY");
-//        addStringParameter(declarbody, declarbodyParameters, "HSTREET");
-//        addStringParameter(declarbody, declarbodyParameters, "HBUILD");
-//        addStringParameter(declarbody, declarbodyParameters, "HCORP");
-//        addStringParameter(declarbody, declarbodyParameters, "HAPT");
-//        addStringParameter(declarbody, declarbodyParameters, "HLNAME");
-//        addStringParameter(declarbody, declarbodyParameters, "HPNAME");
-//        addStringParameter(declarbody, declarbodyParameters, "HFNAME");
-//        addStringParameter(declarbody, declarbodyParameters, "HCOUNTRY");
-//        addStringParameter(declarbody, declarbodyParameters, "HEMAIL");
-//        addStringParameter(declarbody, declarbodyParameters, "HFILL");
-//        addStringParameter(declarbody, declarbodyParameters, "HZ");
-//        addStringParameter(declarbody, declarbodyParameters, "HY");
-//        addIntParameter(declarbody, declarbodyParameters, "HZY");
-//        addStringParameter(declarbody, declarbodyParameters, "HSTI");
-//
-////        I. ЗАГАЛЬНІ ПОКАЗНИКИ ПІДПРИЄМНИЦЬКОЇ ДІЯЛЬНОСТІ
-//        addIntParameter(declarbody, declarbodyParameters, "HNACTL");
-//
-////        ІІ. ПОКАЗНИКИ ГОСПОДАРСЬКОЇ ДІЯЛЬНОСТІ ДЛЯ ПЛАТНИКІВ ЄДИНОГО ПОДАТКУ ПЕРШОЇ ГРУПИ
-//        addDoubleParameter(declarbody, declarbodyParameters, "R02G1");
-//        addDoubleParameter(declarbody, declarbodyParameters, "R02G2");
-//        addDoubleParameter(declarbody, declarbodyParameters, "R02G3");
-//        addDoubleParameter(declarbody, declarbodyParameters, "R02G4");
-//        addDoubleParameter(declarbody, declarbodyParameters, "R001G3");
-//        addDoubleParameter(declarbody, declarbodyParameters, "R002G3");
-//
-////ІІІ. ПОКАЗНИКИ ГОСПОДАРСЬКОЇ ДІЯЛЬНОСТІ ДЛЯ ПЛАТНИКІВ ЄДИНОГО ПОДАТКУ ДРУГОЇ ГРУПИ
-//        addDoubleParameter(declarbody, declarbodyParameters, "R03G1");
-//        addDoubleParameter(declarbody, declarbodyParameters, "R03G2");
-//        addDoubleParameter(declarbody, declarbodyParameters, "R03G3");
-//        addDoubleParameter(declarbody, declarbodyParameters, "R03G4");
-//        addDoubleParameter(declarbody, declarbodyParameters, "R003G3");
-//        addDoubleParameter(declarbody, declarbodyParameters, "R004G3");
-//
-////        ІV. ПОКАЗНИКИ ГОСПОДАРСЬКОЇ ДІЯЛЬНОСТІ ДЛЯ ПЛАТНИКІВ ЄДИНОГО ПОДАТКУ ТРЕТЬОЇ ГРУПИ
-//        addDoubleParameter(declarbody, declarbodyParameters, "R005G3");
-//        addDoubleParameter(declarbody, declarbodyParameters, "R006G3");
-//        addDoubleParameter(declarbody, declarbodyParameters, "R007G3");
-//
-////        V. ВИЗНАЧЕННЯ ПОДАТКОВИХ ЗОБОВ'ЯЗАНЬ ПО ЄДИНОМУ ПОДАТКУ
-//        addDoubleParameter(declarbody, declarbodyParameters, "R008G3");
-//        addDoubleParameter(declarbody, declarbodyParameters, "R009G3");
-//        addDoubleParameter(declarbody, declarbodyParameters, "R010G3");
-//        addDoubleParameter(declarbody, declarbodyParameters, "R011G3");
-//        addDoubleParameter(declarbody, declarbodyParameters, "R012G3");
-//        addDoubleParameter(declarbody, declarbodyParameters, "R013G3");
-//        addDoubleParameter(declarbody, declarbodyParameters, "R014G3");
-//
-//        addDoubleParameter(declarbody, declarbodyParameters, "HZY");
-//        addDoubleParameter(declarbody, declarbodyParameters, "HZY");
-//
-//        addDoubleParameter(declarbody, declarbodyParameters, "HZY");
-//
-//
-//        return declarbody;
-//    }
-
-    private static TaxDeclFOP getTaxDeclFOP(ReportForm reportForm, Node node) {
-        TaxDeclFOP taxDeclFOP = new TaxDeclFOP();
-        Element element = (Element) node;
-
-        taxDeclFOP.setDeclarHead(getDeclarHead(reportForm.head, element));
-        taxDeclFOP.setDeclarBody(getDeclarBody(reportForm.body, element));
-
-        return taxDeclFOP;
-    }
-
-//    private static TaxDeclFOP getTaxDeclFOP(Node node) {
-//        TaxDeclFOP taxDeclFOP = new TaxDeclFOP();
-//        Element element = (Element) node;
-//
-//        taxDeclFOP.setDeclarHead(getDeclarHead(element));
-//        taxDeclFOP.setDeclarBody(getDeclarBody(element));
-//
-//        return taxDeclFOP;
-//    }
-
-    private static SubElement getDeclarHead(Map<String, String> headMap, Element element) {
-        NodeList nodeList = element.getElementsByTagName("DECLARHEAD");
-
-        Element declarHeadElement = (Element) nodeList.item(0);
-
-        SubElement declarhead = new SubElement();
-
-        setDeclarElement(headMap, declarhead, declarHeadElement);
-        return declarhead;
-    }
-
-//    private static SubElement getDeclarHead(Element element) {
-//        NodeList nodeList = element.getElementsByTagName("DECLARHEAD");
-//
-//        Element declarHeadElement = (Element) nodeList.item(0);
-//
-//        SubElement declarhead = new SubElement();
-//
-//        addLongParameter(declarhead, declarHeadElement, "TIN");
-//        addStringParameter(declarhead, declarHeadElement, "C_DOC");
-//        addStringParameter(declarhead, declarHeadElement, "C_DOC_SUB");
-//        addStringParameter(declarhead, declarHeadElement, "C_DOC_VER");
-//        addIntParameter(declarhead, declarHeadElement, "C_DOC_TYPE");
-//        addIntParameter(declarhead, declarHeadElement, "C_DOC_CNT");
-//        addIntParameter(declarhead, declarHeadElement, "C_REG");
-//        addIntParameter(declarhead, declarHeadElement, "C_RAJ");
-//        addIntParameter(declarhead, declarHeadElement, "PERIOD_MONTH");
-//        addIntParameter(declarhead, declarHeadElement, "PERIOD_TYPE");
-//        addIntParameter(declarhead, declarHeadElement, "PERIOD_YEAR");
-//        addIntParameter(declarhead, declarHeadElement, "C_DOC_STAN");
-//        setLinkedDocs(declarhead, declarHeadElement);
-//        addIntParameter(declarhead, declarHeadElement, "D_FILL");
-//        addStringParameter(declarhead, declarHeadElement, "SOFTWARE");
-//
-//        return declarhead;
-//    }
 
     private static void setLinkedDocs(SubElement subElementClass, Element element) {
         Element subElement = (Element) element.getElementsByTagName("LINKED_DOCS").item(0);
-        NodeList nodeList = subElement.getElementsByTagName("DOC");
-        List<LinkedDoc> linkedDocs = new ArrayList<>();
-        for (int temp = 0; temp < nodeList.getLength(); temp++) {
-            Node node = nodeList.item(temp);
-            if (node.getNodeType() == Node.ELEMENT_NODE)
-                linkedDocs.add(getLinkedDoc(node));
+        if(subElement!=null) {
+            NodeList nodeList = subElement.getElementsByTagName("DOC");
+            List<LinkedDoc> linkedDocs = new ArrayList<>();
+            for (int temp = 0; temp < nodeList.getLength(); temp++) {
+                Node node = nodeList.item(temp);
+                if (node.getNodeType() == Node.ELEMENT_NODE)
+                    linkedDocs.add(getLinkedDoc(node));
+            }
+            subElementClass.addParameter("LINKED_DOCS", linkedDocs);
         }
-        subElementClass.addParameter("LINKED_DOCS", linkedDocs);
     }
 
     private static LinkedDoc getLinkedDoc(Node node) {
@@ -256,7 +148,6 @@ public class ReadXmlDOMController {
             );
         }
     }
-
 
     private static void addLongParameter(SubElement subElementClass, Element element, String elementName) {
         String strElement = getStringElement(element, elementName);
@@ -297,14 +188,6 @@ public class ReadXmlDOMController {
         } else return 0;
     }
 
-
-//    private static String getLighingParameter(Element element) {
-//        return element
-//                .getElementsByTagName("lighting")
-//                .item(0).getAttributes().item(0)
-//                .getTextContent();
-//    }
-
     private static String getStringElement(Element element, String elementName) {
         Node node = element
                 .getElementsByTagName(elementName)
@@ -313,18 +196,16 @@ public class ReadXmlDOMController {
         else return null;
     }
 
-    public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException, XMLStreamException {
+    public static void main(String[] args) throws XmlException {
         String xmlFileName = "zvit_main.XML";
         ReadXmlDOMController domController = new ReadXmlDOMController();
-        TaxDeclFOP taxDeclFOP;
+        TaxForm taxForm;
         ReportForm reportForm = new F0103405();
-//        System.out.println(reportForm.body);
         try {
-            taxDeclFOP = domController.loadFile(reportForm, xmlFileName);
-//            System.out.println(taxDeclFOP);
-
+            taxForm = domController.loadFile(reportForm, xmlFileName);
+            System.out.println(taxForm);
             WriteXmlStAXController writeXmlStAXController = new WriteXmlStAXController();
-            writeXmlStAXController.writeToXML(taxDeclFOP, "out.xml");
+            writeXmlStAXController.writeToXML(taxForm, reportForm, "out.xml");
         } catch (Exception e) {
             e.printStackTrace();
         }
