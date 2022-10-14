@@ -3,7 +3,6 @@
 
 <html>
 <c:set var="title" value="Info"/>
-<%--<%@ include file="/WEB-INF/jspf/head.jspf" %>--%>
 <%@ include file="/WEB-INF/jspf/header.jspf" %>
 <head>
     <link rel="stylesheet" type="text/css" href="style/stylesheet.css"/>
@@ -26,7 +25,7 @@
 
 <div id="main">
     <span id="newReport">
-    <c:if test="${userRole.id!=1}">
+    <c:if test="${userRole.id==2}">
         <form class="cmxform">
             <select name="reportTypeId" id="newReportType" class="select">
                 <c:forEach var="reportType" items="${reportTypeList}">
@@ -35,8 +34,9 @@
                 </c:forEach>
             </select>
             <input type="hidden" name="command" value="editReport">
-            <input type="submit" id="newReportBtn" name="newReport" value=<fmt:message
-                    key='reportList_jsp.button.new_report'/>>
+            <input type="submit" id="newReportBtn" name="newReport"
+                   value=
+                <fmt:message key='reportList_jsp.button.new_report'/>>
         </form>
     </c:if>
     </span>
@@ -108,7 +108,7 @@
             <td value="asc" onclick='sortTable(3,this);'>Last update</td>
             <td value="asc" onclick='sortTable(4,this);'>Report type</td>
             <td value="asc" onclick='sortTable(5,this);'>Status</td>
-            <td>Edit</td>
+            <td>Actions</td>
 
         </tr>
         <c:forEach var="entry" items="${reportsList}">
@@ -127,6 +127,7 @@
                         <c:choose>
                             <c:when test="${userRole.id==2 && userReport.status.id==1}">
                                 <a href="controller?command=editReport&reportId=${userReport.report.id}">Edit</a>
+                                <a href="controller?command=editReport&reportId=${userReport.report.id}" onclick="return confirm('Are you sure?')">Edit?</a>
                             </c:when>
                             <c:otherwise>
                                 <a href="controller?command=editReport&reportId=${userReport.report.id}">Show</a>

@@ -103,6 +103,8 @@ public class LowLevelUserManager {
             user.setLastName(rs.getString(Fields.USER_LAST_NAME));
 //			user.setLogin(rs.getString(Fields.USER_LOGIN));
             user.setPassword(rs.getString(Fields.USER_PASSWORD));
+            user.setPatronymic(rs.getString(Fields.USER_PATRONYMIC));
+            user.setCodePassport(rs.getString(Fields.USER_CODEPASSPORT));
             user.setPhone(rs.getString(Fields.USER_PHONE));
             user.setEmail(rs.getString(Fields.USER_EMAIL));
             user.setRoleId(rs.getInt(Fields.USER_ROLE_ID));

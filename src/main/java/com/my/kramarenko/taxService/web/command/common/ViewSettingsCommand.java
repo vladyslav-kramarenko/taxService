@@ -64,6 +64,8 @@ public class ViewSettingsCommand extends Command {
                 userInSession.setEmail(request.getParameter("email"));
                 userInSession.setFirstName(request.getParameter("first_name"));
                 userInSession.setLastName(request.getParameter("last_name"));
+                userInSession.setPatronymic(request.getParameter("patronymic"));
+                userInSession.setCodePassport(request.getParameter("code_passport"));
                 userInSession.setPhone(request.getParameter("phone"));
                 if (password != null && password.length() > 0) {
                     userInSession.setPassword(PasswordCreator.getPassword(password));

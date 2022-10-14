@@ -47,21 +47,22 @@ public class ReportListCommand extends Command {
 
         ServletContext sc = request.getServletContext();
         Map<Integer, Status> statusMap = (Map<Integer, Status>) sc.getAttribute("statusMap");
+        Map<Integer, Role> roleMap = (Map<Integer, Role>) sc.getAttribute("roleMap");
         Map<String, Type> typeMap = (Map<String, Type>) sc.getAttribute("typeMap");
 
         Map<Status, Boolean> chosenStatusMap = getChosenStatusMap(statusMap, chosenIdParameter);
 
         List<Type> reportTypes;
 
-        if (Role.getRole(user).equals(Role.USER)) {
+        if (roleMap.get(user.getRoleId()).equals(Role.USER)) {
             LOG.trace("user role == user -> go to user reports");
             reportsList = UserReportDTOBuilder.getUserReportsWithStatuses(user, chosenStatusMap, typeMap);
             TypeDao tm = new TypeManager();
             reportTypes = tm.getAllTypes();
             request.setAttribute("reportTypeList", reportTypes);
         } else {
-            if (Role.getRole(user).equals(Role.ADMIN)) {
-            }
+//            if (roleMap.get(user.getRoleId()).equals(Role.ADMIN)) {
+//            }
             reportsList = UserReportDTOBuilder.getAllUserReportsWithStatuses(chosenStatusMap, typeMap);
         }
 

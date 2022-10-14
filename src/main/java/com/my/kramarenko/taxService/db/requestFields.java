@@ -6,8 +6,10 @@ public class requestFields {
     public static final String SQL_SELECT_ALL_USERS = "SELECT * FROM user";
     public static final String SQL_SELECT_ALL_REPORTS = "SELECT * FROM report";
     public static final String SQL_SELECT_ALL_REPORT_TYPES = "SELECT * FROM type";
+    public static final String SQL_SELECT_ALL_ROLES = "SELECT * FROM role";
     public static final String SQL_SELECT_ALL_STATUSES = "SELECT * FROM status";
     public static final String SQL_SELECT_REPORT_TYPE_BY_ID = "SELECT * FROM type WHERE id=?";
+    public static final String SQL_SELECT_ROLE_BY_ID = "SELECT * FROM role WHERE id=?";
     public static final String SQL_SELECT_STATUS_BY_ID = "SELECT * FROM status WHERE id=?";
     public static final String SQL_SELECT_USER_REPORTS = "SELECT * FROM report WHERE id IN " +
             "(SELECT report_id FROM user_report WHERE user_id=?)";

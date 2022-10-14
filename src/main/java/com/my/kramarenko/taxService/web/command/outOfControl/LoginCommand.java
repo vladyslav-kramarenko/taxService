@@ -2,12 +2,14 @@ package com.my.kramarenko.taxService.web.command.outOfControl;
 
 import com.my.kramarenko.taxService.db.DBException;
 import com.my.kramarenko.taxService.db.PasswordCreator;
+import com.my.kramarenko.taxService.db.entity.Status;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Role;
 import com.my.kramarenko.taxService.db.mySQL.UserManager;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.command.LastPage;
 import com.my.kramarenko.taxService.web.Path;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,6 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -71,10 +74,12 @@ public class LoginCommand extends Command {
     }
 
     private void setUserInSession(User user, HttpServletRequest request) {
+        ServletContext sc = request.getServletContext();
+        Map<Integer, Role> roleMap = (Map<Integer, Role>) sc.getAttribute("roleMap");
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
 
-        Role userRole = Role.getRole(user);
+        Role userRole = roleMap.get(user.getRoleId());
         session.setAttribute("userRole", userRole);
 
         LOG.info("User " + user.getEmail() + " logged as " + userRole.toString().toLowerCase());
@@ -88,7 +93,7 @@ public class LoginCommand extends Command {
             String generatedPassword = PasswordCreator.getPassword(password);
             if (generatedPassword.equals(userPassword)) {
                 return user;
-            }else{
+            } else {
                 LOG.debug("password is incorrect");
             }
         }

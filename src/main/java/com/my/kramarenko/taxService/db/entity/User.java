@@ -14,30 +14,43 @@ public class User extends Entity {
     @Serial
     private static final long serialVersionUID = -6889036256149495388L;
 
-//    private String login;
-
+    //    private String login;
     private String password;
-
     private String email;
-
     private String phone;
-
     private String firstName;
-
     private String lastName;
-
+    private String patronymic;
+    private String codePassport;
     private int roleId;
 
     public User() {
     }
 
-    public User(String email, String password, String name, String surname, String phone) {
+    public User(String email, String password, String name, String surname, String phone, int roleId) {
         this.firstName = name;
         this.lastName = surname;
         this.email = email;
         this.phone = phone;
         this.password = password;
-        this.roleId = Role.USER.getId();
+        this.roleId = roleId;
+    }
+
+
+    public String getPatronymic() {
+        return patronymic;
+    }
+
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
+    public String getCodePassport() {
+        return codePassport;
+    }
+
+    public void setCodePassport(String codePassport) {
+        this.codePassport = codePassport;
     }
 
     /**
@@ -105,8 +118,7 @@ public class User extends Entity {
         return "User [" +
 //                "login=" + login + ", " +
                 "firstName=" + firstName
-                + ", lastName=" + lastName + ", roleId=" + roleId + ", e-mail="
+                + ", lastName=" + lastName + ", patronymic=" + patronymic + ", codePassport=" + codePassport + ", roleId=" + roleId + ", e-mail="
                 + email + ", phone=" + phone + "]";
     }
-
 }

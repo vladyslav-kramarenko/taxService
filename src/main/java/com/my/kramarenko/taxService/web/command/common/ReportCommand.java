@@ -46,7 +46,9 @@ public class ReportCommand extends Command {
 //        List<Status> statuses = (List<Status>) sc.getAttribute("allStatuses");
         Map<Integer, Status> statusMap = (Map<Integer, Status>) sc.getAttribute("statusMap");
 
-        User user=(User) request.getSession().getAttribute("user");
+        Map<Integer, Role> roleMap = (Map<Integer, Role>) sc.getAttribute("roleMap");
+
+        User user = (User) request.getSession().getAttribute("user");
 
         Status status = statusMap.get(1);//Status.DRAFT;
         String typeId = request.getParameter("reportTypeId");
@@ -58,13 +60,14 @@ public class ReportCommand extends Command {
             Report report = openSavedReport(reportId, request);
             typeId = report.getTypeId();
             status = statusMap.get(report.getStatusId());//Status.getStatus(report.getStatusId());
-        }else{
-            request.setAttribute("HTEL",user.getPhone());
+        } else {
+            request.setAttribute("HTEL", user.getPhone());
         }
 
         request.setAttribute("reportStatus", status);
 
-        if (Role.getRole(user).equals(Role.INSPECTOR)) {
+
+        if (roleMap.get(user.getRoleId()).equals(Role.INSPECTOR)) {
             Status[] statusValues = {statusMap.get(2), statusMap.get(3), statusMap.get(4)};
 //            Status[] statusValues = {Status.SENT, Status.ACCEPTED, Status.REFUSED};
             request.setAttribute("statusTypes", statusValues);

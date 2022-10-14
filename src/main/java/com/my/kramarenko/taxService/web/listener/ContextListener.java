@@ -3,6 +3,7 @@ package com.my.kramarenko.taxService.web.listener;
 import com.my.kramarenko.taxService.db.DBException;
 import com.my.kramarenko.taxService.db.entity.Status;
 import com.my.kramarenko.taxService.db.entity.Type;
+import com.my.kramarenko.taxService.db.enums.Role;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
@@ -10,10 +11,7 @@ import jakarta.servlet.ServletContextListener;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -40,6 +38,7 @@ public class ContextListener implements ServletContextListener {
         initI18N(servletContext);
         initStatuses(servletContext);
         initTypes(servletContext);
+        initRoles(servletContext);
 
         log("Servlet context initialization finished");
     }
@@ -112,6 +111,18 @@ public class ContextListener implements ServletContextListener {
         }
         servletContext.setAttribute("typeMap", typeMap);
         LOG.trace("Types list initialization finished");
+    }
+
+    /**
+     * Initializes list of available report types
+     *
+     * @param servletContext
+     */
+    private void initRoles(ServletContext servletContext) {
+        LOG.trace("Roles initialization started");
+        Map<Integer, Role> roleMap = Arrays.stream(Role.values()).collect(Collectors.toMap(Role::getId, x -> x));
+        servletContext.setAttribute("roleMap", roleMap);
+        LOG.trace("Roles initialization finished");
     }
 
     /**

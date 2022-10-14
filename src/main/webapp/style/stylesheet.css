@@ -9,9 +9,47 @@
     display: inline-block;
 }
 
+table {
+    width: 100%;
+    text-align: center;
+    alignment: center;
+}
+
+.label {
+    text-align: right;
+}
+.leftAlignmentTD {
+    text-align: left;
+}
+.centerAlignmentTD {
+    text-align: center;
+}
+
+#logo {
+    color: #3f3731;
+    background-color: #ede4d4;
+    border: 1px solid #cdc3b7;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 1.1em;
+    alignment: left;
+    text-align: left;
+    display: inline;
+    float: left;
+    vertical-align: center;
+    margin: 0px 0 0 4px;
+    font-weight: normal;
+}
+
+
+#inputForm {
+    align-content: center;
+}
+
 /* support: IE7 */
 * + html #toolbar {
     display: inline;
+    align-content: center;
 }
 
 body {
@@ -22,25 +60,10 @@ body {
     align: center;
 }
 
-h1 {
-    letter-spacing: 6px;
-    font-size: 1.6em;
-    color: #be7429;
-    font-weight: bold;
-}
-
-h2 {
-    text-align: left;
-    letter-spacing: 6px;
-    font-size: 1.4em;
-    color: #be7429;
-    font-weight: normal;
-}
-
 table {
     padding: 5px;
     background-color: #f9faff;
-    text-align: center;
+    /*text-align: center;*/
     alignment: center;
     margin-left: auto;
     margin-right: auto
@@ -55,10 +78,6 @@ a {
     text-decoration: none;
 }
 
-form {
-    alignment: center;
-}
-
 #main {
 }
 
@@ -70,7 +89,6 @@ form {
 #widgetBar {
     height: 50px;
     width: 94%;
-    /*float: center;*/
 }
 
 .headerWidget {
@@ -97,6 +115,8 @@ a:hover {
 
 #footer {
     flex: 0 0 auto; /*add*/
+    align-content: center;
+    alignment: center;
 }
 
 .popupCell:hover {
@@ -113,11 +133,6 @@ a:hover {
     width: 150px;
 }
 
-fieldset {
-    margin-left: 0px;
-    margin-right: 0px;
-}
-
 hr {
     border: none;
     background-color: red;
@@ -128,6 +143,18 @@ hr {
 
 .content {
     align: center;
+    text-align: center;
     align-content: center;
     child-align: middle;
+}
+
+#topLoginButtons {
+    float: right;
+}
+
+footer {
+    width: 100%;
+    position: fixed;
+    text-align: center;
+    bottom: 0px;
 }

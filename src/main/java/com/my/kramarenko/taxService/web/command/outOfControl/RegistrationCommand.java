@@ -8,6 +8,7 @@ import com.my.kramarenko.taxService.db.mySQL.UserManager;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.command.LastPage;
 import com.my.kramarenko.taxService.web.Path;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class RegistrationCommand extends Command {
 
@@ -51,7 +53,9 @@ public class RegistrationCommand extends Command {
                         LOG.trace("everything is ok => write user to DB");
                         user.setPassword(PasswordCreator.getPassword(user.getPassword()));
                         userManager.addUser(user);
-                        setSessionAttributes(session, user);
+                        ServletContext sc = request.getServletContext();
+                        Map<Integer, Role> roleMap = (Map<Integer, Role>) sc.getAttribute("roleMap");
+                        setSessionAttributes(session, user, roleMap);
                         forward = LastPage.getPage((String) session
                                 .getAttribute("page"));
                         if (forward.isEmpty()) {
@@ -76,15 +80,16 @@ public class RegistrationCommand extends Command {
         LOG.debug("errorMessage --> " + errorMessage);
     }
 
-    private void setSessionAttributes(HttpSession session, User user) {
+    private void setSessionAttributes(HttpSession session, User user, Map<Integer, Role> roleMap) {
         session.setAttribute("user", user);
+
         LOG.trace("Set the session attribute: user --> " + user);
-        Role role = Role.getRole(user);
+        Role role = roleMap.get(user.getRoleId());
         session.setAttribute("userRole", role);
         LOG.trace("Set the session attribute: userRole --> "
-                + Role.USER);
+                + role.getName());
         LOG.info("User " + user + " logged as "
-                + role.toString().toLowerCase());
+                + role.getName());
     }
 
     private void setRequestAttributes(HttpServletRequest request, User user) {
@@ -95,11 +100,13 @@ public class RegistrationCommand extends Command {
     }
 
     private User createUserBean(HttpServletRequest request) {
+        int id = Role.USER.getId();
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         String phone = request.getParameter("phone");
-        return new User(email, password, name, surname, phone);
+
+        return new User(email, password, name, surname, phone, id);
     }
 }

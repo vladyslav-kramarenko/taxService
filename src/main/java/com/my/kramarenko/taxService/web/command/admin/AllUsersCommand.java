@@ -44,7 +44,7 @@ public class AllUsersCommand extends Command {
         LOG.trace("Found in DB: userOrderBeanList --> " + users);
 
         request.setAttribute("userList", users);
-        request.setAttribute("roleTypes", Role.values());
+//        request.setAttribute("roleTypes", Role.values());
         session.setAttribute("page", "users");
 
         LOG.trace("Set the request attribute: userOrderBeanList --> " + users);

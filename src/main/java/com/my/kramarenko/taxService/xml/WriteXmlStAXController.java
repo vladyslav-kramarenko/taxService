@@ -1,8 +1,6 @@
 package com.my.kramarenko.taxService.xml;
 
-import com.my.kramarenko.taxService.db.mySQL.UserManager;
 import org.apache.log4j.Logger;
-import org.apache.log4j.helpers.LogLog;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -12,6 +10,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class WriteXmlStAXController {
+    private final String ENCODING = "windows-1251";
 
     private static final Logger LOG = Logger.getLogger(WriteXmlStAXController.class);
 
@@ -23,9 +22,9 @@ public class WriteXmlStAXController {
             //TODO create directory if not created
             //default tomcat/bin
             out = new FileOutputStream(fileName);
-            writer = output.createXMLStreamWriter(out);
+            writer = output.createXMLStreamWriter(out, ENCODING);
 
-            writer.writeStartDocument("windows-1251", "1.0");
+            writer.writeStartDocument(ENCODING, "1.0");
             writer.writeStartElement("DECLAR");
             writer.writeAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
             writer.writeAttribute(" xsi:noNamespaceSchemaLocation", "F0103405.xsd");
@@ -52,7 +51,9 @@ public class WriteXmlStAXController {
             writer.writeEndElement();//DECLAR
 
         } catch (XMLStreamException | IOException e) {
+            e.printStackTrace();
             LOG.error(e.getMessage());
+            throw new XMLStreamException("Can't write the XML", e);
         } finally {
             writer.flush();
             writer.close();

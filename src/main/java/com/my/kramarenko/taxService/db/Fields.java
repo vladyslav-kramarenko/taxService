@@ -2,9 +2,9 @@ package com.my.kramarenko.taxService.db;
 
 /**
  * Holder for fields names of DB tables.
- * 
+ *
  * @author Vlad Kramarenko
- * 
+ *
  */
 public final class Fields {
 
@@ -14,6 +14,8 @@ public final class Fields {
 	public static final String ENTITY_NAME = "name";
 	public static final String USER_ID = "user_id";
 	public static final String USER_PASSWORD = "password";
+	public static final String USER_PATRONYMIC = "patronymic";
+	public static final String USER_CODEPASSPORT = "code_passport";
 	public static final String STATUS_VISIBILITY = "visible_for_inspector";
 	public static final String USER_FIRST_NAME = "first_name";
 	public static final String USER_LAST_NAME = "last_name";

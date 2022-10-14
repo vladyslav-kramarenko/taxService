@@ -11,30 +11,33 @@
         $("#registerBtn").button({});
     });
 </script>
-<div align="center" class="content">
-    <form id="login_form" action="controller"
-          method="post">
-        <input type="hidden" name="command" value="login"/>
-        <fieldset>
-            <legend>
-                <fmt:message key="login_jsp.label.email"/>
-            </legend>
-            <input name="email" required/><br/>
-        </fieldset>
-        <br/>
-        <fieldset>
-            <legend>
-                <fmt:message key="login_jsp.label.password"/>
-            </legend>
-            <input type="password" name="password" required/>
-        </fieldset>
-        <br/>
-        <span id="log">
-            <input type="submit" class="btn" id="loginBtn" value='<fmt:message key="login_jsp.button.login"/>'>
-            <input type="submit" class="btn" id="registerBtn" value='<fmt:message key="login_jsp.button.registration"/>'>
-        </span>
-    </form>
-</div>
+<span class="content">
+    <span id="inputForm">
+        <form id="login_form" action="controller" method="post">
+            <input type="hidden" name="command" value="login"/>
+            <fieldset>
+                <legend>
+                    <fmt:message key="login_jsp.label.email"/>
+                </legend>
+                <input id="email" name="email" required/><br/>
+            </fieldset>
+            <br/>
+            <fieldset>
+                <legend>
+                    <fmt:message key="login_jsp.label.password"/>
+                </legend>
+                <input id="password" type="password" name="password" required/>
+            </fieldset>
+            <br/>
+            <span id="log">
+                <input type="submit" class="btn" id="loginBtn"
+                       value='<fmt:message key="login_jsp.button.login"/>'>
+                <input type="submit" class="btn" id="registerBtn"
+                       value='<fmt:message key="login_jsp.button.registration"/>'>
+            </span>
+        </form>
+    </span>
+</span>
 <script>
     $("#login_form").validate();
 </script>

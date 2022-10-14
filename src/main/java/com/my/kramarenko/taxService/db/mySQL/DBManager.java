@@ -24,6 +24,12 @@ public final class DBManager {
     private final TypeManager typeManager;
 
     private final UserManager userManager;
+
+//    private final RoleManager roleManager;
+
+    //    public RoleManager getRoleManager() {
+//        return roleManager;
+//    }
     public ReportManager getReportManager() {
         return reportManager;
     }
@@ -50,6 +56,7 @@ public final class DBManager {
             statusManager = new StatusManager();
             typeManager = new TypeManager();
             userManager = new UserManager();
+//            roleManager = new RoleManager();
         } catch (NamingException e) {
             throw new IllegalStateException("Cannot obtain a datasource", e);
         }

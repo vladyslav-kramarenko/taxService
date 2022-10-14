@@ -3,12 +3,12 @@
 
 <html>
 <c:set var="title" value="registration"/>
-<%@ include file="/WEB-INF/jspf/head.jspf" %>
-<head>
-    <link rel="stylesheet" type="text/css" href="style/stylesheet.css"/>
-</head>
+<%--<%@ include file="/WEB-INF/jspf/head.jspf" %>--%>
+<%--<head>--%>
+<%--    <link rel="stylesheet" type="text/css" href="style/stylesheet.css"/>--%>
+<%--</head>--%>
 
-<body>
+<%--<body>--%>
 <%@ include file="/WEB-INF/jspf/header.jspf" %>
 <script>
     $(function () {

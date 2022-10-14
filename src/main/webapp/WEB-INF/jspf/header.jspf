@@ -2,22 +2,11 @@
 Header (top area). 
 ===========================================================================--%>
 
-<%--<%@ page import="com.my.kramarenko.taxService.db.enums.Role" %>--%>
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
-
 <%@ include file="/WEB-INF/jspf/head.jspf" %>
 
-<link rel="stylesheet" type="text/css" href="style/stylesheet.css"/>
-
-<%--<style>--%>
-<%--    #toolbar {--%>
-<%--        padding: 4px;--%>
-<%--        display: inline-block;--%>
-<%--        width: 100%;--%>
-<%--        text-align: center;--%>
-<%--    }--%>
-<%--</style>--%>
+<%--<link rel="stylesheet" type="text/css" href="style/stylesheet.css"/>--%>
 
 <script>
     $(function () {
@@ -51,15 +40,14 @@ Header (top area).
                 primary: "ui-icon-script"
             }
         });
-
         $("#lang").buttonset();
         $("#reg").buttonset();
     });
 </script>
 
 <body>
-<%--<div id="toolbar">--%>
 <div id="toolbar" class="ui-widget-header ui-corner-all">
+    <H1 class="logo" id="logo">Tax Service</H1>
     <c:choose>
         <c:when test="${userRole.name == 'admin' }">
             <a href="controller?command=allUsers" id="users">
@@ -79,31 +67,33 @@ Header (top area).
         </a> &nbsp;
     </c:if>
 
-    <%--Include language span--%>
-    <%@ include file="/WEB-INF/jspf/directive/language.jspf" %>
+    <span id="topLoginButtons">
+        <c:if test="${not empty user}">
+            <span id="email">
+                <c:out value="${user.email}"/>
+            </span>
+            <a id="logout" href="controller?command=logout">
+                <fmt:message key="header_jspf.anchor.logout"/>
+            </a>
+        </c:if>
 
-    <c:if test="${not empty user}">
-        <span id="email">
-        <c:out value="${user.email}"/>
-        </span>
-        <a id="logout" href="controller?command=logout">
-            <fmt:message key="header_jspf.anchor.logout"/>
-        </a>
-    </c:if>
-
-    <c:if test="${empty user}">
-        <span id="reg">
-            <a id="login" href="controller?command=login">
+        <c:if test="${empty user}">
+             <span id="reg">
+                <a id="login" href="controller?command=login">
                         <fmt:message key="header_jspf.anchor.login"/>
                     </a>
                 <a id="register" href="controller?command=registration">
                     <fmt:message key="header_jspf.anchor.registration"/>
                 </a>
-        </span>
-    </c:if>
+            </span>
+        </c:if>
+    </span>
+    <%--Include language span--%>
+    <%@ include file="/WEB-INF/jspf/directive/language.jspf" %>
+    <script>
+        $("#login_form").validate();
+    </script>
 </div>
 <br>
-<script>
-    $("#login_form").validate();
-</script>
+
 
