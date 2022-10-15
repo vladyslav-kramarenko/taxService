@@ -157,7 +157,6 @@ public class ContextListener implements ServletContextListener {
         } catch (ClassNotFoundException ex) {
             LOG.error(ex);
         }
-
         LOG.trace("Command container initialization finished");
     }
 

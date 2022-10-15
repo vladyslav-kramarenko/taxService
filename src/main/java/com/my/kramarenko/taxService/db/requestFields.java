@@ -21,7 +21,7 @@ public class requestFields {
     public static final String SQL_SET_REPORT_STATUS_AND_XML_PATH = "UPDATE report SET xml=?, status_id=? WHERE id=?";
     public static final String SQL_UPDATE_REPORT_STATUS = "UPDATE report SET comment=?, status_id=? WHERE id=?";
     public static final String SQL_SET_USER_REPORT = "INSERT INTO user_report (user_id,report_id) VALUES(?,?)";
-
+    public static final String SQL_DELETE_REPORT = "DELETE FROM report WHERE id = ?";
     public static final String SQL_INSERT_INTO_USERS = "INSERT INTO user (password, first_name, last_name, role_id, phone,email) \n"
             + "VALUES (?, ?, ?, ?, ?,?)";
     public static final String SQL_SELECT_USER_BY_ID = "SELECT * FROM user where id = ?";

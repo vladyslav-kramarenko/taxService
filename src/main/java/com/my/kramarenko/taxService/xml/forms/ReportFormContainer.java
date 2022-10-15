@@ -1,6 +1,6 @@
-package com.my.kramarenko.taxService.xml;
+package com.my.kramarenko.taxService.xml.forms;
 
-import com.my.kramarenko.taxService.xml.forms.F0103405;
+import com.my.kramarenko.taxService.xml.ReportForm;
 import org.apache.log4j.Logger;
 
 import java.util.HashMap;
@@ -15,6 +15,7 @@ public class ReportFormContainer {
     static {
         // common commands
         commands.put("F0103405", new F0103405());
+        commands.put("F0134105", new F0134105());
         LOG.trace("Report form container was successfully initialized");
         LOG.trace("Number of forms --> " + commands.size());
     }

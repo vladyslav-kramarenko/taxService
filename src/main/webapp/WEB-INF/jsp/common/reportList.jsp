@@ -1,32 +1,16 @@
+<%@ page pageEncoding="UTF-8" %>
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 
 <html>
 <c:set var="title" value="Info"/>
 <%@ include file="/WEB-INF/jspf/header.jspf" %>
-<head>
-    <link rel="stylesheet" type="text/css" href="style/stylesheet.css"/>
-</head>
-<body>
-<script src="js/reportList.js"/>
-<script>
-    $(function () {
-        // $("#newReportType").option();//selbutton();
-        $("#newReportBtn").button({});//selbutton();
-        $("#newReportType").button({});
-        $("input[type=submit], button").button();
-        // $("#sort").selectmenu({
-        //     change: function (event, ui) {
-        //         $("#filterForm").submit();
-        //     }
-        // });
-    });
-</script>
+<script src="js/reportList.js"></script>
 
 <div id="main">
     <span id="newReport">
     <c:if test="${userRole.id==2}">
-        <form class="cmxform">
+        <form>
             <select name="reportTypeId" id="newReportType" class="select">
                 <c:forEach var="reportType" items="${reportTypeList}">
                     <option value="${reportType.id}">
@@ -34,12 +18,51 @@
                 </c:forEach>
             </select>
             <input type="hidden" name="command" value="editReport">
-            <input type="submit" id="newReportBtn" name="newReport"
+            <input class="aButton" type="submit" id="newReportBtn" name="newReport"
                    value=
                 <fmt:message key='reportList_jsp.button.new_report'/>>
         </form>
     </c:if>
     </span>
+    <form>
+        количество записей на странице
+        <input type="hidden" name="command" value="reportList">
+        <input type="hidden" name="selectedPage" value="1">
+        <select name="recordsPerPage" class="select" onChange="this.form.submit();">
+            <c:choose>
+                <c:when test="${recordsPerPage==1}">
+                    <option selected value="1">1</option>
+                </c:when>
+                <c:otherwise>
+                    <option value="1">1</option>
+                </c:otherwise>
+            </c:choose>
+            <c:choose>
+                <c:when test="${recordsPerPage==10}">
+                    <option selected value="10">10</option>
+                </c:when>
+                <c:otherwise>
+                    <option value="10">10</option>
+                </c:otherwise>
+            </c:choose>
+            <c:choose>
+                <c:when test="${recordsPerPage==20}">
+                    <option selected value="20">20</option>
+                </c:when>
+                <c:otherwise>
+                    <option value="20">20</option>
+                </c:otherwise>
+            </c:choose>
+            <c:choose>
+                <c:when test="${recordsPerPage==50}">
+                    <option selected value="50">50</option>
+                </c:when>
+                <c:otherwise>
+                    <option value="50">50</option>
+                </c:otherwise>
+            </c:choose>
+        </select>
+    </form>
     <span id="filter">
     <form id="filterForm" action="controller" method="get">
         <input type="hidden" name="command" value="reportList"/>
@@ -111,35 +134,68 @@
             <td>Actions</td>
 
         </tr>
-        <c:forEach var="entry" items="${reportsList}">
-            <c:forEach var="userReport" items="${entry.value}">
-                <%--                <c:forEach var="report" items="${userReport}">--%>
-                <tr>
-                    <c:if test="${userRole.id!=2}">
-                        <td>${entry.key.email}</td>
-                        <td>${userReport.report.id}</td>
-                    </c:if>
-                    <td>${userReport.report.date}</td>
-                    <td>${userReport.report.lastUpdate}</td>
-                    <td>${userReport.type.name}</td>
-                    <td>${userReport.status.name}</td>
-                    <td>
+        <c:forEach var="report" items="${paginationList}">
+            <tr>
+                <c:if test="${userRole.id!=2}">
+                    <td>${report.user.email}</td>
+                    <td>${report.report.id}</td>
+                </c:if>
+                <td>${report.report.date}</td>
+                <td>${report.report.lastUpdate}</td>
+                <td>${report.type.name}</td>
+                <td>${report.status.name}</td>
+                <td>
+                        <span class="actions">
                         <c:choose>
-                            <c:when test="${userRole.id==2 && userReport.status.id==1}">
-                                <a href="controller?command=editReport&reportId=${userReport.report.id}">Edit</a>
-                                <a href="controller?command=editReport&reportId=${userReport.report.id}" onclick="return confirm('Are you sure?')">Edit?</a>
+                            <c:when test="${userRole.id==2}">
+                                <c:choose>
+                                    <c:when test="${report.status.id==1}">
+                                        <a class="aButton"
+                                           href="controller?command=editReport&reportId=${report.report.id}">Edit</a>
+                                        <a class="aButton"
+                                           href="controller?command=deleteReport&reportId=${report.report.id}"
+                                           onclick="return confirm('Are you sure?')">Delete</a>
+                                    </c:when>
+                                    <c:when test="${report.status.id==2}">
+                                        <a class="aButton"
+                                           href="controller?command=editReport&reportId=${report.report.id}">Show</a>
+                                        <a class="aButton"
+                                           href="controller?command=cancelReport&reportId=${report.report.id}"
+                                           onclick="return confirm('Are you sure?')">Cancel</a>
+                                    </c:when>
+                                </c:choose>
                             </c:when>
                             <c:otherwise>
-                                <a href="controller?command=editReport&reportId=${userReport.report.id}">Show</a>
+                                <a href="controller?command=editReport&reportId=${report.report.id}">Show</a>
                             </c:otherwise>
                         </c:choose>
-                    </td>
-                </tr>
-                <%--                </c:forEach>--%>
-            </c:forEach>
+                            </span>
+                </td>
+            </tr>
         </c:forEach>
     </table>
     </form>
+</div>
+
+<div class="pagination_section">
+    <c:if test="${selectedPage != 1}">
+        <a href="controller?command=reportList&selectedPage=${selectedPage - 1}&recordsPerPage=${recordsPerPage}"><<
+            Previous</a>
+    </c:if>
+    <c:forEach begin="1" end="${noOfPages}" var="i">
+        <c:choose>
+            <c:when test="${selectedPage == i}">
+                <a href="controller?command=reportList&selectedPage=${i}&recordsPerPage=${recordsPerPage}"
+                   class="active">${i}</a>
+            </c:when>
+            <c:otherwise>
+                <a href="controller?command=reportList&selectedPage=${i}&recordsPerPage=${recordsPerPage}">${i}</a>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+    <c:if test="${selectedPage < noOfPages}">
+        <a href="employee.do?selectedPage=${selectedPage + 1}&recordsPerPage=${recordsPerPage}">Next >></a>
+    </c:if>
 </div>
 
 </body>

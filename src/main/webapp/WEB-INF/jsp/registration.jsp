@@ -51,6 +51,20 @@
         <br/>
         <fieldset>
             <legend>
+                <fmt:message key="user.patronymic"/>
+            </legend>
+            <input type="text" name="patronymic"/>
+        </fieldset>
+        <br/>
+        <fieldset>
+            <legend>
+                <fmt:message key="user.code_passport"/>
+            </legend>
+            <input type="text" name="code_passport"/>
+        </fieldset>
+        <br/>
+        <fieldset>
+            <legend>
                 <fmt:message key="user.phone"/>
             </legend>
             <input type="text" name="phone"/>

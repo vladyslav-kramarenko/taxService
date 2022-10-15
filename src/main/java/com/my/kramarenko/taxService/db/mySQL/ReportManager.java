@@ -14,7 +14,6 @@ import org.apache.log4j.Logger;
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.sql.*;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -195,6 +194,11 @@ public class ReportManager implements ReportDao {
         }
     }
 
+    @Override
+    public void updateReportStatus(int reportId, Status status) throws DBException {
+        updateReportStatus(reportId, status, "");
+    }
+
     /**
      * Parse resultSet for select query
      *
@@ -293,6 +297,18 @@ public class ReportManager implements ReportDao {
             pstmt.executeUpdate();
         } finally {
             DBManager.getInstance().close(pstmt);
+        }
+    }
+
+    public void deleteReport(int id) throws DBException {
+        try (Connection con = DBManager.getInstance().getConnection();
+             PreparedStatement pstmt = con.prepareStatement(SQL_DELETE_REPORT)) {
+            pstmt.setInt(1, id);
+            pstmt.executeUpdate();
+            con.commit();
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            throw new DBException("Can't delete the report", e);
         }
     }
 

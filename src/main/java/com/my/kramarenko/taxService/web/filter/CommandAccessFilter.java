@@ -4,6 +4,7 @@ import com.my.kramarenko.taxService.db.enums.Role;
 import com.my.kramarenko.taxService.web.Path;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
@@ -28,22 +29,19 @@ public class CommandAccessFilter implements Filter {
     public void destroy() {
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response,
+    public void doFilter(ServletRequest request, ServletResponse servletResponse,
                          FilterChain chain) throws IOException, ServletException {
         LOG.trace("Filter starts");
-
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
         if (isAccessAllowed(request)) {
-            LOG.trace(request.getParameter("command")+" => access allowed");
+            LOG.trace(request.getParameter("command") + " => access allowed");
             LOG.trace("Filter finished");
             chain.doFilter(request, response);
         } else {
             String errorMessage = "You do not have permission to access the requested resource";
-            request.setAttribute("errorMessage", errorMessage);
             LOG.error("Set the request attribute: errorMessage --> "
                     + errorMessage);
-
-            request.getRequestDispatcher(Path.PAGE_ERROR_PAGE).forward(request,
-                    response);
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, errorMessage);
         }
     }
 
@@ -72,10 +70,9 @@ public class CommandAccessFilter implements Filter {
             LOG.trace("userRole == null");
             return false;
         }
-            LOG.trace("userRole == "+userRole);
-        LOG.trace("accessMap of "+userRole+" contains "+commandName+": "+accessMap.get(userRole).contains(commandName));
-        LOG.trace("commons contains "+commandName+": "+commons.contains(commandName));
-
+        LOG.trace("userRole == " + userRole);
+        LOG.trace("accessMap of " + userRole + " contains " + commandName + ": " + accessMap.get(userRole).contains(commandName));
+        LOG.trace("commons contains " + commandName + ": " + commons.contains(commandName));
 
 
         return accessMap.get(userRole).contains(commandName)

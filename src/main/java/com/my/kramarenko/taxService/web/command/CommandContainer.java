@@ -34,6 +34,7 @@ public class CommandContainer {
         // user commands
         commands.put("loadXML", new LoadXMLCommand());
         commands.put("submitReport", new SendReportCommand());
+        commands.put("deleteReport", new DeleteReportCommand());
 		commands.put("reportList", new ReportListCommand());
 
         // inspector commands

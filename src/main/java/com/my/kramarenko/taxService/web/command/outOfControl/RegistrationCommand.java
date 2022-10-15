@@ -105,8 +105,10 @@ public class RegistrationCommand extends Command {
         String password = request.getParameter("password");
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
+        String patronymic = request.getParameter("patronymic");
+        String codePassport = request.getParameter("code_passport");
         String phone = request.getParameter("phone");
 
-        return new User(email, password, name, surname, phone, id);
+        return new User(email, password, name, surname,patronymic,codePassport, phone, id);
     }
 }

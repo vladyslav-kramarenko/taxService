@@ -91,14 +91,18 @@ public class Controller extends HttpServlet {
 
         } catch (DBException e) {
             LOG.error(e.getMessage());
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+//            response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
             request.setAttribute("errorMessage", e.getMessage());
 //            response.sendRedirect(Path.PAGE_ERROR_PAGE);
         } catch (XmlException e) {
-            LOG.error(e.getMessage());
+//            LOG.error(e.getMessage());
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             request.setAttribute("errorMessage", e.getMessage());
 //            response.sendRedirect(Path.PAGE_ERROR_PAGE);
         } catch (Exception | Error e) {
-            LOG.error(e.getMessage());
+//            LOG.error(e.getMessage());
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             request.setAttribute("errorMessage", e.getMessage());
         } finally {
             LOG.trace("Controller finished");
@@ -111,6 +115,8 @@ public class Controller extends HttpServlet {
             } catch (Exception | Error e) {
                 LOG.error(e.getMessage());
                 request.setAttribute("errorMessage", e.getMessage());
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+//                response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
                 dispatcher = request.getRequestDispatcher(Path.PAGE_ERROR_PAGE);
                 dispatcher.forward(request, response);
             }

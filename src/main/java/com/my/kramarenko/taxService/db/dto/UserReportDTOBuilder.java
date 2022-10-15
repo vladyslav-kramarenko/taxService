@@ -4,6 +4,7 @@ import com.my.kramarenko.taxService.db.DBException;
 import com.my.kramarenko.taxService.db.entity.Type;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.entity.Status;
+import com.my.kramarenko.taxService.db.mySQL.DBManager;
 import com.my.kramarenko.taxService.db.mySQL.ReportManager;
 import com.my.kramarenko.taxService.db.mySQL.UserManager;
 import org.apache.log4j.Logger;
@@ -14,9 +15,9 @@ public class UserReportDTOBuilder {
 
     private static final Logger LOG = Logger.getLogger(UserReportDTOBuilder.class);
 
-    public static Map<User, List<ReportDTO>> getUserReportsWithStatuses(User user, Map<Status, Boolean> statuses, Map<String, Type> typeMap) throws DBException {
-        Map<User, List<ReportDTO>> reportsList = new HashMap<>();
-        ReportManager reportManager = new ReportManager();
+    public static List<ReportDTO> getAllUserReportsWithStatuses(User user, Map<Status, Boolean> statuses, Map<String, Type> typeMap) throws DBException {
+        List<ReportDTO> reportsList = new ArrayList<>();
+        ReportManager reportManager = DBManager.getInstance().getReportManager();
         List<Status> chosenStatuses = statuses.entrySet()
                 .stream()
                 .filter(Map.Entry::getValue)
@@ -25,20 +26,21 @@ public class UserReportDTOBuilder {
         List<ReportDTO> reports = ReportDTOBuilder
                 .getReportsDTO(
                         reportManager.getUserReportsWithStatuses(user.getId(), chosenStatuses),
-                        typeMap
+                        typeMap,
+                        user
                 );
         if (reports.size() > 0) {
-            reportsList.put(user, reports);
+            reportsList.addAll(reports);
         }
         return reportsList;
     }
 
-    public static Map<User, List<ReportDTO>> getAllUserReportsWithStatuses(Map<Status, Boolean> statusMap, Map<String, Type> typeMap) throws DBException {
-        Map<User, List<ReportDTO>> map = new HashMap<>();
+    public static List<ReportDTO> getAllReportsWithStatuses(Map<Status, Boolean> statusMap, Map<String, Type> typeMap) throws DBException {
+        List<ReportDTO> list = new ArrayList<>();
         List<User> users = new UserManager().getAllUsers();
         for (User user : users) {
-            map.put(user, getUserReportsWithStatuses(user, statusMap, typeMap).get(user));
+            list.addAll(getAllUserReportsWithStatuses(user, statusMap, typeMap));
         }
-        return map;
+        return list;
     }
 }

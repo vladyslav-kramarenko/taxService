@@ -11,7 +11,7 @@ import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.Path;
 import com.my.kramarenko.taxService.xml.ReadXmlDOMController;
 import com.my.kramarenko.taxService.xml.ReportForm;
-import com.my.kramarenko.taxService.xml.ReportFormContainer;
+import com.my.kramarenko.taxService.xml.forms.ReportFormContainer;
 import com.my.kramarenko.taxService.xml.TaxForm;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;

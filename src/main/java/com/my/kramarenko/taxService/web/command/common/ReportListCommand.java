@@ -1,5 +1,6 @@
 package com.my.kramarenko.taxService.web.command.common;
 
+import com.my.kramarenko.taxService.Util;
 import com.my.kramarenko.taxService.db.DBException;
 import com.my.kramarenko.taxService.db.XmlException;
 import com.my.kramarenko.taxService.db.dto.ReportDTO;
@@ -42,7 +43,7 @@ public class ReportListCommand extends Command {
 
         User user = (User) request.getSession().getAttribute("user");
 
-        Map<User, List<ReportDTO>> reportsList;
+        List<ReportDTO> reportsList;
         String[] chosenIdParameter = request.getParameterValues("chosen_status_id");
 
         ServletContext sc = request.getServletContext();
@@ -56,18 +57,19 @@ public class ReportListCommand extends Command {
 
         if (roleMap.get(user.getRoleId()).equals(Role.USER)) {
             LOG.trace("user role == user -> go to user reports");
-            reportsList = UserReportDTOBuilder.getUserReportsWithStatuses(user, chosenStatusMap, typeMap);
+            reportsList = UserReportDTOBuilder.getAllUserReportsWithStatuses(user, chosenStatusMap, typeMap);
             TypeDao tm = new TypeManager();
             reportTypes = tm.getAllTypes();
             request.setAttribute("reportTypeList", reportTypes);
         } else {
 //            if (roleMap.get(user.getRoleId()).equals(Role.ADMIN)) {
 //            }
-            reportsList = UserReportDTOBuilder.getAllUserReportsWithStatuses(chosenStatusMap, typeMap);
+            reportsList = UserReportDTOBuilder.getAllReportsWithStatuses(chosenStatusMap, typeMap);
         }
 
         request.setAttribute("chosenStatusMap", chosenStatusMap);
-        request.setAttribute("reportsList", reportsList);
+
+        Util.setReportsWithPagination(reportsList, request);
         request.getSession().setAttribute("page", forward);
         LOG.trace("Command finished");
         return forward;

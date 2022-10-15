@@ -10,7 +10,9 @@ import com.my.kramarenko.taxService.xml.TaxForm;
 import java.util.List;
 
 public interface ReportDao {
-    void addReport(Status status,User user, TaxForm taxForm, ReportForm reportForm) throws DBException;
+    void updateReportStatus(int reportId, Status status) throws DBException;
+
+    void addReport(Status status, User user, TaxForm taxForm, ReportForm reportForm) throws DBException;
 
     List<Report> getAllReports() throws DBException;
 

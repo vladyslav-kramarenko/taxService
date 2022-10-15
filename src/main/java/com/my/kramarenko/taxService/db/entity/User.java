@@ -27,9 +27,11 @@ public class User extends Entity {
     public User() {
     }
 
-    public User(String email, String password, String name, String surname, String phone, int roleId) {
+    public User(String email, String password, String name, String surname, String patronymic, String codePassport, String phone, int roleId) {
         this.firstName = name;
         this.lastName = surname;
+        this.patronymic = patronymic;
+        this.codePassport = codePassport;
         this.email = email;
         this.phone = phone;
         this.password = password;

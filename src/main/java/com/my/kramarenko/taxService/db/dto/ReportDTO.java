@@ -3,11 +3,22 @@ package com.my.kramarenko.taxService.db.dto;
 import com.my.kramarenko.taxService.db.entity.Report;
 import com.my.kramarenko.taxService.db.entity.Type;
 import com.my.kramarenko.taxService.db.entity.Status;
+import com.my.kramarenko.taxService.db.entity.User;
 
 public class ReportDTO {
-    Report report;
-    Type type;
-    Status status;
+
+    private User user;
+    private Report report;
+    private Type type;
+    private Status status;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Report getReport() {
         return report;

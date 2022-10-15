@@ -91,15 +91,15 @@
         </init-param>
         <init-param>
             <param-name>user</param-name>
-            <param-value>loadXML submitReport</param-value>
+            <param-value>loadXML submitReport deleteReport</param-value>
         </init-param>
         <init-param>
             <param-name>common</param-name>
-            <param-value>reportList editReport logout viewSettings</param-value>
+            <param-value>reportList editReport viewSettings</param-value>
         </init-param>
         <init-param>
             <param-name>out-of-control</param-name>
-            <param-value>info login registration updateLocale complete
+            <param-value>logout info login registration updateLocale complete
             </param-value>
         </init-param>
     </filter>
@@ -117,10 +117,14 @@
         <exception-type>java.lang.Throwable</exception-type>
         <location>/WEB-INF/jsp/error_page.jsp</location>
     </error-page>
-
     <error-page>
         <error-code>404</error-code>
         <location>/WEB-INF/jsp/error_page.jsp</location>
     </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/WEB-INF/jsp/error_page.jsp</location>
+    </error-page>
+
 
 </web-app>

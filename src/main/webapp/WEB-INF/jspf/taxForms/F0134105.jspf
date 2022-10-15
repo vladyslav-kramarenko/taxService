@@ -1,0 +1,376 @@
+<%@ taglib prefix="mylib" tagdir="/WEB-INF/tags" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="windows-1251" %>
+<link rel="stylesheet" type="text/css" media="screen" href="style/reportForm.css"/>
+
+<form class="cmxform" id="report_form" action="controller" method="post">
+    <input type="hidden" name="reportId" value="${reportId}"/>
+    <input type="hidden" name="command" value="submitReport"/>
+    <input type="hidden" name="reportName" value="F0134105"/>
+    <table>
+        <tr>
+            <td class="rowNumber" rowspan="4">1</td>
+            <td class="title" rowspan="4" colspan="10">
+                ВІДОМОСТІ*
+                <br>
+                про суми нарахованого доходу застрахованих осіб та суми нарахованого єдиного внеску
+            </td>
+            <td>01</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="HZ" propertyType="checkbox" propertyClass="formType"/>
+                <label for="HZ">Звітна</label>
+            </td>
+        </tr>
+        <tr>
+            <td>02</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="HZN" propertyType="checkbox" propertyClass="formType"/>
+                <label for="HZN"> Звітна нова</label>
+            </td>
+        </tr>
+        <tr>
+            <td>03</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="HZU" propertyType="checkbox" propertyClass="formType"/>
+                <label for="HZU">Уточнююча</label>
+            </td>
+        </tr>
+        <tr>
+            <td>04</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="HD" propertyType="checkbox"/>
+                <label for="HD">Довідкова</label>
+            </td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td class="rowNumber">2</td>
+            <td colspan="10">Реєстраційний номер облікової картри платника податків або серія (за наявності) та номер
+                паспорту
+            </td>
+            <td></td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="HTIN" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td class="rowNumber">3</td>
+            <td colspan="10">Серія (за наявності) та номер паспорта для ідентифікації платника єдиного внеску у
+                Пенсійному фонді України5
+            </td>
+            <td></td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="HTINPF" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td class="rowNumber" rowspan="2">4</td>
+            <td rowspan="1" colspan="14">Прізвище, ім'я, по батькові (за навності)</td>
+        </tr>
+        <tr>
+            <td colspan="14"><mylib:formProperty propertyName="HNAME" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td class="parameter" rowspan="3">2</td>
+            <td class="parameter" colspan="14">Податковий (звітній) період:</td>
+        </tr>
+        <tr>
+            <td class="parameter"></td>
+            <td><input name="" type="checkbox"></td>
+            <td>I квартал</td>
+            <td><input name="" type="checkbox"></td>
+            <td>півріччя</td>
+            <td><input name="" type="checkbox"></td>
+            <td>три квартали</td>
+            <td><input name="" type="checkbox"></td>
+            <td>рік</td>
+            <td><mylib:formProperty propertyName="HMONTH" propertyType="text"/></td>
+            <td class="emptyBox"></td>
+            <td><mylib:formProperty propertyName="HZY" propertyType="text"/></td>
+            <td class="comment">року</td>
+            <td class="emptyBox"></td>
+        </tr>
+
+        <tr class="bottomLine">
+            <td class="emptyBox"></td>
+            <td class="comment" colspan="7">(Необхідне позначити)</td>
+            <td class="emptyBox"></td>
+            <td class="comment" colspan="2">(місяць)</td>
+            <td class="emptyBox" colspan="3"></td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr class="upperLine">
+            <td class="rowNumber" rowspan="3">3</td>
+            <td class="comment" colspan="14">Податковий (звітній) період, який уточнююється:</td>
+        </tr>
+        <tr>
+            <td class="emptyBox"></td>
+            <td><input name="" type="checkbox"></td>
+            <td>I квартал</td>
+            <td><input name="" type="checkbox"></td>
+            <td>півріччя</td>
+            <td><input name="" type="checkbox"></td>
+            <td>три квартали</td>
+            <td><input name="" type="checkbox"></td>
+            <td colspan="2">рік</td>
+            <td class="emptyBox"></td>
+            <td><mylib:formProperty propertyName="HZYP" propertyType="text"/></td>
+            <td class="comment">року</td>
+            <td class="emptyBox"></td>
+        </tr>
+        <tr>
+            <td class="emptyBox"></td>
+            <td class="comment" colspan="13">(Необхідне позначити)</td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td colspan="15">Тип форми:</td>
+        </tr>
+        <tr>
+            <td><mylib:formProperty propertyName="H01" propertyType="checkbox" propertyClass="formType"/></td>
+            <td colspan="2">після припинення</td>
+            <td><mylib:formProperty propertyName="H02" propertyType="checkbox" propertyClass="formType"/></td>
+            <td colspan="3">прзначення пенсії</td>
+            <td><mylib:formProperty propertyName="H03" propertyType="checkbox" propertyClass="formType"/></td>
+            <td colspan="3">перехід на сплату інших податків і зборів</td>
+            <td><mylib:formProperty propertyName="H04" propertyType="checkbox" propertyClass="formType"/></td>
+            <td colspan="3">призначення матеріального забезпечення, страхових випла</td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td colspan="15">Дата державної реєстрації припинення</td>
+        </tr>
+        <tr>
+            <td><mylib:formProperty propertyName="R06G1" propertyType="text"/></td>
+            <td colspan="4">число</td>
+            <td><mylib:formProperty propertyName="R06G2" propertyType="text"/></td>
+            <td colspan="4">місяць</td>
+            <td><mylib:formProperty propertyName="R06G3" propertyType="text"/></td>
+            <td colspan="4">рік</td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td colspan="14">Код основного виду діяльності</td>
+            <td><mylib:formProperty propertyName="HKVED" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td colspan="15">Період перебування фізичної особи - підприємця на спрощеній системі оподаткування</td>
+        </tr>
+        <tr>
+            <td colspan="6">з</td>
+            <td colspan="2"><mylib:formProperty propertyName="R08G1D" propertyType="text"/></td>
+            <td colspan="5">по</td>
+            <td colspan="2"><mylib:formProperty propertyName="R08G2D" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="14">Код категорії застрахованої особи 1</td>
+            <td><mylib:formProperty propertyName="R081G1" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td colspan="15">ВИЗНАЧЕННЯ СУМ НАРАХОВАНОГО ДОХОДУ ЗАСТРАХОВАНИХ ОСІБ ТА СУМИ НАРАХОВАНОГО ЄДИНОГО ВНЕСКУ
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">Місяць</td>
+            <td colspan="4">Самостійно визначена сума доходу, на яку нараховується єдиний внесок з урахуванням
+                максимальної
+                величини
+            </td>
+            <td colspan="4">Розмір єдиного
+                внеску
+            </td>
+            <td colspan="4">Сума
+                нарахованого єдиного внеску
+                (графа 3 х графа 4)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">1</td>
+            <td colspan="4">2</td>
+            <td colspan="4">3</td>
+            <td colspan="4">4</td>
+        </tr>
+        <tr>
+            <td colspan="3">Січень</td>
+            <td colspan="4"><mylib:formProperty propertyName="R091G2" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R091G3" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R091G4" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="3">Лютий</td>
+            <td colspan="4"><mylib:formProperty propertyName="R092G2" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R092G3" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R092G4" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="3">Березень</td>
+            <td colspan="4"><mylib:formProperty propertyName="R093G2" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R093G3" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R093G4" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="3">Квітень</td>
+            <td colspan="4"><mylib:formProperty propertyName="R094G2" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R094G3" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R094G4" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="3">Травень</td>
+            <td colspan="4"><mylib:formProperty propertyName="R095G2" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R095G3" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R095G4" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="3">Червень</td>
+            <td colspan="4"><mylib:formProperty propertyName="R096G2" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R096G3" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R096G4" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="3">Липень</td>
+            <td colspan="4"><mylib:formProperty propertyName="R097G2" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R097G3" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R097G4" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="3">Серпень</td>
+            <td colspan="4"><mylib:formProperty propertyName="R098G2" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R098G3" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R098G4" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="3">Вересень</td>
+            <td colspan="4"><mylib:formProperty propertyName="R099G2" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R099G3" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R099G4" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="3">Жовтень</td>
+            <td colspan="4"><mylib:formProperty propertyName="R0910G2" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R0910G3" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R0910G4" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="3">Листопад</td>
+            <td colspan="4"><mylib:formProperty propertyName="R0911G2" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R0911G3" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R0911G4" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="3">Грудень</td>
+            <td colspan="4"><mylib:formProperty propertyName="R0912G2" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R0912G3" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R0912G4" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="3">УСЬОГО</td>
+            <td colspan="4"><mylib:formProperty propertyName="R09G2" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R09G3" propertyType="text"/></td>
+            <td colspan="4"><mylib:formProperty propertyName="R09G4" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td colspan="15">ВИЗНАЧЕННЯ ЗОБОВ'ЯЗАНЬ ІЗ СПЛАТИ ЄДИНОГО ВНЕСКУ У ЗВ'ЯЗКУ З ВИПРАВЛЕННЯМ САМОСТІЙНО
+                ВИЯВЛЕНИХ ПОМИЛОК
+            </td>
+        </tr>
+        <tr>
+            <td colspan="14">Сума єдиного внеску, яка підлягала перерахуванню на небюджетні рахунки, за даними звітного
+                (податкового) періоду, в якому виявлена помилка (рядок Усього графа 4 розділу
+                9)
+            </td>
+            <td colspan="1"><mylib:formProperty propertyName="R0101G3" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="14">Уточнена сума нарахованого єдиного внеску за звітний (податковий) період, у якому виявлена
+                помилка
+            </td>
+            <td colspan="1"><mylib:formProperty propertyName="R0102G3" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td colspan="15">Розрахунки у зв'язку з виправленням помилки:</td>
+        </tr>
+        <tr>
+            <td colspan="14">Збільшення суми єдиного внеску, яка підлягала перерахуванню на небюджетні рахунки (рядок 2
+                - рядок 1, якщо рядок 2 > рядка 1)
+            </td>
+            <td colspan="1"><mylib:formProperty propertyName="R0103G3" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="14">Зменшення суми єдиного внеску, яка підлягала перерахуванню на небюджетні рахунки (рядок 2 -
+                рядок 1, якщо рядок 2 < рядка 1)
+            </td>
+            <td colspan="1"><mylib:formProperty propertyName="R0104G3" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="14">Сума пені, яка нарахована платником самостійно відповідно до статті 25 Закону України "Про
+                збір та облік єдиного внеску на загальнообов'язкове державне соціальне
+                страхування"13
+            </td>
+            <td colspan="1"><mylib:formProperty propertyName="R0105G3" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td rowspan="2" colspan="8">Наведена інформація є вірною:
+                Фізична особа - платник податку або уповноважена особа
+            </td>
+            <td colspan="2">
+            </td>
+            <td colspan="5"><mylib:formProperty propertyName="R0105G3" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="2">підпис</td>
+            <td colspan="5">(прізвище та ініціали)</td>
+        </tr>
+    </table>
+    <br>
+    <span id="reportButtons">
+    <c:if test="${userRole.name=='user'}">
+        <input class="aButton" type="submit" name="save" id="saveReportBtn" value='Save report'>
+        <input class="aButton" type="submit" name="send" id="sendReportBtn" value='Send report'>
+    </c:if>
+    </span>
+
+</form>
+<script src="js/f0103405.js"/>
+<script>
+    onload = function () {
+        document.getElementById('R001G3').addEventListener('input', calculate8);
+        document.getElementById('R002G3').addEventListener('input', listener247);
+        document.getElementById('R003G3').addEventListener('input', calculate8);
+        document.getElementById('R004G3').addEventListener('input', listener247);
+        document.getElementById('R005G3').addEventListener('input', listener5);
+        document.getElementById('R006G3').addEventListener('input', listener6);
+        document.getElementById('R007G3').addEventListener('input', listener247);
+        document.getElementById('R013G3').addEventListener('input', calculate14);
+    }
+</script>
