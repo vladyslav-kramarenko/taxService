@@ -11,7 +11,7 @@ public class Util {
     public static int getIntValue(int defaultValue, String value) {
         if (value != null) {
             try {
-                defaultValue = Integer.parseInt(value);
+                defaultValue = Integer.parseInt(value.trim());
             } catch (NumberFormatException e) {
                 LOG.error(e.getMessage());
             }

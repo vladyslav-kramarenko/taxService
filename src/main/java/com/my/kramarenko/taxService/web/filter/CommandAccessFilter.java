@@ -49,6 +49,7 @@ public class CommandAccessFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
 
         String commandName = request.getParameter("command");
+        commandName = commandName.trim();
         if (commandName == null || commandName.isEmpty()) {
             LOG.trace("CommandName is empty");
             return false;

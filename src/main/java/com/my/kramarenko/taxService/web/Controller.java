@@ -79,11 +79,11 @@ public class Controller extends HttpServlet {
         try {
             // extract command name from the request
             String commandName = request.getParameter("command");
-            LOG.trace("Request parameter: command --> " + commandName);
+            LOG.trace("Request parameter: command --> [" + commandName + "]");
 
             // obtain command object by its name
             Command command = CommandContainer.getCommand(commandName);
-            LOG.trace("Obtained command --> " + command);
+            LOG.trace("Obtained command --> [" + command + "]");
 
             // execute command and get forward address
             address = command.execute(request, response);

@@ -40,6 +40,16 @@ public class ReportDTO {
         return status;
     }
 
+    @Override
+    public String toString() {
+        return "ReportDTO{" +
+                "user=" + user +
+                ", report=" + report +
+                ", type=" + type +
+                ", status=" + status +
+                '}';
+    }
+
     public void setStatus(Status status) {
         this.status = status;
     }

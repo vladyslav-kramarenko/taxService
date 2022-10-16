@@ -35,18 +35,18 @@ public class CommandContainer {
         commands.put("loadXML", new LoadXMLCommand());
         commands.put("submitReport", new SendReportCommand());
         commands.put("deleteReport", new DeleteReportCommand());
-		commands.put("reportList", new ReportListCommand());
+        commands.put("reportList", new ReportListCommand());
 
         // inspector commands
-		commands.put("updateReportStatus", new UpdateReportStatus());
+        commands.put("updateReportStatus", new UpdateReportStatus());
 
         //user & inspector commands
         commands.put("editReport", new ReportCommand());
         commands.put("viewReport", new ReportCommand());
 
         // admin commands
-		commands.put("allUsers", new AllUsersCommand());
-		commands.put("changeUserRole", new AllUsersCommand());
+        commands.put("allUsers", new AllUsersCommand());
+        commands.put("changeUserRole", new AllUsersCommand());
 
         LOG.trace("Command container was successfully initialized");
         LOG.trace("Number of commands --> " + commands.size());
@@ -59,8 +59,11 @@ public class CommandContainer {
      * @return Command object.
      */
     public static Command getCommand(String commandName) {
+        LOG.trace("Looking for a command [" + commandName + "]");
+        commandName = commandName.trim();
+        LOG.trace("Command after trim [" + commandName + "]");
         if (commandName == null || !commands.containsKey(commandName)) {
-            LOG.debug("Command not found, name --> " + commandName);
+            LOG.debug("Command not found, name --> [" + commandName + "]");
             return commands.get("noCommand");
         }
         LOG.debug("Obtained command: " + commandName);

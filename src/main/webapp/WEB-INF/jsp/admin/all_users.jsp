@@ -1,50 +1,23 @@
 <%@ page pageEncoding="UTF-8" %>
+<%@ taglib prefix="mylib" tagdir="/WEB-INF/tags" %>
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 
 <html>
 
-<c:set var="title" value="List orders" scope="page"/>
+<c:set var="title" value="All users" scope="page"/>
 
-<body>
 <%@ include file="/WEB-INF/jspf/header.jspf" %>
+</br>
 <form>
     количество записей на странице
     <input type="hidden" name="command" value="allUsers">
     <input type="hidden" name="selectedPage" value="1">
     <select name="recordsPerPage" class="select" onChange="this.form.submit();">
-        <c:choose>
-            <c:when test="${recordsPerPage==1}">
-                <option selected value="1">1</option>
-            </c:when>
-            <c:otherwise>
-                <option value="1">1</option>
-            </c:otherwise>
-        </c:choose>
-        <c:choose>
-            <c:when test="${recordsPerPage==10}">
-                <option selected value="10">10</option>
-            </c:when>
-            <c:otherwise>
-                <option value="10">10</option>
-            </c:otherwise>
-        </c:choose>
-        <c:choose>
-            <c:when test="${recordsPerPage==20}">
-                <option selected value="20">20</option>
-            </c:when>
-            <c:otherwise>
-                <option value="20">20</option>
-            </c:otherwise>
-        </c:choose>
-        <c:choose>
-            <c:when test="${recordsPerPage==50}">
-                <option selected value="50">50</option>
-            </c:when>
-            <c:otherwise>
-                <option value="50">50</option>
-            </c:otherwise>
-        </c:choose>
+        <mylib:paginationRecordsPerPage pageQuantity="1"/>
+        <mylib:paginationRecordsPerPage pageQuantity="2"/>
+        <mylib:paginationRecordsPerPage pageQuantity="10"/>
+        <mylib:paginationRecordsPerPage pageQuantity="20"/>
     </select>
 </form>
 <table>
@@ -99,27 +72,7 @@
     </c:forEach>
 </table>
 
-
-<div class="pagination_section">
-    <c:if test="${selectedPage != 1}">
-        <a href="controller?command=allUsers&selectedPage=${selectedPage - 1}&recordsPerPage=${recordsPerPage}"><<
-            Previous</a>
-    </c:if>
-    <c:forEach begin="1" end="${noOfPages}" var="i">
-        <c:choose>
-            <c:when test="${selectedPage == i}">
-                <a href="controller?command=allUsers&selectedPage=${i}&recordsPerPage=${recordsPerPage}"
-                   class="active">${i}</a>
-            </c:when>
-            <c:otherwise>
-                <a href="controller?command=allUsers&selectedPage=${i}&recordsPerPage=${recordsPerPage}">${i}</a>
-            </c:otherwise>
-        </c:choose>
-    </c:forEach>
-    <c:if test="${selectedPage < noOfPages}">
-        <a href="employee.do?selectedPage=${selectedPage + 1}&recordsPerPage=${recordsPerPage}">Next >></a>
-    </c:if>
-</div>
+<mylib:paginationFooter pageCommand="allUsers"/>
 
 </body>
 <%@ include file="/WEB-INF/jspf/footer.jspf" %>
