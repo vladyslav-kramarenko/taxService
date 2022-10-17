@@ -4,8 +4,8 @@ import com.my.kramarenko.taxService.db.DBException;
 import com.my.kramarenko.taxService.db.entity.Report;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.entity.Status;
-import com.my.kramarenko.taxService.xml.ReportForm;
-import com.my.kramarenko.taxService.xml.TaxForm;
+import com.my.kramarenko.taxService.xml.forms.ReportForm;
+import com.my.kramarenko.taxService.xml.entity.TaxForm;
 
 import java.util.List;
 

@@ -1,7 +1,9 @@
 package com.my.kramarenko.taxService.xml;
 
 import com.my.kramarenko.taxService.db.XmlException;
+import com.my.kramarenko.taxService.xml.entity.*;
 import com.my.kramarenko.taxService.xml.forms.F0103405;
+import com.my.kramarenko.taxService.xml.forms.ReportForm;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -23,8 +25,8 @@ import java.util.List;
  */
 public class ReadXmlDOMController {
     private static final Logger LOG = Logger.getLogger(ReadXmlDOMController.class);
-    private DocumentBuilderFactory documentBuilderFactory;
-    private DocumentBuilder documentBuilder;
+    private final DocumentBuilderFactory documentBuilderFactory;
+    private final DocumentBuilder documentBuilder;
 
     public ReadXmlDOMController() throws XmlException {
 
@@ -91,21 +93,11 @@ public class ReadXmlDOMController {
         SubElement subElement = new SubElement();
         for (ReportValue entry : map) {
             switch (entry.type) {
-                case "String":
-                    addStringParameter(subElement, parameters, entry.name);
-                    break;
-                case "Long":
-                    addLongParameter(subElement, parameters, entry.name);
-                    break;
-                case "Int":
-                    addIntParameter(subElement, parameters, entry.name);
-                    break;
-                case "Double":
-                    addDoubleParameter(subElement, parameters, entry.name);
-                    break;
-                case "LinkedDoc":
-                    setLinkedDocs(subElement, parameters);
-                    break;
+                case "String" -> addStringParameter(subElement, parameters, entry.name);
+                case "Long" -> addLongParameter(subElement, parameters, entry.name);
+                case "Int" -> addIntParameter(subElement, parameters, entry.name);
+                case "Double" -> addDoubleParameter(subElement, parameters, entry.name);
+                case "LinkedDoc" -> setLinkedDocs(subElement, parameters);
             }
         }
         return subElement;

@@ -1,17 +1,17 @@
-package com.my.kramarenko.taxService.xml;
+package com.my.kramarenko.taxService.xml.entity;
 
 public class LinkedDoc {
 
-    String doc;
-    String docSub;
-    String docVer;
-    String docType;
-    String docCnt;
-    String docStan;
-    String filename;
+    private String doc;
+    private String docSub;
+    private String docVer;
+    private String docType;
+    private String docCnt;
+    private String docStan;
+    private String filename;
     //attributes
-    String num;
-    String typeLinkDOC;
+    private String num;
+    private String typeLinkDOC;
 
     public String getDoc() {
         return doc;

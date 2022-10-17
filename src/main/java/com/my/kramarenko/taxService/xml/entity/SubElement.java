@@ -1,4 +1,4 @@
-package com.my.kramarenko.taxService.xml;
+package com.my.kramarenko.taxService.xml.entity;
 
 import java.util.*;
 

@@ -6,8 +6,8 @@ import com.my.kramarenko.taxService.db.dao.ReportDao;
 import com.my.kramarenko.taxService.db.entity.Report;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.entity.Status;
-import com.my.kramarenko.taxService.xml.ReportForm;
-import com.my.kramarenko.taxService.xml.TaxForm;
+import com.my.kramarenko.taxService.xml.forms.ReportForm;
+import com.my.kramarenko.taxService.xml.entity.TaxForm;
 import com.my.kramarenko.taxService.xml.WriteXmlStAXController;
 import org.apache.log4j.Logger;
 
@@ -31,7 +31,7 @@ public class ReportManager implements ReportDao {
      */
     @Override
     public List<Report> getAllReports() throws DBException {
-        List<Report> reportsList = null;
+        List<Report> reportsList;
         try (Connection con = DBManager.getInstance().getConnection();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(SQL_SELECT_ALL_REPORTS)) {
@@ -55,7 +55,7 @@ public class ReportManager implements ReportDao {
      */
     @Override
     public List<Report> getUserReports(int userId) throws DBException {
-        List<Report> reportsList = null;
+        List<Report> reportsList;
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -88,7 +88,7 @@ public class ReportManager implements ReportDao {
      */
     @Override
     public List<Report> getUserReportsWithStatuses(int userId, List<Status> statuses) throws DBException {
-        List<Report> reportsList = null;
+        List<Report> reportsList;
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -124,7 +124,7 @@ public class ReportManager implements ReportDao {
 
     @Override
     public Report getReport(int reportId) throws DBException {
-        Report report = null;
+        Report report;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         Connection con = null;
@@ -179,11 +179,11 @@ public class ReportManager implements ReportDao {
     @Override
     public void updateReportStatus(int reportId, Status status, String comment) throws DBException {
         try (Connection con = DBManager.getInstance().getConnection();
-             PreparedStatement pstmt = con.prepareStatement(SQL_UPDATE_REPORT_STATUS);) {
+             PreparedStatement pstmt = con.prepareStatement(SQL_UPDATE_REPORT_STATUS)) {
             int k = 1;
             pstmt.setString(k++, comment);
             pstmt.setInt(k++, status.getId());
-            pstmt.setInt(k++, reportId);
+            pstmt.setInt(k, reportId);
             LOG.trace(pstmt);
             pstmt.executeUpdate();
             con.commit();
@@ -275,7 +275,7 @@ public class ReportManager implements ReportDao {
             int k = 1;
             pstmt.setInt(k++, report.getStatusId());
             pstmt.setString(k++, report.getTypeId());
-            pstmt.setString(k++, "");
+            pstmt.setString(k, "");
             pstmt.executeUpdate();
 
             ResultSet keys = pstmt.getGeneratedKeys();
@@ -293,7 +293,7 @@ public class ReportManager implements ReportDao {
             int k = 1;
             pstmt.setString(k++, report.getXmlPath());
             pstmt.setInt(k++, report.getStatusId());
-            pstmt.setInt(k++, report.getId());
+            pstmt.setInt(k, report.getId());
             pstmt.executeUpdate();
         } finally {
             DBManager.getInstance().close(pstmt);
@@ -319,7 +319,7 @@ public class ReportManager implements ReportDao {
             pstmt = con.prepareStatement(SQL_SET_USER_REPORT);
             int k = 1;
             pstmt.setInt(k++, user.getId());
-            pstmt.setInt(k++, report.getId());
+            pstmt.setInt(k, report.getId());
             pstmt.executeUpdate();
         } finally {
             DBManager.getInstance().close(pstmt);

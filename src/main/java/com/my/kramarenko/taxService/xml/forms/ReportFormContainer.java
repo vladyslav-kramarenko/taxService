@@ -1,6 +1,5 @@
 package com.my.kramarenko.taxService.xml.forms;
 
-import com.my.kramarenko.taxService.xml.ReportForm;
 import org.apache.log4j.Logger;
 
 import java.util.HashMap;

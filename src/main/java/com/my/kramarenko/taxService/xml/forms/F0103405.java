@@ -1,7 +1,6 @@
 package com.my.kramarenko.taxService.xml.forms;
 
-import com.my.kramarenko.taxService.xml.ReportForm;
-import com.my.kramarenko.taxService.xml.ReportValue;
+import com.my.kramarenko.taxService.xml.entity.ReportValue;
 
 public class F0103405 extends ReportForm {
     {
