@@ -2,7 +2,6 @@ package com.my.kramarenko.taxService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
-
 import java.util.List;
 
 public class Util {
@@ -27,7 +26,7 @@ public class Util {
         if (reportsList.size() < selectedPage * recordsPerPage) maxReport = reportsList.size();
         int minReport = (selectedPage - 1) * recordsPerPage;
         LOG.trace("show users from " + minReport + " to " + maxReport);
-        int noOfPages = reportsList.size() / recordsPerPage;
+        int noOfPages =  (int) Math.ceil((double)reportsList.size() / recordsPerPage);
         LOG.trace("noOfPages = " + noOfPages);
         List<?> chosenReports = reportsList.subList(minReport, maxReport);
         LOG.trace(chosenReports);
