@@ -4,7 +4,7 @@
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 
 <html>
-<c:set var="title" value="Info"/>
+<c:set var="title" value="Reports"/>
 <%@ include file="/WEB-INF/jspf/header.jspf" %>
 <script src="js/reportList.js"></script>
 </br>

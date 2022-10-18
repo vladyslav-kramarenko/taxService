@@ -10,21 +10,21 @@
             defaultTransactionIsolation="READ_COMMITTED"
             url="jdbc:mysql://localhost:3306/taxservicedb"/>
 
-    <Resource
-            name="jdbc/DerbyDB"
-            auth="Container"
-            type="javax.sql.DataSource"
-            maxTotal="100" maxIdle="30"
-            maxWaitMillis="10000"
-            driverClassName="org.apache.derby.jdbc.EmbeddedDriver"
-            url="jdbc:derby:memory:testdb;create=true"/>
+<!--    <Resource-->
+<!--            name="jdbc/DerbyDB"-->
+<!--            auth="Container"-->
+<!--            type="javax.sql.DataSource"-->
+<!--            maxTotal="100" maxIdle="30"-->
+<!--            maxWaitMillis="10000"-->
+<!--            driverClassName="org.apache.derby.jdbc.EmbeddedDriver"-->
+<!--            url="jdbc:derby:memory:testdb;create=true"/>-->
 
-    <Resource
-            name="jdbc/MySQL"
-            auth="Container"
-            type="javax.sql.DataSource" maxTotal="100" maxIdle="30"
-            maxWaitMillis="10000"
-            username="user" password="user"
-            driverClassName="com.mysql.cj.jdbc.Driver"
-            url="jdbc:mysql://localhost:3306/topic07-task01"/>
+<!--    <Resource-->
+<!--            name="jdbc/MySQL"-->
+<!--            auth="Container"-->
+<!--            type="javax.sql.DataSource" maxTotal="100" maxIdle="30"-->
+<!--            maxWaitMillis="10000"-->
+<!--            username="user" password="user"-->
+<!--            driverClassName="com.mysql.cj.jdbc.Driver"-->
+<!--            url="jdbc:mysql://localhost:3306/topic07-task01"/>-->
 </Context>

@@ -3,7 +3,7 @@
 
 <html>
 
-<c:set var="title" value="Info"/>
+<c:set var="title" value="Report"/>
 <%--<%@ include file="/WEB-INF/jspf/head.jspf" %>--%>
 <%@ include file="/WEB-INF/jspf/header.jspf" %>
 <body>
