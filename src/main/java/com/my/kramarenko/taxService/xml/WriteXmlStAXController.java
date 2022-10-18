@@ -18,10 +18,12 @@ public class WriteXmlStAXController {
     private static final Logger LOG = Logger.getLogger(WriteXmlStAXController.class);
     public void writeToXML(TaxForm taxForm, ReportForm reportForm, String fileName) throws XMLStreamException, IOException {
         XMLOutputFactory output = XMLOutputFactory.newInstance();
+        FileOutputStream out = null;
         XMLStreamWriter writer = null;
-        try (FileOutputStream out = new FileOutputStream(fileName)) {
+        try {
             //TODO create directory if not created
             //default tomcat/bin
+            out = new FileOutputStream(fileName);
             writer = output.createXMLStreamWriter(out, ENCODING);
 
             writer.writeStartDocument(ENCODING, "1.0");
@@ -57,6 +59,7 @@ public class WriteXmlStAXController {
         } finally {
             writer.flush();
             writer.close();
+            out.close();
         }
 
     }
@@ -66,35 +69,36 @@ public class WriteXmlStAXController {
         for (LinkedDoc linkedDoc : entry) {
             writer.writeStartElement("DOC");
 
-            writer.writeAttribute("NUM", linkedDoc.getNum());
-            writer.writeAttribute("TYPE", linkedDoc.getDocType());
+            LinkedDoc doc = linkedDoc;
+            writer.writeAttribute("NUM", doc.getNum());
+            writer.writeAttribute("TYPE", doc.getDocType());
 
             writer.writeStartElement("C_DOC");
-            writer.writeCharacters(linkedDoc.getDoc());
+            writer.writeCharacters(doc.getDoc());
             writer.writeEndElement();//C_DOC
 
             writer.writeStartElement("C_DOC_SUB");
-            writer.writeCharacters(linkedDoc.getDocSub());
+            writer.writeCharacters(doc.getDocSub());
             writer.writeEndElement();//C_DOC_SUB
 
             writer.writeStartElement("C_DOC_VER");
-            writer.writeCharacters(linkedDoc.getDocVer());
+            writer.writeCharacters(doc.getDocVer());
             writer.writeEndElement();//C_DOC_VER
 
             writer.writeStartElement("C_DOC_TYPE");
-            writer.writeCharacters(linkedDoc.getDocType());
+            writer.writeCharacters(doc.getDocType());
             writer.writeEndElement();//C_DOC_TYPE
 
             writer.writeStartElement("C_DOC_CNT");
-            writer.writeCharacters(linkedDoc.getDocCnt());
+            writer.writeCharacters(doc.getDocCnt());
             writer.writeEndElement();//C_DOC_CNT
 
             writer.writeStartElement("C_DOC_STAN");
-            writer.writeCharacters(linkedDoc.getDocStan());
+            writer.writeCharacters(doc.getDocStan());
             writer.writeEndElement();//C_DOC_STAN
 
             writer.writeStartElement("FILENAME");
-            writer.writeCharacters(linkedDoc.getFilename());
+            writer.writeCharacters(doc.getFilename());
             writer.writeEndElement();//FILENAME
 
             writer.writeEndElement();//DOC
