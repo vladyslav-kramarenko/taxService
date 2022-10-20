@@ -1,4 +1,4 @@
-package com.my.kramarenko.taxService;
+package com.my.kramarenko.taxService.util;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.mockito.Mockito;
