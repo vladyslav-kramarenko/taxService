@@ -3,7 +3,9 @@
 
 <html>
 <c:set var="title" value="Login"/>
-<%@ include file="/WEB-INF/jspf/header.jspf" %>
+<%@ include file="/WEB-INF/jspf/head.jspf" %>
+<body>
+<%@ include file="/WEB-INF/jspf/menu.jspf" %>
 <script>
     $(function () {
         $("#log").buttonset();

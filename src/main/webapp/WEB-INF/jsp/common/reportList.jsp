@@ -5,7 +5,9 @@
 
 <html>
 <c:set var="title" value="Reports"/>
-<%@ include file="/WEB-INF/jspf/header.jspf" %>
+<%@ include file="/WEB-INF/jspf/head.jspf" %>
+<body>
+<%@ include file="/WEB-INF/jspf/menu.jspf" %>
 <script src="js/reportList.js"></script>
 <br>
 <div id="main">
@@ -53,8 +55,8 @@
                     </c:when>
                     <c:otherwise>
                          <input type="checkbox" name="chosen_status_id"
-                               value="${entry.key.id}"
-                               onChange="this.form.submit();"/>
+                                value="${entry.key.id}"
+                                onChange="this.form.submit();"/>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>

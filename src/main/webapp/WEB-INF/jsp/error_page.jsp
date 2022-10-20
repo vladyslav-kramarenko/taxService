@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isErrorPage="true" %>
-<%@ page import="java.io.PrintWriter" %>
+<%--<%@ page import="java.io.PrintWriter" %>--%>
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 
@@ -8,7 +8,7 @@
 
 <c:set var="title" value="Error" scope="page"/>
 <body>
-<%@ include file="/WEB-INF/jspf/header.jspf" %>
+<%@ include file="/WEB-INF/jspf/head.jspf" %>
 
 <h2 class="error">The following error occurred:</h2>
 

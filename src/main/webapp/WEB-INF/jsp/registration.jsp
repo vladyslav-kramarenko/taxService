@@ -3,7 +3,9 @@
 
 <html>
 <c:set var="title" value="registration"/>
-<%@ include file="/WEB-INF/jspf/header.jspf" %>
+<%@ include file="/WEB-INF/jspf/head.jspf" %>
+<body>
+<%@ include file="/WEB-INF/jspf/menu.jspf" %>
 <br>
 <div align="center" class="content">
     <div class="tab">

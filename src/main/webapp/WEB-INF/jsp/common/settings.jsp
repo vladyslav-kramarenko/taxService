@@ -4,9 +4,10 @@
 <html>
 
 <c:set var="title" value="Settings" scope="page"/>
-<%@ include file="/WEB-INF/jspf/header.jspf" %>
+<%@ include file="/WEB-INF/jspf/head.jspf" %>
 
 <body>
+<%@ include file="/WEB-INF/jspf/menu.jspf" %>
 <script>
     $(function () {
         $("#cancel").button({});
@@ -125,7 +126,7 @@
                 <td>${error}</td>
             </tr>
             <tr>
-                <td class="centerAlignmentTD" colspan='2' class="label">
+                <td class="centerAlignmentTD label" colspan='2'>
                 <span id="settings">
                 <input id="update" class="btn" type="submit"
                        value='<fmt:message key="settings_jsp.button.update"/>'>

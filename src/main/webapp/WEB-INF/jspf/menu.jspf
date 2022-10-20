@@ -1,21 +1,5 @@
-<%--=========================================================================== 
-Header (top area). 
-===========================================================================--%>
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
-<head>
-    <title>${title}</title>
-
-    <link rel="stylesheet" type="text/css" media="screen" href="style/stylesheet.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="style/gold/jquery-ui.css" />
-
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <script src="js/jquery-1.11.2.js" type="text/javascript"></script>
-    <script src="js/jquery.validate.js" type="text/javascript"></script>
-    <script src="style/gold/jquery-ui.js" type="text/javascript"></script>
-
-</head>
-
 <script>
     $(function () {
         $("#settings").button({
@@ -58,8 +42,6 @@ Header (top area).
         $("#reg").buttonset();
     });
 </script>
-
-<body>
 <div id="toolbar" class="ui-widget-header ui-corner-all">
     <H1 class="logo" id="logo">Tax Service</H1>
     <c:choose>

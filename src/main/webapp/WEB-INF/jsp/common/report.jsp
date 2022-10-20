@@ -2,7 +2,9 @@
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 <html>
 <c:set var="title" value="Report"/>
-<%@ include file="/WEB-INF/jspf/header.jspf" %>
+<%@ include file="/WEB-INF/jspf/head.jspf" %>
+<body>
+<%@ include file="/WEB-INF/jspf/menu.jspf" %>
 <br>
 <c:if test="${userRole.name=='user' and reportStatus.id==1}">
     <form action="controller" class="cmxform" id="loadXML_form" method="post" enctype="multipart/form-data">
