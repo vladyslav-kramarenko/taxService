@@ -16,6 +16,10 @@ public enum Role implements Serializable {
 
     public static Role getRole(User user) {
         int roleId = user.getRoleId();
+        return getRole(roleId);
+    }
+
+    public static Role getRole(int roleId) {
         return Arrays.stream(Role.values())
                 .filter(c -> c.getId() == roleId)
                 .findFirst().get();

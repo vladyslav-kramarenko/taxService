@@ -7,6 +7,7 @@ import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.mySQL.UserManager;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.Path;
+import com.my.kramarenko.taxService.web.command.util.UserUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -61,12 +62,7 @@ public class ViewSettingsCommand extends Command {
         if (PasswordCreator.getPassword(currentPassword).equals(userInSession.getPassword())) {
             try {
                 LOG.trace("current password == user password");
-                userInSession.setEmail(request.getParameter("email"));
-                userInSession.setFirstName(request.getParameter("first_name"));
-                userInSession.setLastName(request.getParameter("last_name"));
-                userInSession.setPatronymic(request.getParameter("patronymic"));
-                userInSession.setCodePassport(request.getParameter("code_passport"));
-                userInSession.setPhone(request.getParameter("phone"));
+                UserUtil.setUserFields(userInSession, request);
                 if (password != null && password.length() > 0) {
                     userInSession.setPassword(PasswordCreator.getPassword(password));
                 } else {

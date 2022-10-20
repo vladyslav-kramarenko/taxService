@@ -44,5 +44,4 @@ public class UpdateLocaleCommand extends Command {
 
         return Path.PAGE_INFO;
     }
-
 }

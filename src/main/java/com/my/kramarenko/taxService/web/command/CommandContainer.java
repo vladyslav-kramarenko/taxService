@@ -1,6 +1,8 @@
 package com.my.kramarenko.taxService.web.command;
 
 import com.my.kramarenko.taxService.web.command.admin.AllUsersCommand;
+import com.my.kramarenko.taxService.web.command.admin.DeleteUserCommand;
+import com.my.kramarenko.taxService.web.command.admin.EditUserCommand;
 import com.my.kramarenko.taxService.web.command.common.*;
 import com.my.kramarenko.taxService.web.command.inspector.UpdateReportStatus;
 import com.my.kramarenko.taxService.web.command.outOfControl.LoginCommand;
@@ -45,8 +47,11 @@ public class CommandContainer {
         commands.put("viewReport", new ReportCommand());
 
         // admin commands
+        commands.put("changeUserBannedStatus", new AllUsersCommand());
         commands.put("allUsers", new AllUsersCommand());
         commands.put("changeUserRole", new AllUsersCommand());
+        commands.put("editUser", new EditUserCommand());
+        commands.put("deleteUser", new DeleteUserCommand());
 
         LOG.trace("Command container was successfully initialized");
         LOG.trace("Number of commands --> " + commands.size());
@@ -62,7 +67,7 @@ public class CommandContainer {
         LOG.trace("Looking for a command [" + commandName + "]");
         commandName = commandName.trim();
         LOG.trace("Command after trim [" + commandName + "]");
-        if (commandName == null || !commands.containsKey(commandName)) {
+        if (!commands.containsKey(commandName)) {
             LOG.debug("Command not found, name --> [" + commandName + "]");
             return commands.get("noCommand");
         }

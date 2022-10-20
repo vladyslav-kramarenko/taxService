@@ -1,7 +1,5 @@
 package com.my.kramarenko.taxService.db.entity;
 
-import com.my.kramarenko.taxService.db.enums.Role;
-
 import java.io.Serial;
 
 /**
@@ -21,23 +19,53 @@ public class User extends Entity {
     private String firstName;
     private String lastName;
     private String patronymic;
-    private String codePassport;
+    private String code;
     private int roleId;
+
+    private String companyName;
+    private boolean isBanned = false;
+    private boolean isIndividual = true;
+
 
     public User() {
     }
 
-    public User(String email, String password, String name, String surname, String patronymic, String codePassport, String phone, int roleId) {
-        this.firstName = name;
-        this.lastName = surname;
-        this.patronymic = patronymic;
-        this.codePassport = codePassport;
-        this.email = email;
-        this.phone = phone;
-        this.password = password;
-        this.roleId = roleId;
+    public boolean isIndividual() {
+        return isIndividual;
     }
 
+    public void setIndividual(boolean individual) {
+        isIndividual = individual;
+    }
+
+    public void setIndividual(int individual) {
+        isIndividual = individual == 1;
+    }
+
+    public void setIndividual(String individual) {
+        isIndividual = Boolean.parseBoolean(individual);
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+
+    public boolean isBanned() {
+        return isBanned;
+    }
+
+    public void setBanned(boolean banned) {
+        this.isBanned = banned;
+    }
+
+    public void setBanned(int banned) {
+        isBanned = banned == 1;
+    }
 
     public String getPatronymic() {
         return patronymic;
@@ -47,12 +75,12 @@ public class User extends Entity {
         this.patronymic = patronymic;
     }
 
-    public String getCodePassport() {
-        return codePassport;
+    public String getCode() {
+        return code;
     }
 
-    public void setCodePassport(String codePassport) {
-        this.codePassport = codePassport;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     /**
@@ -118,9 +146,11 @@ public class User extends Entity {
     @Override
     public String toString() {
         return "User [" +
-//                "login=" + login + ", " +
-                "firstName=" + firstName
-                + ", lastName=" + lastName + ", patronymic=" + patronymic + ", codePassport=" + codePassport + ", roleId=" + roleId + ", e-mail="
-                + email + ", phone=" + phone + "]";
+                "companyName=" + companyName +
+                ", code=" + code + ", " +
+                ", is Individual=" + isIndividual +
+                ", roleId=" + roleId +
+                ", e-mail=" + email +
+                ", phone=" + phone + "]";
     }
 }

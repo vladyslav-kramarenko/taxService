@@ -9,13 +9,17 @@ import java.util.Optional;
 public interface UserDao {
     List<User> getAllUsers() throws DBException;
 
+    List<User> getUsersByFilter(String userFilter) throws DBException;
+
     User getUser(int userId) throws DBException;
 
     void updateUser(User user) throws DBException;
 
+    void setBanned(int userId, boolean banned) throws DBException;
+
     void updateUserRole(int userId, int roleId) throws DBException;
 
-    void deleteUser(User user) throws DBException;
+    void deleteUser(int userId) throws DBException;
 
     void addUser(User user) throws DBException;
 

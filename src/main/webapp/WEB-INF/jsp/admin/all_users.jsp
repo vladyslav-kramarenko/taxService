@@ -8,47 +8,82 @@
 <c:set var="title" value="All users" scope="page"/>
 
 <%@ include file="/WEB-INF/jspf/header.jspf" %>
-</br>
+<br>
 <form>
-    количество записей на странице
+    <label for="recordsPerPage"> количество записей на странице:</label>
     <input type="hidden" name="command" value="allUsers">
     <input type="hidden" name="selectedPage" value="1">
-    <select name="recordsPerPage" class="select" onChange="this.form.submit();">
+    <select id="recordsPerPage" name="recordsPerPage" class="select" onchange="this.form.submit()">
         <mylib:paginationRecordsPerPage pageQuantity="1"/>
         <mylib:paginationRecordsPerPage pageQuantity="2"/>
         <mylib:paginationRecordsPerPage pageQuantity="10"/>
         <mylib:paginationRecordsPerPage pageQuantity="20"/>
     </select>
+    <label for="userFilter">Filter by company name:</label>
+    <input id="userFilter" type="text" value="${userFilter}" name="userFilter" onchange="this.form.submit()">
 </form>
 <table>
     <thead>
     <tr class="header">
         <td>№</td>
-        <td><fmt:message key="user.first_name"/></td>
-        <td><fmt:message key="user.last_name"/></td>
+        <td><fmt:message key="user.company_name"/></td>
         <td><fmt:message key="user.phone"/></td>
         <td><fmt:message key="user.email"/></td>
+        <td><fmt:message key="header.banned"/></td>
         <td><fmt:message key="user.role"/></td>
+        <td><fmt:message key="header.actions"/></td>
     </tr>
     </thead>
-    <c:forEach var="bean" items="${paginationList}">
+    <c:forEach var="userItem" items="${paginationList}">
         <tr>
-            <td>${bean.id}</td>
-            <td>${bean.firstName}</td>
-            <td>${bean.lastName}</td>
-            <td>${bean.phone}</td>
-            <td>${bean.email}</td>
-            <c:choose>
-                <c:when test="${bean.id!=user.id}">
-                    <td>
+            <td>${userItem.id}</td>
+            <td>${userItem.companyName}</td>
+            <td>${userItem.phone}</td>
+            <td>${userItem.email}</td>
+            <td>
+                <form action="controller">
+                    <input type="hidden" name="command" value="changeUserBannedStatus"/>
+                    <input type="hidden" name="user_id" value="${userItem.id}"/>
+                    <c:choose>
+                        <c:when test="${userItem.id==user.id}">
+                            <fmt:message key='banned.${userItem.banned}'/>
+                        </c:when>
+                        <c:otherwise>
+                            <select name="banned_status" onChange="this.form.submit();">
+                                <c:choose>
+                                    <c:when test="${userItem.banned==true}">
+                                        <option selected value="${true}">
+                                            <fmt:message key='banned.true'/>
+                                        </option>
+                                        <option value="${false}">
+                                            <fmt:message key='banned.false'/>
+                                        </option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="${true}">
+                                            <fmt:message key='banned.true'/>
+                                        </option>
+                                        <option selected value=${false}>
+                                            <fmt:message key='banned.false'/>
+                                        </option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </select>
+                        </c:otherwise>
+                    </c:choose>
+                </form>
+            </td>
+            <td>
+                <c:choose>
+                    <c:when test="${userItem.id!=user.id}">
                         <form action="controller">
                             <input type="hidden" name="command" value="changeUserRole"/>
-                            <input type="hidden" name="user_id" value="${bean.id}"/>
+                            <input type="hidden" name="user_id" value="${userItem.id}"/>
                             <select name="role_id" onChange="this.form.submit();">
                                 <c:forEach var="role" items="${roleMap}" varStatus="loop">
                                     <c:choose>
-                                        <c:when test="${role.key != bean.roleId}">
-                                            <option value="${loop.index}">
+                                        <c:when test="${role.key != userItem.roleId}">
+                                            <option value="${role.key}">
                                                 <fmt:message key='role.${role.value.name}'/>
                                             </option>
                                         </c:when>
@@ -61,13 +96,21 @@
                                 </c:forEach>
                             </select>
                         </form>
-                    </td>
-                </c:when>
-                <c:otherwise>
-                    <td>
-                        <fmt:message key='role.${roleMap.get(bean.roleId).name}'/></td>
-                </c:otherwise>
-            </c:choose>
+                    </c:when>
+                    <c:otherwise>
+                        <fmt:message key='role.${roleMap.get(userItem.roleId).name}'/>
+                    </c:otherwise>
+                </c:choose>
+            </td>
+            <td>
+                <a class="aButton" id="editUserBtn" href="controller?command=editUser&userId=${userItem.id}">
+                    <fmt:message key="all_users.jsp.edit_user"/>
+                </a>
+                <a class="aButton" id="deleteUserBtn" href="controller?command=deleteUser&userId=${userItem.id}"
+                   onclick="return confirm('Are you sure?')">
+                    <fmt:message key="all_users.jsp.delete_user"/>
+                </a>
+            </td>
         </tr>
     </c:forEach>
 </table>

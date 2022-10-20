@@ -6,7 +6,6 @@ import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.entity.Status;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
 import com.my.kramarenko.taxService.db.mySQL.ReportManager;
-import com.my.kramarenko.taxService.db.mySQL.UserManager;
 import org.apache.log4j.Logger;
 
 import java.util.*;
@@ -18,11 +17,13 @@ public class UserReportDTOBuilder {
     public static List<ReportDTO> getAllUserReportsWithStatuses(User user, Map<Status, Boolean> statuses, Map<String, Type> typeMap) throws DBException {
         List<ReportDTO> reportsList = new ArrayList<>();
         ReportManager reportManager = DBManager.getInstance().getReportManager();
+
         List<Status> chosenStatuses = statuses.entrySet()
                 .stream()
                 .filter(Map.Entry::getValue)
                 .map(Map.Entry::getKey)
                 .toList();
+
         List<ReportDTO> reports = ReportDTOBuilder
                 .getReportsDTO(
                         reportManager.getUserReportsWithStatuses(user.getId(), chosenStatuses),
@@ -35,9 +36,26 @@ public class UserReportDTOBuilder {
         return reportsList;
     }
 
-    public static List<ReportDTO> getAllReportsWithStatuses(Map<Status, Boolean> statusMap, Map<String, Type> typeMap) throws DBException {
+//    public static List<ReportDTO> getAllReportsWithStatuses(Map<Status, Boolean> statusMap, Map<String, Type> typeMap) throws DBException {
+//        List<ReportDTO> list = new ArrayList<>();
+//        List<User> users = new UserManager().getAllUsers();
+//        for (User user : users) {
+//            list.addAll(getAllUserReportsWithStatuses(user, statusMap, typeMap));
+//        }
+//        return list;
+//    }
+
+//    public static List<ReportDTO> getAllReportsWithStatusesWithUser(Map<Status, Boolean> statusMap, Map<String, Type> typeMap, String userFilter) throws DBException {
+//        List<ReportDTO> list = new ArrayList<>();
+//        List<User> users = new UserManager().getUsersByFilter(userFilter);
+//        for (User user : users) {
+//            list.addAll(getAllUserReportsWithStatuses(user, statusMap, typeMap));
+//        }
+//        return list;
+//    }
+
+    public static List<ReportDTO> getUsersReportsWithStatuses(Map<Status, Boolean> statusMap, Map<String, Type> typeMap, List<User> users) throws DBException {
         List<ReportDTO> list = new ArrayList<>();
-        List<User> users = new UserManager().getAllUsers();
         for (User user : users) {
             list.addAll(getAllUserReportsWithStatuses(user, statusMap, typeMap));
         }

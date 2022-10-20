@@ -13,29 +13,24 @@ import java.io.Serial;
 
 /**
  * Logout command.
- * 
+ *
  * @author Vlad Kramarenko
- * 
  */
 public class LogoutCommand extends Command {
+    @Serial
+    private static final long serialVersionUID = -2785976616686657267L;
+    private static final Logger LOG = Logger.getLogger(LogoutCommand.class);
+    @Override
+    public String execute(HttpServletRequest request,
+                          HttpServletResponse response) throws IOException, ServletException {
+        LOG.trace("Command starts");
 
-	@Serial
-	private static final long serialVersionUID = -2785976616686657267L;
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
 
-	private static final Logger LOG = Logger.getLogger(LogoutCommand.class);
-
-	@Override
-	public String execute(HttpServletRequest request,
-						  HttpServletResponse response) throws IOException, ServletException {
-		LOG.trace("Command starts");
-
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			session.invalidate();
-		}
-
-		LOG.debug("Command finished");
-		return Path.PAGE_LOGIN;
-	}
-
+        LOG.debug("Command finished");
+        return Path.PAGE_LOGIN;
+    }
 }

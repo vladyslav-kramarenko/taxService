@@ -18,9 +18,11 @@ table {
 .label {
     text-align: right;
 }
+
 .leftAlignmentTD {
     text-align: left;
 }
+
 .centerAlignmentTD {
     text-align: center;
 }
@@ -37,7 +39,7 @@ table {
     display: inline;
     float: left;
     vertical-align: center;
-    margin: 0px 0 0 4px;
+    margin: 0 0 0 4px;
     font-weight: normal;
 }
 
@@ -138,7 +140,6 @@ hr {
     background-color: red;
     color: red;
     height: 1px;
-    color: red;
 }
 
 .content {
@@ -164,7 +165,7 @@ hr {
     background: #ede4d4;
     border: 1px solid #cdc3b7;
     border-radius: 6px;
-    font-family: Helvetica,Arial,sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
     font-size: 1em;
 }
 
@@ -175,10 +176,11 @@ hr {
     text-decoration: none;
 }
 
-#saveReportBtn{
+#saveReportBtn {
     width: 150px;
 }
-#sendReportBtn{
+
+#sendReportBtn {
     width: 150px;
 }
 
@@ -190,7 +192,7 @@ footer {
     width: 100%;
     position: fixed;
     text-align: center;
-    bottom: 0px;
+    bottom: 0;
 }
 
 /* pagination position styling */
@@ -212,8 +214,64 @@ footer {
     font-weight: bold;
 }
 
+
 /* pagination hover effect on non-active */
 .pagination_section a:hover:not(.active) {
     background-color: #031F3B;
     color: white;
+}
+
+#editUserBtn {
+    width: 100px;
+}
+
+#deleteUserBtn {
+    width: 100px;
+}
+
+/* Style the tab */
+/*.tab {*/
+/*    display: inline-block;*/
+/*    alignment: center;*/
+/*    overflow: hidden;*/
+/*    border: 1px solid #ccc;*/
+/*    background-color: #f1f1f1;*/
+/*}*/
+
+/*!* Style the buttons that are used to open the tab content *!*/
+.tab button {
+    width: 200px;
+    height: 30px;
+    transition: 0.3s;
+}
+
+.tab button.active {
+    /*background-color: #ccc;*/
+    color: #b85700;
+    font-weight: bold;
+    border-color: #b85700;
+}
+
+#individual {
+    display: inline-block;
+    border: none;
+}
+
+#company {
+    display: none;
+    border: none;
+}
+
+#regBtnComp {
+    width: 300px;
+    height: 30px;
+}
+
+#regBtnInd {
+    width: 300px;
+    height: 30px;
+}
+#comment{
+    display: none;
+    width: auto;
 }

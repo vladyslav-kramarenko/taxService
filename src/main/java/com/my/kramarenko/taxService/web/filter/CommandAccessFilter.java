@@ -1,7 +1,7 @@
 package com.my.kramarenko.taxService.web.filter;
 
+import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Role;
-import com.my.kramarenko.taxService.web.Path;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -50,7 +50,7 @@ public class CommandAccessFilter implements Filter {
 
         String commandName = request.getParameter("command");
         commandName = commandName.trim();
-        if (commandName == null || commandName.isEmpty()) {
+        if (commandName.isEmpty()) {
             LOG.trace("CommandName is empty");
             return false;
         }
@@ -66,11 +66,20 @@ public class CommandAccessFilter implements Filter {
             return false;
         }
 
-        Role userRole = (Role) session.getAttribute("userRole");
-        if (userRole == null) {
-            LOG.trace("userRole == null");
+        User user = (User) session.getAttribute("user");
+
+        if (user == null) {
+            LOG.info("User == null");
             return false;
         }
+
+        if (user.isBanned()) {
+            LOG.info("User is banned");
+            return false;
+        }
+
+        Role userRole = Role.getRole(user);
+
         LOG.trace("userRole == " + userRole);
         LOG.trace("accessMap of " + userRole + " contains " + commandName + ": " + accessMap.get(userRole).contains(commandName));
         LOG.trace("commons contains " + commandName + ": " + commons.contains(commandName));

@@ -24,6 +24,7 @@ public class LowLevelUserManager {
         try (PreparedStatement pstmt = con.prepareStatement(SQL_INSERT_INTO_USERS,
                 Statement.RETURN_GENERATED_KEYS)) {
             fillUserFields(user, pstmt);
+            LOG.trace(pstmt);
             pstmt.executeUpdate();
             ResultSet keys = pstmt.getGeneratedKeys();
             keys.next();
@@ -52,9 +53,15 @@ public class LowLevelUserManager {
         pstmt.setString(k++, user.getPassword());
         pstmt.setString(k++, user.getFirstName());
         pstmt.setString(k++, user.getLastName());
+        pstmt.setString(k++, user.getPatronymic());
+        pstmt.setString(k++, user.getCode());
+        pstmt.setString(k++, user.getCompanyName());
+        pstmt.setInt(k++, user.isIndividual() ? 1 : 0);
+        LOG.info("isInd=" + (user.isIndividual() ? 1 : 0));
         pstmt.setInt(k++, user.getRoleId());
-        pstmt.setString(k++, user.getPhone());
+        LOG.info("roleId=" + user.getRoleId());
         pstmt.setString(k++, user.getEmail());
+        pstmt.setString(k++, user.getPhone());
         return k;
     }
 
@@ -63,6 +70,16 @@ public class LowLevelUserManager {
         try (PreparedStatement pstmt = con.prepareStatement(SQL_UPDATE_USER_ROLE)) {
             int k = 1;
             pstmt.setInt(k++, roleId);
+            pstmt.setInt(k, userId);
+            LOG.trace(pstmt);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public static void setBanned(Connection con, int userId, boolean banned) throws SQLException {
+        try (PreparedStatement pstmt = con.prepareStatement(SQL_SET_USER_BANNED)) {
+            int k = 1;
+            pstmt.setInt(k++, banned ? 1 : 0);
             pstmt.setInt(k, userId);
             LOG.trace(pstmt);
             pstmt.executeUpdate();
@@ -101,15 +118,17 @@ public class LowLevelUserManager {
             user.setId(rs.getInt(Fields.ENTITY_ID));
             user.setFirstName(rs.getString(Fields.USER_FIRST_NAME));
             user.setLastName(rs.getString(Fields.USER_LAST_NAME));
+            user.setPatronymic(rs.getString(Fields.USER_PATRONYMIC));
 //			user.setLogin(rs.getString(Fields.USER_LOGIN));
             user.setPassword(rs.getString(Fields.USER_PASSWORD));
-            user.setPatronymic(rs.getString(Fields.USER_PATRONYMIC));
-            user.setCodePassport(rs.getString(Fields.USER_CODEPASSPORT));
+            user.setCode(rs.getString(Fields.USER_CODE));
             user.setPhone(rs.getString(Fields.USER_PHONE));
             user.setEmail(rs.getString(Fields.USER_EMAIL));
+            user.setCompanyName(rs.getString(Fields.USER_COMPANY_NAME));
             user.setRoleId(rs.getInt(Fields.USER_ROLE_ID));
+            user.setBanned(rs.getInt(Fields.USER_IS_BANNED));
+            user.setIndividual(rs.getInt(Fields.USER_IS_INDIVIDUAL));
             result.add(user);
-            System.out.println(user);
         }
         return result;
     }
@@ -133,6 +152,22 @@ public class LowLevelUserManager {
         try (Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(SQL_SELECT_ALL_USERS)) {
             return parseResultSet(rs);
+        }
+    }
+
+    public static List<User> getAllUsersThatContainString(Connection con, String partOfUserCompany) throws SQLException {
+
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            pstmt = con.prepareStatement(SQL_SELECT_ALL_USERS_THAT_CONTAIN_STRING);
+            pstmt.setString(1, partOfUserCompany);
+            LOG.trace(pstmt);
+            rs = pstmt.executeQuery();
+            return parseResultSet(rs);
+        } finally {
+            DBManager.getInstance().close(rs);
+            DBManager.getInstance().close(pstmt);
         }
     }
 

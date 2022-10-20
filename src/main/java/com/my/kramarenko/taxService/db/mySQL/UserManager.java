@@ -37,6 +37,24 @@ public class UserManager implements UserDao {
     }
 
     /**
+     * Search for all users with filter
+     * @param userFilter part of user company name
+     * @return list of users
+     * @throws DBException
+     */
+    @Override
+    public List<User> getUsersByFilter(String userFilter) throws DBException {
+        try (Connection con = DBManager.getInstance().getConnection()) {
+            con.setAutoCommit(true);
+            return LowLevelUserManager.getAllUsersThatContainString(con, userFilter);
+        } catch (SQLException e) {
+            String message = "Cannot obtain all users";
+            LOG.error(message, e);
+            throw new DBException(message, e);
+        }
+    }
+
+    /**
      * Search user by id
      *
      * @param userId user id
@@ -79,6 +97,26 @@ public class UserManager implements UserDao {
      * Update user role
      *
      * @param userId id of user to update
+     * @param banned is user banned
+     * @throws DBException
+     */
+    @Override
+    public void setBanned(int userId, boolean banned) throws DBException {
+        LOG.trace("start update");
+        try (Connection con = DBManager.getInstance().getConnection()) {
+            LowLevelUserManager.setBanned(con, userId, banned);
+            con.commit();
+        } catch (SQLException e) {
+            String message = "Cannot update user's role";
+            LOG.error(message, e);
+            throw new DBException(message, e);
+        }
+    }
+
+    /**
+     * Update user role
+     *
+     * @param userId id of user to update
      * @param roleId new role id
      * @throws DBException
      */
@@ -99,14 +137,14 @@ public class UserManager implements UserDao {
     /**
      * Delete user
      *
-     * @param user user to delete
+     * @param userId id of user to delete
      * @throws DBException
      */
     @Override
-    public void deleteUser(User user) throws DBException {
+    public void deleteUser(int userId) throws DBException {
         try (Connection con = DBManager.getInstance().getConnection()) {
             con.setAutoCommit(true);
-            LowLevelUserManager.deleteUser(con, user.getId());
+            LowLevelUserManager.deleteUser(con, userId);
         } catch (SQLException ex) {
             String message = "Cannot delete a user";
             LOG.error(message, ex);
@@ -123,8 +161,8 @@ public class UserManager implements UserDao {
     @Override
     public void addUser(User user) throws DBException {
         try (Connection con = DBManager.getInstance().getConnection()) {
-            con.setAutoCommit(true);
             LowLevelUserManager.addUser(con, user);
+            con.commit();
         } catch (SQLException e) {
             String message = "Cannot create a user";
             LOG.error(message, e);

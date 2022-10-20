@@ -3,7 +3,6 @@ package com.my.kramarenko.taxService.db.entity;
 
 public class Status extends Entity {
 
-
     private int id;
     private String name;
 

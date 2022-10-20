@@ -5,19 +5,18 @@
 <html>
 
 <c:set var="title" value="Error" scope="page" />
-<%@ include file="/WEB-INF/jspf/head.jspf"%>
+<%--<%@ include file="/WEB-INF/jspf/head.jspf"%>--%>
 
-<body>
-<table style="width: 100%" id="main-container">
+<%--<body>--%>
+<%--<table style="width: 100%" id="main-container">--%>
 
     <%@ include file="/WEB-INF/jspf/header.jspf"%>
     <%
-        String site = new String("controller?command=login");
+        String site = "controller?command=login";
         response.setStatus(response.SC_MOVED_TEMPORARILY);
         response.setHeader("Location", site);
     %>
 
-</table>
 <%@ include file="/WEB-INF/jspf/footer.jspf"%>
 </body>
 </html>

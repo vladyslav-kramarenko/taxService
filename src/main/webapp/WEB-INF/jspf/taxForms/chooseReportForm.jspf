@@ -1,0 +1,11 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--<%@ attribute name="pageCommand" required="true" type="java.lang.String" %>--%>
+
+<c:choose>
+    <c:when test="${reportTypeId=='F0103405'}">
+        <%@ include file="/WEB-INF/jspf/taxForms/F0103405.jspf" %>
+    </c:when>
+    <c:when test="${reportTypeId=='F0134105'}">
+        <%@ include file="/WEB-INF/jspf/taxForms/F0134105.jspf" %>
+    </c:when>
+</c:choose>

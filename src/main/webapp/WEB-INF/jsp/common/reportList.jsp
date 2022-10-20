@@ -7,7 +7,7 @@
 <c:set var="title" value="Reports"/>
 <%@ include file="/WEB-INF/jspf/header.jspf" %>
 <script src="js/reportList.js"></script>
-</br>
+<br>
 <div id="main">
     <span id="newReport">
     <c:if test="${userRole.id==2}">
@@ -26,10 +26,10 @@
     </c:if>
     </span>
     <form>
-        количество записей на странице
+        <label for="recordsPerPage"> количество записей на странице</label>
         <input type="hidden" name="command" value="reportList">
         <input type="hidden" name="selectedPage" value="1">
-        <select name="recordsPerPage" class="select" onChange="this.form.submit();">
+        <select id="recordsPerPage" name="recordsPerPage" class="select" onChange="this.form.submit();">
             <mylib:paginationRecordsPerPage pageQuantity="1"/>
             <mylib:paginationRecordsPerPage pageQuantity="5"/>
             <mylib:paginationRecordsPerPage pageQuantity="10"/>
@@ -37,8 +37,12 @@
         </select>
     </form>
     <span id="filter">
-    <form id="filterForm" action="controller" method="get">
-        <input type="hidden" name="command" value="reportList"/>
+        <form id="filterForm" action="controller" method="get"> <input type="hidden" name="command" value="reportList"/>
+        <input type="hidden" name="recordsPerPage" value="${recordsPerPage}">
+        <c:if test="${userRole.id!=2}">
+            <label for="userFilter">Filter by user: </label>
+            <input id="userFilter" name="userFilter" value="${userFilter}" type="text" onchange="this.form.submit()">
+        </c:if>
             <c:forEach var="entry" items="${chosenStatusMap}">
                 ${entry.key.name}
                 <c:choose>
@@ -48,12 +52,12 @@
                                 onChange="this.form.submit();"/>
                     </c:when>
                     <c:otherwise>
-                        <input type="checkbox" name="chosen_status_id"
+                         <input type="checkbox" name="chosen_status_id"
                                value="${entry.key.id}"
                                onChange="this.form.submit();"/>
                     </c:otherwise>
-            </c:choose>
-        </c:forEach>
+                </c:choose>
+            </c:forEach>
 <%--        <c:forEach var="st" items="${statusFilterList}">--%>
 <%--            ${st.status.name}--%>
 <%--            <c:choose>--%>
@@ -89,12 +93,13 @@
         <%--            </c:forEach>--%>
         <%--        </select>--%>
 
-</span>
-    <hr/>
+        </form>
+    </span>
+    <hr>
     <table id="reportTable" style="width: 100%;">
         <tr class="header">
             <c:if test="${userRole.id!=2}">
-                <td value="asc" onclick='sortTable(0,this);'>User ID</td>
+                <td value="asc" onclick='sortTable(0,this);'>User</td>
                 <td value="asc" onclick='sortTable(1,this);'>Report ID</td>
             </c:if>
             <td value="asc" onclick='sortTable(2,this);'>
@@ -105,12 +110,11 @@
             <td value="asc" onclick='sortTable(4,this);'>Report type</td>
             <td value="asc" onclick='sortTable(5,this);'>Status</td>
             <td>Actions</td>
-
         </tr>
         <c:forEach var="report" items="${paginationList}">
             <tr>
                 <c:if test="${userRole.id!=2}">
-                    <td>${report.user.email}</td>
+                    <td>${report.user.companyName}</td>
                     <td>${report.report.id}</td>
                 </c:if>
                 <td>${report.report.date}</td>
@@ -118,7 +122,7 @@
                 <td>${report.type.name}</td>
                 <td>${report.status.name}</td>
                 <td>
-                        <span class="actions">
+                    <span class="actions">
                         <c:choose>
                             <c:when test="${userRole.id==2}">
                                 <c:choose>
@@ -142,12 +146,11 @@
                                 <a href="controller?command=editReport&reportId=${report.report.id}">Show</a>
                             </c:otherwise>
                         </c:choose>
-                            </span>
+                    </span>
                 </td>
             </tr>
         </c:forEach>
     </table>
-    </form>
 </div>
 <mylib:paginationFooter pageCommand="reportList"/>
 

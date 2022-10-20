@@ -13,6 +13,7 @@ import com.my.kramarenko.taxService.db.entity.Status;
 import com.my.kramarenko.taxService.db.mySQL.TypeManager;
 import com.my.kramarenko.taxService.web.Path;
 import com.my.kramarenko.taxService.web.command.Command;
+import com.my.kramarenko.taxService.web.command.util.UserUtil;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -62,9 +63,10 @@ public class ReportListCommand extends Command {
             reportTypes = tm.getAllTypes();
             request.setAttribute("reportTypeList", reportTypes);
         } else {
+            List<User> users = UserUtil.getUserListDependOnFilter(request);
+            reportsList = UserReportDTOBuilder.getUsersReportsWithStatuses(chosenStatusMap, typeMap, users);
 //            if (roleMap.get(user.getRoleId()).equals(Role.ADMIN)) {
 //            }
-            reportsList = UserReportDTOBuilder.getAllReportsWithStatuses(chosenStatusMap, typeMap);
         }
 
         request.setAttribute("chosenStatusMap", chosenStatusMap);

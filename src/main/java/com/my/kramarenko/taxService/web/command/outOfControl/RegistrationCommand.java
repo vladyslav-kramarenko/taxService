@@ -8,6 +8,7 @@ import com.my.kramarenko.taxService.db.mySQL.UserManager;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.command.LastPage;
 import com.my.kramarenko.taxService.web.Path;
+import com.my.kramarenko.taxService.web.command.util.UserUtil;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,7 +34,6 @@ public class RegistrationCommand extends Command {
         String forward = Path.PAGE_ERROR_PAGE;
         String email = request.getParameter("email");
 
-        // error handler
         String errorMessage;
         if (email == null || email.isEmpty()) {
             forward = Path.PAGE_REGISTRATION;
@@ -52,6 +52,15 @@ public class RegistrationCommand extends Command {
                     try {
                         LOG.trace("everything is ok => write user to DB");
                         user.setPassword(PasswordCreator.getPassword(user.getPassword()));
+                        UserUtil.setUserFields(user, request);
+                        if (user.isIndividual()) {
+                            LOG.debug("user is individual -> create company name:");
+                            user.setCompanyName(createCompanyName(user));
+                            LOG.debug(user.getCompanyName());
+                        } else {
+                            LOG.debug("isIndividual = " + user.isIndividual());
+                        }
+                        user.setRoleId(Role.USER.getId());
                         userManager.addUser(user);
                         ServletContext sc = request.getServletContext();
                         Map<Integer, Role> roleMap = (Map<Integer, Role>) sc.getAttribute("roleMap");
@@ -80,14 +89,28 @@ public class RegistrationCommand extends Command {
         LOG.debug("errorMessage --> " + errorMessage);
     }
 
+    private static String createCompanyName(User user) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getValue(user.getLastName()));
+        stringBuilder.append(" ");
+        stringBuilder.append(getValue(user.getFirstName()));
+        stringBuilder.append(" ");
+        stringBuilder.append(getValue(user.getPatronymic()));
+        return stringBuilder.toString();
+    }
+
+    private static String getValue(String value) {
+        if (value != null) return value;
+        else return "";
+    }
+
     private void setSessionAttributes(HttpSession session, User user, Map<Integer, Role> roleMap) {
         session.setAttribute("user", user);
-
         LOG.trace("Set the session attribute: user --> " + user);
         Role role = roleMap.get(user.getRoleId());
         session.setAttribute("userRole", role);
-        LOG.trace("Set the session attribute: userRole --> "
-                + role.getName());
+//        LOG.trace("Set the session attribute: userRole --> "
+//                + role.getName());
         LOG.info("User " + user + " logged as "
                 + role.getName());
     }
@@ -97,18 +120,19 @@ public class RegistrationCommand extends Command {
         request.setAttribute("phone", user.getPhone());
         request.setAttribute("name", user.getFirstName());
         request.setAttribute("lastName", user.getLastName());
+        request.setAttribute("patronymic", user.getPatronymic());
+        request.setAttribute("company_name", user.getCompanyName());
+        request.setAttribute("is_individual", user.isIndividual());
+        request.setAttribute("code", user.getCode());
     }
 
     private User createUserBean(HttpServletRequest request) {
         int id = Role.USER.getId();
-        String email = request.getParameter("email");
+        User user = new User();
+        user.setId(id);
         String password = request.getParameter("password");
-        String name = request.getParameter("name");
-        String surname = request.getParameter("surname");
-        String patronymic = request.getParameter("patronymic");
-        String codePassport = request.getParameter("code_passport");
-        String phone = request.getParameter("phone");
-
-        return new User(email, password, name, surname,patronymic,codePassport, phone, id);
+        user.setPassword(password);
+        UserUtil.setUserFields(user, request);
+        return user;
     }
 }
