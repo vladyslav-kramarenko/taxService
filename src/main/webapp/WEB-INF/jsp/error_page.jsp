@@ -3,12 +3,11 @@
 <%--<%@ page import="java.io.PrintWriter" %>--%>
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
-
 <html>
-
 <c:set var="title" value="Error" scope="page"/>
-<body>
 <%@ include file="/WEB-INF/jspf/head.jspf" %>
+<body>
+<%@ include file="/WEB-INF/jspf/menu.jspf" %>
 
 <h2 class="error">The following error occurred:</h2>
 

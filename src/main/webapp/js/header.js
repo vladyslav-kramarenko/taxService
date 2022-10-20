@@ -1,24 +1,10 @@
-// const initButton=function(button, icon){
-//     alert("!")
-//     button.button({
+// const setStyle = function () {
+//     $("#settings").button({
 //         text: true,
 //         icons: {
-//             primary: icon
+//             primary: "ui-icon-gear"
 //         }
 //     });
-// }
-// const initLoginButton=function(){
-//     alert("!")
-//     $("#login").button({
-//         text: true,
-//         icons: {
-//             primary: "ui-icon-power"
-//         }
-//     });
-// }
-//
-//
-// const init = function () {
 //     $("#users").button({
 //         text: true,
 //         icons: {
@@ -43,7 +29,12 @@
 //             primary: "ui-icon-key"
 //         }
 //     });
-//
+//     $("#reports").button({
+//         text: true,
+//         icons: {
+//             primary: "ui-icon-script"
+//         }
+//     });
 //     $("#lang").buttonset();
 //     $("#reg").buttonset();
-// };
+// }

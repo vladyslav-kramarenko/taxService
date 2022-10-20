@@ -76,7 +76,7 @@ public class ReportCommand extends Command {
 
         LOG.trace("reportTypeId = " + typeId);
         request.setAttribute("reportTypeId", typeId);
-        request.getSession().setAttribute("page", Path.PAGE_REPORT);
+//        request.getSession().setAttribute("page", Path.PAGE_REPORT);
         LOG.trace("Command finished");
         return forward;
     }

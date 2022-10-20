@@ -11,18 +11,11 @@
 <body>
 <%@ include file="/WEB-INF/jspf/menu.jspf" %>
 <br>
+
 <form>
-    <label for="recordsPerPage"> количество записей на странице:</label>
-    <input type="hidden" name="command" value="allUsers">
-    <input type="hidden" name="selectedPage" value="1">
-    <select id="recordsPerPage" name="recordsPerPage" class="select" onchange="this.form.submit()">
-        <mylib:paginationRecordsPerPage pageQuantity="1"/>
-        <mylib:paginationRecordsPerPage pageQuantity="2"/>
-        <mylib:paginationRecordsPerPage pageQuantity="10"/>
-        <mylib:paginationRecordsPerPage pageQuantity="20"/>
-    </select>
     <label for="userFilter">Filter by company name:</label>
     <input id="userFilter" type="text" value="${userFilter}" name="userFilter" onchange="this.form.submit()">
+    <%@ include file="/WEB-INF/jspf/recordsPerPageChooser.jspf" %>
 </form>
 <table>
     <thead>

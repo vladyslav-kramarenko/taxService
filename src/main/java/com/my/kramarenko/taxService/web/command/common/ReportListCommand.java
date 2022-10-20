@@ -72,7 +72,8 @@ public class ReportListCommand extends Command {
         request.setAttribute("chosenStatusMap", chosenStatusMap);
 
         Util.setReportsWithPagination(reportsList, request);
-        request.getSession().setAttribute("page", forward);
+        request.getSession().setAttribute("page", Path.COMMAND_REPORT_LIST);
+//        request.getSession().setAttribute("page", forward);
         LOG.trace("Command finished");
         return forward;
     }

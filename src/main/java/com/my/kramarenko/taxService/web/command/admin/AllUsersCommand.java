@@ -47,7 +47,7 @@ public class AllUsersCommand extends Command {
         Util.setReportsWithPagination(users, request);
 
         LOG.debug("Commands finished");
-        session.setAttribute("page", Path.PAGE_ALL_USERS);
+        session.setAttribute("page", Path.COMMAND_ALL_USERS);
         return Path.PAGE_ALL_USERS;
     }
 

@@ -9,7 +9,6 @@
 <body>
 <%@ include file="/WEB-INF/jspf/menu.jspf" %>
 <script src="js/reportList.js"></script>
-<br>
 <div id="main">
     <span id="newReport">
     <c:if test="${userRole.id==2}">
@@ -27,16 +26,9 @@
         </form>
     </c:if>
     </span>
-    <form>
-        <label for="recordsPerPage"> количество записей на странице</label>
-        <input type="hidden" name="command" value="reportList">
-        <input type="hidden" name="selectedPage" value="1">
-        <select id="recordsPerPage" name="recordsPerPage" class="select" onChange="this.form.submit();">
-            <mylib:paginationRecordsPerPage pageQuantity="1"/>
-            <mylib:paginationRecordsPerPage pageQuantity="5"/>
-            <mylib:paginationRecordsPerPage pageQuantity="10"/>
-            <mylib:paginationRecordsPerPage pageQuantity="20"/>
-        </select>
+
+    <form action="controller" method="get">
+        <%@ include file="/WEB-INF/jspf/recordsPerPageChooser.jspf" %>
     </form>
     <span id="filter">
         <form id="filterForm" action="controller" method="get"> <input type="hidden" name="command" value="reportList"/>

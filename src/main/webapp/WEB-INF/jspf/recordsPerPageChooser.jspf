@@ -1,0 +1,13 @@
+<%@ taglib prefix="mylib" tagdir="/WEB-INF/tags" %>
+<%@ page pageEncoding="UTF-8" %>
+<span id="recordsPerPageSpan">
+        <label for="recordsPerPage"> количество записей на странице:</label>
+        <input type="hidden" name="command" value="allUsers">
+        <input type="hidden" name="selectedPage" value="1">
+        <select id="recordsPerPage" name="recordsPerPage" class="select" onchange="this.form.submit()">
+            <mylib:paginationRecordsPerPage pageQuantity="1"/>
+            <mylib:paginationRecordsPerPage pageQuantity="2"/>
+            <mylib:paginationRecordsPerPage pageQuantity="10"/>
+            <mylib:paginationRecordsPerPage pageQuantity="20"/>
+        </select>
+    </span>
