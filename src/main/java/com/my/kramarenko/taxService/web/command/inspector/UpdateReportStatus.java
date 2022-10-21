@@ -1,11 +1,10 @@
 package com.my.kramarenko.taxService.web.command.inspector;
 
 import com.my.kramarenko.taxService.db.DBException;
-import com.my.kramarenko.taxService.db.entity.Status;
+import com.my.kramarenko.taxService.db.enums.Status;
 import com.my.kramarenko.taxService.db.mySQL.ReportManager;
 import com.my.kramarenko.taxService.web.Path;
 import com.my.kramarenko.taxService.web.command.Command;
-import com.my.kramarenko.taxService.xml.*;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,7 +12,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 /**

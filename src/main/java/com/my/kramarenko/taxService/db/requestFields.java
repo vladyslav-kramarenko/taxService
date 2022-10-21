@@ -7,11 +7,7 @@ public class requestFields {
     public static final String SQL_SELECT_ALL_USERS_THAT_CONTAIN_STRING = "SELECT * FROM user WHERE LOCATE(?, company_name) > 0";
     public static final String SQL_SELECT_ALL_REPORTS = "SELECT * FROM report";
     public static final String SQL_SELECT_ALL_REPORT_TYPES = "SELECT * FROM type";
-    public static final String SQL_SELECT_ALL_ROLES = "SELECT * FROM role";
-    public static final String SQL_SELECT_ALL_STATUSES = "SELECT * FROM status";
     public static final String SQL_SELECT_REPORT_TYPE_BY_ID = "SELECT * FROM type WHERE id=?";
-    public static final String SQL_SELECT_ROLE_BY_ID = "SELECT * FROM role WHERE id=?";
-    public static final String SQL_SELECT_STATUS_BY_ID = "SELECT * FROM status WHERE id=?";
     public static final String SQL_SELECT_USER_REPORTS = "SELECT * FROM report WHERE id IN " +
             "(SELECT report_id FROM user_report WHERE user_id=?)";
     public static final String SQL_SELECT_USER_REPORTS_WITH_STATUSES = "SELECT * FROM report " +
@@ -26,8 +22,18 @@ public class requestFields {
     public static final String SQL_INSERT_INTO_USERS = "INSERT INTO user (password, first_name, last_name,patronymic,code,company_name,is_individual, role_id,email,phone) \n"
             + "VALUES (?, ?, ?, ?,?, ?,?,?,?,?)";
     public static final String SQL_SELECT_USER_BY_ID = "SELECT * FROM user where id = ?";
-    public static final String SQL_UPDATE_USER = "UPDATE user SET password=?, first_name=?, last_name=?, patronymic=?,code=?,company_name=?,is_individual=?,"
-            + " role_id=?, email=?, phone=?, WHERE id=?";
+    public static final String SQL_UPDATE_USER = "UPDATE user SET " +
+            "password=?, " +
+            "first_name=?, " +
+            "last_name=?, " +
+            "patronymic=?, " +
+            "code=?, " +
+            "company_name=?, " +
+            "is_individual=?, " +
+            "role_id=?, " +
+            "email=?, " +
+            "phone=? " +
+            "WHERE id=?";
     public static final String SQL_UPDATE_USER_ROLE = "UPDATE user SET role_id=?"
             + "	WHERE id=?";
     public static final String SQL_SET_USER_BANNED = "UPDATE user SET banned=?"

@@ -9,7 +9,7 @@ import com.my.kramarenko.taxService.db.dto.UserReportDTOBuilder;
 import com.my.kramarenko.taxService.db.entity.Type;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Role;
-import com.my.kramarenko.taxService.db.entity.Status;
+import com.my.kramarenko.taxService.db.enums.Status;
 import com.my.kramarenko.taxService.db.mySQL.TypeManager;
 import com.my.kramarenko.taxService.web.Path;
 import com.my.kramarenko.taxService.web.command.Command;
@@ -22,7 +22,8 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
+
+import static com.my.kramarenko.taxService.web.command.util.ReportUtil.getChosenStatusMap;
 
 /**
  * ReportList command.
@@ -76,19 +77,5 @@ public class ReportListCommand extends Command {
 //        request.getSession().setAttribute("page", forward);
         LOG.trace("Command finished");
         return forward;
-    }
-
-    private static Map<Status, Boolean> getChosenStatusMap(Map<Integer, Status> statusMap, String[] chosedId) {
-        Map<Status, Boolean> chosenStatuses;
-        if (chosedId != null) {
-            chosenStatuses = statusMap.values().stream().collect(Collectors.toMap(x -> x, x -> false));
-            for (String s : chosedId) {
-                int id = Integer.parseInt(s);
-                chosenStatuses.put(statusMap.get(id), true);
-            }
-        } else {
-            chosenStatuses = statusMap.values().stream().collect(Collectors.toMap(x -> x, x -> true));
-        }
-        return chosenStatuses;
     }
 }

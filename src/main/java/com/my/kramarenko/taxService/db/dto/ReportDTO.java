@@ -2,8 +2,8 @@ package com.my.kramarenko.taxService.db.dto;
 
 import com.my.kramarenko.taxService.db.entity.Report;
 import com.my.kramarenko.taxService.db.entity.Type;
-import com.my.kramarenko.taxService.db.entity.Status;
 import com.my.kramarenko.taxService.db.entity.User;
+import com.my.kramarenko.taxService.db.enums.Status;
 
 public class ReportDTO {
 

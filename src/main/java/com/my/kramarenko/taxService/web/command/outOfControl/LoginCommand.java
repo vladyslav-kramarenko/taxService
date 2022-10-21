@@ -2,7 +2,6 @@ package com.my.kramarenko.taxService.web.command.outOfControl;
 
 import com.my.kramarenko.taxService.db.DBException;
 import com.my.kramarenko.taxService.db.PasswordCreator;
-import com.my.kramarenko.taxService.db.entity.Status;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Role;
 import com.my.kramarenko.taxService.db.mySQL.UserManager;
@@ -35,7 +34,6 @@ public class LoginCommand extends Command {
                           HttpServletResponse response) throws IOException, ServletException, DBException {
 
         LOG.debug("Command starts");
-        String errorMessage;
         String forward = Path.PAGE_ERROR_PAGE;
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -45,7 +43,6 @@ public class LoginCommand extends Command {
             request.getSession().setAttribute("page", Path.PAGE_LOGIN);
         }
         if (email == null || email.isEmpty()) {
-//            error("Email is emty", request);
             return Path.PAGE_LOGIN;
         } else if (password == null || password.isEmpty()) {
             error("Pasword is emty", request);

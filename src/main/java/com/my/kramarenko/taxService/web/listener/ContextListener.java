@@ -1,9 +1,9 @@
 package com.my.kramarenko.taxService.web.listener;
 
 import com.my.kramarenko.taxService.db.DBException;
-import com.my.kramarenko.taxService.db.entity.Status;
 import com.my.kramarenko.taxService.db.entity.Type;
 import com.my.kramarenko.taxService.db.enums.Role;
+import com.my.kramarenko.taxService.db.enums.Status;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
@@ -75,18 +75,12 @@ public class ContextListener implements ServletContextListener {
     private void initStatuses(ServletContext servletContext) {
         LOG.trace("Status list initialization started");
         Map<Integer, Status> statusMap;
-        List<Status> statuses;
-        try {
-            statuses = DBManager.getInstance().getStatusManager().getAllStatuses();
-            statusMap = statuses
-                    .stream()
-                    .collect(Collectors.toMap(Status::getId, x -> x));
-            LOG.debug("Statuses set:\n" + statusMap.values());
-        } catch (DBException e) {
-            LOG.error("Cannot obtain status list");
-            throw new RuntimeException(e);
-        }
-        servletContext.setAttribute("allStatuses", statuses);
+        Status[] statuses = Status.values();
+        statusMap = Arrays.stream(statuses)
+                .collect(Collectors.toMap(Status::getId, x -> x));
+        LOG.debug("Statuses set:\n" + statusMap.values());
+
+//        servletContext.setAttribute("allStatuses", statuses);
         servletContext.setAttribute("statusMap", statusMap);
         LOG.trace("Status list initialization finished");
     }

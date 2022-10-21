@@ -1,11 +1,10 @@
 package com.my.kramarenko.taxService.db.mySQL;
 
 import com.my.kramarenko.taxService.db.DBException;
-import com.my.kramarenko.taxService.db.Fields;
 import com.my.kramarenko.taxService.db.dao.ReportDao;
 import com.my.kramarenko.taxService.db.entity.Report;
 import com.my.kramarenko.taxService.db.entity.User;
-import com.my.kramarenko.taxService.db.entity.Status;
+import com.my.kramarenko.taxService.db.enums.Status;
 import com.my.kramarenko.taxService.xml.forms.ReportForm;
 import com.my.kramarenko.taxService.xml.entity.TaxForm;
 import com.my.kramarenko.taxService.xml.WriteXmlStAXController;
@@ -14,9 +13,7 @@ import org.apache.log4j.Logger;
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.sql.*;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.my.kramarenko.taxService.db.requestFields.*;
 
@@ -32,15 +29,12 @@ public class ReportManager implements ReportDao {
     @Override
     public List<Report> getAllReports() throws DBException {
         List<Report> reportsList;
-        try (Connection con = DBManager.getInstance().getConnection();
-             Statement stmt = con.createStatement();
-             ResultSet rs = stmt.executeQuery(SQL_SELECT_ALL_REPORTS)) {
-            reportsList = parseResultSet(rs);
-            con.commit();
+        try (Connection con = DBManager.getInstance().getConnection()) {
+            con.setAutoCommit(true);
+            reportsList = LowLevelReportManager.getAllReports(con);
         } catch (SQLException e) {
-            String message = "Cannot obtain all reports";
-            LOG.error(message, e);
-            throw new DBException(message, e);
+            LOG.error(e.getMessage());
+            throw new DBException("Cannot obtain all reports", e);
         }
         return reportsList;
     }
@@ -56,25 +50,12 @@ public class ReportManager implements ReportDao {
     @Override
     public List<Report> getUserReports(int userId) throws DBException {
         List<Report> reportsList;
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        try {
-            con = DBManager.getInstance().getConnection();
-            pstmt = con.prepareStatement(SQL_SELECT_USER_REPORTS);
-            pstmt.setInt(1, userId);
-            rs = pstmt.executeQuery();
-            reportsList = parseResultSet(rs);
-            con.commit();
+        try (Connection con = DBManager.getInstance().getConnection()) {
+            con.setAutoCommit(true);
+            reportsList = LowLevelReportManager.getUserReports(con, userId);
         } catch (SQLException e) {
-            DBManager.getInstance().rollback(con);
-            String message = "Cannot obtain reports by user id";
-            LOG.error(message, e);
-            throw new DBException(message, e);
-        } finally {
-            DBManager.getInstance().close(rs);
-            DBManager.getInstance().close(pstmt);
-            DBManager.getInstance().close(con);
+            LOG.error(e.getMessage());
+            throw new DBException("Cannot obtain reports by user id", e);
         }
         return reportsList;
     }
@@ -90,34 +71,16 @@ public class ReportManager implements ReportDao {
     public List<Report> getUserReportsWithStatuses(int userId, List<Status> statuses) throws DBException {
         List<Report> reportsList;
         Connection con = null;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
         try {
             con = DBManager.getInstance().getConnection();
-            LOG.trace("user id = " + userId);
-            String parameters = statuses.stream().map(x -> "?").collect(Collectors.joining(","));
-            LOG.trace("parameters: " + parameters);
-            String sql = SQL_SELECT_USER_REPORTS_WITH_STATUSES.replace("%", parameters);
-            LOG.trace(sql);
-
-            pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, userId);
-            for (int i = 2; i < statuses.size() + 2; i++) {
-                pstmt.setInt(i, statuses.get(i - 2).getId());
-            }
-            LOG.trace(pstmt);
-            rs = pstmt.executeQuery();
-            reportsList = parseResultSet(rs);
+            reportsList = LowLevelReportManager.getUserReportsWithStatuses(con, userId, statuses);
             con.commit();
         } catch (SQLException e) {
             DBManager.getInstance().rollback(con);
-            String message = "Cannot obtain reports with statuses by user id";
-            LOG.error(message, e);
-            throw new DBException(message, e);
+            LOG.error(e.getMessage());
+            throw new DBException("Cannot obtain reports with statuses by user id", e);
         } finally {
-            DBManager.getInstance().close(rs);
-            DBManager.getInstance().close(pstmt);
-            DBManager.getInstance().close(con);
+            DBManager.close(con);
         }
         return reportsList;
     }
@@ -125,27 +88,16 @@ public class ReportManager implements ReportDao {
     @Override
     public Report getReport(int reportId) throws DBException {
         Report report;
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        Connection con = null;
-        try {
-            con = DBManager.getInstance().getConnection();
-            pstmt = con.prepareStatement(SQL_SELECT_REPORT);
-            pstmt.setInt(1, reportId);
-            rs = pstmt.executeQuery();
-            report = parseResultSet(rs).get(0);
-            con.commit();
+        try (Connection con = DBManager.getInstance().getConnection()) {
+            con.setAutoCommit(true);
+            report = LowLevelReportManager.getReport(con, reportId);
         } catch (SQLException e) {
-            String message = "Cannot get report";
-            LOG.error(message, e);
-            throw new DBException(message, e);
-        } finally {
-            DBManager.getInstance().close(rs);
-            DBManager.getInstance().close(pstmt);
-            DBManager.getInstance().close(con);
+            LOG.error(e.getMessage());
+            throw new DBException("Cannot get the report", e);
         }
         return report;
     }
+
 
     @Override
     public void editReport(Status status, int reportId, User user, TaxForm taxForm, ReportForm reportForm) throws DBException {
@@ -172,7 +124,7 @@ public class ReportManager implements ReportDao {
             LOG.error(message + ":\n" + e.getMessage(), e);
             throw new DBException(message, e);
         } finally {
-            DBManager.getInstance().close(con);
+            DBManager.close(con);
         }
     }
 
@@ -200,28 +152,6 @@ public class ReportManager implements ReportDao {
     }
 
     /**
-     * Parse resultSet for select query
-     *
-     * @param rs ResultSEt
-     * @return list of users
-     * @throws SQLException
-     */
-    private static List<Report> parseResultSet(ResultSet rs) throws SQLException {
-        List<Report> result = new LinkedList<>();
-        while (rs.next()) {
-            Report report = new Report();
-            report.setId(rs.getInt(Fields.ENTITY_ID));
-            report.setDate(rs.getTimestamp(Fields.REPORT_DATE));
-            report.setLastUpdate(rs.getTimestamp(Fields.REPORT_LAST_UPDATE));
-            report.setXmlPath(rs.getString(Fields.REPORT_XML));
-            report.setStatusId(rs.getInt(Fields.REPORT_STATUS_ID));
-            report.setTypeId(rs.getString(Fields.REPORT_TYPE_ID));
-            result.add(report);
-        }
-        return result;
-    }
-
-    /**
      * add new report
      *
      * @param user user of the report
@@ -235,7 +165,7 @@ public class ReportManager implements ReportDao {
         Connection con = null;
         try {
             con = DBManager.getInstance().getConnection();
-            addReport(con, report);
+            LowLevelReportManager.addReport(con, report);
 
             //TODO folder
             report.setXmlPath(report.getId() + ".xml");
@@ -256,33 +186,7 @@ public class ReportManager implements ReportDao {
             LOG.error(message + ":\n" + e.getMessage(), e);
             throw new DBException(message, e);
         } finally {
-            DBManager.getInstance().close(con);
-        }
-    }
-
-    /**
-     * Add new user
-     *
-     * @param con    database connection
-     * @param report user to add
-     * @throws SQLException
-     */
-    public void addReport(Connection con, Report report) throws SQLException {
-        PreparedStatement pstmt = null;
-        try {
-            pstmt = con.prepareStatement(SQL_INSERT_INTO_REPORTS,
-                    Statement.RETURN_GENERATED_KEYS);
-            int k = 1;
-            pstmt.setInt(k++, report.getStatusId());
-            pstmt.setString(k++, report.getTypeId());
-            pstmt.setString(k, "");
-            pstmt.executeUpdate();
-
-            ResultSet keys = pstmt.getGeneratedKeys();
-            keys.next();
-            report.setId(keys.getInt(1));
-        } finally {
-            DBManager.getInstance().close(pstmt);
+            DBManager.close(con);
         }
     }
 
@@ -296,16 +200,25 @@ public class ReportManager implements ReportDao {
             pstmt.setInt(k, report.getId());
             pstmt.executeUpdate();
         } finally {
-            DBManager.getInstance().close(pstmt);
+            DBManager.close(pstmt);
         }
     }
 
     public void deleteReport(int id) throws DBException {
-        try (Connection con = DBManager.getInstance().getConnection();
-             PreparedStatement pstmt = con.prepareStatement(SQL_DELETE_REPORT)) {
-            pstmt.setInt(1, id);
-            pstmt.executeUpdate();
-            con.commit();
+        Connection con;
+        PreparedStatement preparedStatement;
+        try {
+            con = DBManager.getInstance().getConnection();
+            preparedStatement = con.prepareStatement(SQL_DELETE_REPORT);
+            Report report = LowLevelReportManager.getReport(con, id);
+            if (report.getStatusId() == 3) {
+                LOG.error("Can't delete accepted report");
+                throw new IllegalStateException();
+            } else {
+                preparedStatement.setInt(1, id);
+                preparedStatement.executeUpdate();
+                con.commit();
+            }
         } catch (SQLException e) {
             LOG.error(e.getMessage());
             throw new DBException("Can't delete the report", e);
@@ -322,7 +235,7 @@ public class ReportManager implements ReportDao {
             pstmt.setInt(k, report.getId());
             pstmt.executeUpdate();
         } finally {
-            DBManager.getInstance().close(pstmt);
+            DBManager.close(pstmt);
         }
     }
 }

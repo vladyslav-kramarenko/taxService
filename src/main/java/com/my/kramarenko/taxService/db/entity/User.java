@@ -1,6 +1,7 @@
 package com.my.kramarenko.taxService.db.entity;
 
 import java.io.Serial;
+import java.util.Objects;
 
 /**
  * User entity.
@@ -12,7 +13,6 @@ public class User extends Entity {
     @Serial
     private static final long serialVersionUID = -6889036256149495388L;
 
-    //    private String login;
     private String password;
     private String email;
     private String phone;
@@ -53,7 +53,6 @@ public class User extends Entity {
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
-
 
     public boolean isBanned() {
         return isBanned;
@@ -141,6 +140,24 @@ public class User extends Entity {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+        if (getId() != user.getId()) return false;
+        if (!email.equals(user.email)) return false;
+        return Objects.equals(code, user.code);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getId()+email.hashCode();
+        result = 31 * result + (code != null ? code.hashCode() : 0);
+        return result;
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.my.kramarenko.taxService.web.command.user;
 import com.my.kramarenko.taxService.db.DBException;
 import com.my.kramarenko.taxService.db.dao.ReportDao;
 import com.my.kramarenko.taxService.db.entity.User;
-import com.my.kramarenko.taxService.db.entity.Status;
+import com.my.kramarenko.taxService.db.enums.Status;
 import com.my.kramarenko.taxService.db.mySQL.ReportManager;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.Path;
@@ -20,7 +20,6 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Login command.
@@ -57,21 +56,13 @@ public class SendReportCommand extends Command {
         String save = request.getParameter("save");
         String send = request.getParameter("send");
 
-        ServletContext sc = request.getServletContext();
-//        List<Status> statuses = (List<Status>) sc.getAttribute("allStatuses");
-        Map<Integer, Status> statusMap = (Map<Integer, Status>) sc.getAttribute("statusMap");
-
-        Status status = statusMap.get(1);//Status.DRAFT;
+        Status status = Status.DRAFT;
         if (save == null) {
             LOG.trace("action = " + send);
-            status = statusMap.get(2);//Status.SENT;
+            status = Status.SENT;
         } else {
             LOG.trace("action = " + save);
         }
-//        if (send == null) {
-//
-//        }
-//        if()
         if (reportID >= 0) {
             LOG.trace("obtain report id: " + reportID + " => edit current report");
             reportDb.editReport(status, reportID, user, taxForm, reportForm);
@@ -112,14 +103,4 @@ public class SendReportCommand extends Command {
 
         return taxForm;
     }
-
-//    private static TaxForm getReport(HttpServletRequest request) {
-//        TaxForm taxForm = new TaxForm();
-//        return taxForm;
-//    }
-
-//    private void error(HttpServletRequest request, String errorMessage) {
-//        request.setAttribute("errorMessage", errorMessage);
-//        LOG.error("errorMessage --> " + errorMessage);
-//    }
 }

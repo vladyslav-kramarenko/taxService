@@ -3,7 +3,7 @@ package com.my.kramarenko.taxService.db.dto;
 import com.my.kramarenko.taxService.db.DBException;
 import com.my.kramarenko.taxService.db.entity.Type;
 import com.my.kramarenko.taxService.db.entity.User;
-import com.my.kramarenko.taxService.db.entity.Status;
+import com.my.kramarenko.taxService.db.enums.Status;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
 import com.my.kramarenko.taxService.db.mySQL.ReportManager;
 import org.apache.log4j.Logger;

@@ -11,7 +11,7 @@ public interface UserDao {
 
     List<User> getUsersByFilter(String userFilter) throws DBException;
 
-    User getUser(int userId) throws DBException;
+    Optional<User> getUser(int userId) throws DBException;
 
     void updateUser(User user) throws DBException;
 

@@ -19,6 +19,8 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.util.Map;
 
+import static com.my.kramarenko.taxService.web.command.util.UserUtil.createCompanyName;
+
 public class RegistrationCommand extends Command {
 
     private static final long serialVersionUID = -3071536593627692473L;
@@ -87,21 +89,6 @@ public class RegistrationCommand extends Command {
     private void error(String errorMessage, HttpServletRequest request) {
         request.setAttribute("errorMessage", errorMessage);
         LOG.debug("errorMessage --> " + errorMessage);
-    }
-
-    private static String createCompanyName(User user) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(getValue(user.getLastName()));
-        stringBuilder.append(" ");
-        stringBuilder.append(getValue(user.getFirstName()));
-        stringBuilder.append(" ");
-        stringBuilder.append(getValue(user.getPatronymic()));
-        return stringBuilder.toString();
-    }
-
-    private static String getValue(String value) {
-        if (value != null) return value;
-        else return "";
     }
 
     private void setSessionAttributes(HttpSession session, User user, Map<Integer, Role> roleMap) {

@@ -1,23 +1,15 @@
 package com.my.kramarenko.taxService.web.command.user;
 
 import com.my.kramarenko.taxService.db.DBException;
-import com.my.kramarenko.taxService.db.dao.ReportDao;
-import com.my.kramarenko.taxService.db.entity.Status;
-import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
-import com.my.kramarenko.taxService.db.mySQL.ReportManager;
 import com.my.kramarenko.taxService.web.Path;
 import com.my.kramarenko.taxService.web.command.Command;
-import com.my.kramarenko.taxService.xml.*;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Login command.
@@ -35,7 +27,7 @@ public class DeleteReportCommand extends Command {
                           HttpServletResponse response) throws IOException, ServletException, DBException {
 
         LOG.debug("Command starts");
-        User user = (User) request.getSession().getAttribute("user");
+//        User user = (User) request.getSession().getAttribute("user");
         int reportID = -1;
         String reportIdParam = request.getParameter("reportId");
         try {
@@ -47,10 +39,8 @@ public class DeleteReportCommand extends Command {
         }
 
         if (reportID >= 0) {
-            ServletContext sc = request.getServletContext();
-            Map<Integer, Status> statusMap = (Map<Integer, Status>) sc.getAttribute("statusMap");
             LOG.trace("obtain report id: " + reportID + " => delete current report");
-            DBManager.getInstance().getReportManager().updateReportStatus(reportID, statusMap.get(2));
+            DBManager.getInstance().getReportManager().deleteReport(reportID);
         } else {
             LOG.trace("incorrect report id");
         }

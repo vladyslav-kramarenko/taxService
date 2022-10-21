@@ -173,12 +173,12 @@ public class ReadXmlDOMController {
         }
     }
 
-    private static int getIntElement(Element element, String elementName) {
-        String strElement = getStringElement(element, elementName);
-        if (strElement != null && strElement.length() > 0) {
-            return Integer.parseInt(strElement);
-        } else return 0;
-    }
+//    private static int getIntElement(Element element, String elementName) {
+//        String strElement = getStringElement(element, elementName);
+//        if (strElement != null && strElement.length() > 0) {
+//            return Integer.parseInt(strElement);
+//        } else return 0;
+//    }
 
     private static String getStringElement(Element element, String elementName) {
         Node node = element

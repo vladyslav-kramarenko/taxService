@@ -1,7 +1,7 @@
 package com.my.kramarenko.taxService.web.command.user;
 
 import com.my.kramarenko.taxService.db.DBException;
-import com.my.kramarenko.taxService.db.entity.User;
+import com.my.kramarenko.taxService.db.enums.Status;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
 import com.my.kramarenko.taxService.web.Path;
 import com.my.kramarenko.taxService.web.command.Command;
@@ -28,7 +28,7 @@ public class CancelReportCommand extends Command {
                           HttpServletResponse response) throws IOException, ServletException, DBException {
 
         LOG.debug("Command starts");
-        User user = (User) request.getSession().getAttribute("user");
+//        User user = (User) request.getSession().getAttribute("user");
         int reportID = -1;
         String reportIdParam = request.getParameter("reportId");
         try {
@@ -40,8 +40,8 @@ public class CancelReportCommand extends Command {
         }
 
         if (reportID >= 0) {
-            LOG.trace("obtain report id: " + reportID + " => delete current report");
-            DBManager.getInstance().getReportManager().deleteReport(reportID);
+            LOG.trace("obtain report id: " + reportID + " => cancel current report");
+            DBManager.getInstance().getReportManager().updateReportStatus(reportID, Status.DRAFT);
         } else {
             LOG.trace("incorrect report id");
         }

@@ -18,49 +18,54 @@ public class TypeManager implements TypeDao {
 
     @Override
     public List<Type> getAllTypes() throws DBException {
-        try (Connection con = DBManager.getInstance().getConnection();
-             Statement stmt = con.createStatement();
+        try (Connection con = DBManager.getInstance().getConnection()) {
+            con.setAutoCommit(true);
+            return getAllTypes(con);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            throw new DBException("Cannot obtain all types", e);
+        }
+    }
+
+    public List<Type> getAllTypes(Connection con) throws SQLException {
+        try (Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(SQL_SELECT_ALL_REPORT_TYPES)) {
             List<Type> typeList = parseResultSet(rs);
-            con.commit();
             return typeList;
-        } catch (SQLException e) {
-            String message = "Cannot obtain all types";
-            LOG.error(message, e);
-            throw new DBException(message, e);
         }
     }
 
     @Override
     public Type getType(String id) throws DBException {
-        Connection con = null;
+        try (Connection con = DBManager.getInstance().getConnection()) {
+            con.setAutoCommit(true);
+            return getType(con, id);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            throw new DBException("Cannot obtain the type with id " + id, e);
+        }
+    }
+
+    public Type getType(Connection con, String id) throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-
         try {
-            con = DBManager.getInstance().getConnection();
             pstmt = con.prepareStatement(SQL_SELECT_REPORT_TYPE_BY_ID);
             pstmt.setString(1, id);
             rs = pstmt.executeQuery();
             List<com.my.kramarenko.taxService.db.entity.Type> typeList = parseResultSet(rs);
-            con.commit();
             return typeList.get(0);
-        } catch (SQLException e) {
-            String message = "Cannot obtain all types";
-            LOG.error(message, e);
-            throw new DBException(message, e);
         } finally {
-            DBManager.getInstance().close(rs);
-            DBManager.getInstance().close(pstmt);
-            DBManager.getInstance().close(con);
+            DBManager.close(rs);
+            DBManager.close(pstmt);
         }
     }
 
     /**
      * Parse resultSet for select query
      *
-     * @param rs ResultSEt
-     * @return list of users
+     * @param rs ResultSet
+     * @return list of types
      * @throws SQLException
      */
     private static List<Type> parseResultSet(ResultSet rs) throws SQLException {

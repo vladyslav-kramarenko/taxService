@@ -52,7 +52,7 @@ public class EditUserCommand extends Command {
         try {
             UserDao userManager = DBManager.getInstance().getUserManager();
             int userId = Integer.parseInt(request.getParameter("userId"));
-            User editableUser = userManager.getUser(userId);
+            User editableUser = userManager.getUser(userId).orElseThrow();
             UserUtil.setUserFields(editableUser, request);
             String password = request.getParameter("password");
             if (password != null && password.length() > 0) {

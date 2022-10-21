@@ -62,7 +62,7 @@ public class UserManager implements UserDao {
      * @throws DBException
      */
     @Override
-    public User getUser(int userId) throws DBException {
+    public Optional<User> getUser(int userId) throws DBException {
         try (Connection con = DBManager.getInstance().getConnection()) {
             con.setAutoCommit(true);
             return LowLevelUserManager.getUser(con, userId);

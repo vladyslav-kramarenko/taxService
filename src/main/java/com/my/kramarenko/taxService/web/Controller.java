@@ -3,8 +3,6 @@ package com.my.kramarenko.taxService.web;
 import com.my.kramarenko.taxService.db.DBException;
 import com.my.kramarenko.taxService.db.XmlException;
 import com.my.kramarenko.taxService.db.enums.SortType;
-import com.my.kramarenko.taxService.db.entity.Status;
-import com.my.kramarenko.taxService.db.mySQL.DBManager;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.command.CommandContainer;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -20,15 +18,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Main servlet controller.
  *
  * @author Vlad Kramarenko
  */
-@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 1,    // 1 MB
+@MultipartConfig(fileSizeThreshold = 1024 * 1024,    // 1 MB
         maxFileSize = 1024 * 1024 * 5,        // 5 MB
         maxRequestSize = 1024 * 1024 * 10)    // 10 MB
 public class Controller extends HttpServlet {

@@ -91,7 +91,7 @@
         </init-param>
         <init-param>
             <param-name>user</param-name>
-            <param-value>loadXML submitReport deleteReport</param-value>
+            <param-value>cancelReport loadXML submitReport deleteReport</param-value>
         </init-param>
         <init-param>
             <param-name>common</param-name>

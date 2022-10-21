@@ -4,8 +4,8 @@ import com.my.kramarenko.taxService.db.DBException;
 import com.my.kramarenko.taxService.db.XmlException;
 import com.my.kramarenko.taxService.db.entity.Report;
 import com.my.kramarenko.taxService.db.entity.User;
-import com.my.kramarenko.taxService.db.entity.Status;
 import com.my.kramarenko.taxService.db.enums.Role;
+import com.my.kramarenko.taxService.db.enums.Status;
 import com.my.kramarenko.taxService.db.mySQL.ReportManager;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.Path;
@@ -68,7 +68,7 @@ public class ReportCommand extends Command {
 
 
         if (roleMap.get(user.getRoleId()).equals(Role.INSPECTOR)) {
-            Status[] statusValues = {statusMap.get(2), statusMap.get(3), statusMap.get(4)};
+            Status[] statusValues = {Status.SENT, Status.ACCEPTED, Status.REFUSED};
 //            Status[] statusValues = {Status.SENT, Status.ACCEPTED, Status.REFUSED};
             request.setAttribute("statusTypes", statusValues);
             LOG.trace("set report statuses to request attribute: \n" + Arrays.toString(statusValues));
@@ -87,7 +87,6 @@ public class ReportCommand extends Command {
         String fileName = report.getXmlPath();
 
         ReadXmlDOMController domController = new ReadXmlDOMController();
-
 
         String reportTypeId = report.getTypeId();
         ReportForm reportForm = ReportFormContainer.getForm(reportTypeId);

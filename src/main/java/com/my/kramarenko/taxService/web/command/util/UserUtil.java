@@ -32,4 +32,19 @@ public class UserUtil {
         }
         return users;
     }
+
+    public static String getValue(String value) {
+        if (value != null) return value;
+        else return "";
+    }
+
+    public static String createCompanyName(User user) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getValue(user.getLastName()));
+        stringBuilder.append(" ");
+        stringBuilder.append(getValue(user.getFirstName()));
+        stringBuilder.append(" ");
+        stringBuilder.append(getValue(user.getPatronymic()));
+        return stringBuilder.toString();
+    }
 }

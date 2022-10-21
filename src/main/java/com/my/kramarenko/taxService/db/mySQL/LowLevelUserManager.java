@@ -43,6 +43,7 @@ public class LowLevelUserManager {
         try (PreparedStatement pstmt = con.prepareStatement(SQL_UPDATE_USER)) {
             int k = fillUserFields(user, pstmt);
             pstmt.setInt(k, user.getId());
+            System.out.println(pstmt);
             pstmt.executeUpdate();
             LOG.trace("user successfully updated");
         }
@@ -57,9 +58,7 @@ public class LowLevelUserManager {
         pstmt.setString(k++, user.getCode());
         pstmt.setString(k++, user.getCompanyName());
         pstmt.setInt(k++, user.isIndividual() ? 1 : 0);
-        LOG.info("isInd=" + (user.isIndividual() ? 1 : 0));
         pstmt.setInt(k++, user.getRoleId());
-        LOG.info("roleId=" + user.getRoleId());
         pstmt.setString(k++, user.getEmail());
         pstmt.setString(k++, user.getPhone());
         return k;
@@ -99,8 +98,8 @@ public class LowLevelUserManager {
                 return Optional.of(userList.get(0));
             else return Optional.empty();
         } finally {
-            DBManager.getInstance().close(rs);
-            DBManager.getInstance().close(pstmt);
+            DBManager.close(rs);
+            DBManager.close(pstmt);
         }
     }
 
@@ -133,17 +132,18 @@ public class LowLevelUserManager {
         return result;
     }
 
-    public static User getUser(Connection con, int userId) throws SQLException {
+    public static Optional<User> getUser(Connection con, int userId) throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
             pstmt = con.prepareStatement(SQL_SELECT_USER_BY_ID);
             pstmt.setInt(1, userId);
             rs = pstmt.executeQuery();
-            return parseResultSet(rs).get(0);
+            List<User> list = parseResultSet(rs);
+            return list.size() > 0 ? Optional.ofNullable(list.get(0)) : Optional.empty();
         } finally {
-            DBManager.getInstance().close(rs);
-            DBManager.getInstance().close(pstmt);
+            DBManager.close(rs);
+            DBManager.close(pstmt);
         }
     }
 
@@ -166,8 +166,8 @@ public class LowLevelUserManager {
             rs = pstmt.executeQuery();
             return parseResultSet(rs);
         } finally {
-            DBManager.getInstance().close(rs);
-            DBManager.getInstance().close(pstmt);
+            DBManager.close(rs);
+            DBManager.close(pstmt);
         }
     }
 

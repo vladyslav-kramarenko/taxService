@@ -20,40 +20,23 @@ public final class DBManager {
     private final String dbName = "taxService";
     private final DataSource ds;
     private final ReportManager reportManager;
-    private final StatusManager statusManager;
     private final TypeManager typeManager;
-
     private final UserManager userManager;
-
-//    private final RoleManager roleManager;
-
-    //    public RoleManager getRoleManager() {
-//        return roleManager;
-//    }
     public ReportManager getReportManager() {
         return reportManager;
     }
-
-    public StatusManager getStatusManager() {
-        return statusManager;
-    }
-
     public TypeManager getTypeManager() {
         return typeManager;
     }
-
     public UserManager getUserManager() {
         return userManager;
     }
-
-
     private DBManager() {
         try {
             Context initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:/comp/env");
             ds = (DataSource) envContext.lookup("jdbc/" + dbName);
             reportManager = new ReportManager();
-            statusManager = new StatusManager();
             typeManager = new TypeManager();
             userManager = new UserManager();
 //            roleManager = new RoleManager();
@@ -61,9 +44,7 @@ public final class DBManager {
             throw new IllegalStateException("Cannot obtain a datasource", e);
         }
     }
-
     private static final Logger LOG = Logger.getLogger(DBManager.class);
-
     private static DBManager instance;
 
     /**
@@ -93,7 +74,7 @@ public final class DBManager {
      *
      * @param con Connection to rollback.
      */
-    void rollback(Connection con) {
+    public static void rollback(Connection con) {
         if (con != null) {
             try {
                 con.rollback();
@@ -108,7 +89,7 @@ public final class DBManager {
      *
      * @param con Connection to be committed and closed.
      */
-    void close(Connection con) {
+    public static void close(Connection con) {
         if (con != null) {
             try {
                 con.close();
@@ -123,7 +104,7 @@ public final class DBManager {
      *
      * @param rs ResultSet
      */
-    void close(ResultSet rs) {
+    public static void close(ResultSet rs) {
         if (rs != null) {
             try {
                 rs.close();
@@ -138,7 +119,7 @@ public final class DBManager {
      *
      * @param stmt statement
      */
-    void close(Statement stmt) {
+    public static void close(Statement stmt) {
         if (stmt != null) {
             try {
                 stmt.close();

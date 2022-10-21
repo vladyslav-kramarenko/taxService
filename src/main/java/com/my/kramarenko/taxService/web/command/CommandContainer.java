@@ -38,6 +38,9 @@ public class CommandContainer {
         commands.put("submitReport", new SendReportCommand());
         commands.put("deleteReport", new DeleteReportCommand());
         commands.put("reportList", new ReportListCommand());
+        commands.put("cancelReport", new CancelReportCommand());
+
+
 
         // inspector commands
         commands.put("updateReportStatus", new UpdateReportStatus());

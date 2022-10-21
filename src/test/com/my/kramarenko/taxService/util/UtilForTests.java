@@ -7,7 +7,7 @@ import org.mockito.stubbing.Answer;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class UtilForTest {
+public class UtilForTests {
     public static HttpServletRequest setMockito() {
         final Map<String, Object> attributes = new ConcurrentHashMap<>();
         HttpServletRequest request = Mockito.mock(HttpServletRequest.class);
