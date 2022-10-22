@@ -2,6 +2,7 @@ package com.my.kramarenko.taxService.web.filter;
 
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Role;
+import com.my.kramarenko.taxService.web.Path;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -41,7 +42,7 @@ public class CommandAccessFilter implements Filter {
             String errorMessage = "You do not have permission to access the requested resource";
             LOG.error("Set the request attribute: errorMessage --> "
                     + errorMessage);
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, errorMessage);
+            response.sendRedirect(Path.COMMAND_LOGIN + "&error=" + errorMessage);
         }
     }
 

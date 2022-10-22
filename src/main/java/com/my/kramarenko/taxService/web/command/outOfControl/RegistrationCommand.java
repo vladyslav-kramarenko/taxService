@@ -1,10 +1,11 @@
 package com.my.kramarenko.taxService.web.command.outOfControl;
 
-import com.my.kramarenko.taxService.db.DBException;
+import com.my.kramarenko.taxService.db.mySQL.DBManager;
+import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.db.PasswordCreator;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Role;
-import com.my.kramarenko.taxService.db.mySQL.UserManager;
+import com.my.kramarenko.taxService.db.dao.UserDAO;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.command.LastPage;
 import com.my.kramarenko.taxService.web.Path;
@@ -17,12 +18,14 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.util.Map;
 
 import static com.my.kramarenko.taxService.web.command.util.UserUtil.createCompanyName;
 
 public class RegistrationCommand extends Command {
 
+    @Serial
     private static final long serialVersionUID = -3071536593627692473L;
 
     private static final Logger LOG = Logger
@@ -47,7 +50,7 @@ public class RegistrationCommand extends Command {
                 request.setAttribute("errorMessage", errorMessage);
                 forward = Path.PAGE_REGISTRATION;
             } else {
-                UserManager userManager = new UserManager();
+                UserDAO userManager = DBManager.getInstance().getUserDAO();
                 if (userManager.findUserByEmail(email).isPresent()) {
                     error("Such email is forbidden", request);
                 } else {

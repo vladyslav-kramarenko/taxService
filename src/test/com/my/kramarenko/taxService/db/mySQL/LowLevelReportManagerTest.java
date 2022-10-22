@@ -31,11 +31,11 @@ class LowLevelReportManagerTest {
     @Test
     void getReportTests() throws SQLException {
         try {
-            List<Report> reports = LowLevelReportManager.getAllReports(con);
+            List<Report> reports = ReportManager.getAllReports(con);
             assertTrue(reports.size() > 0);
 
             Report report1 = reports.get(0);
-            Report report2 = LowLevelReportManager.getReport(con, report1.getId());
+            Report report2 = ReportManager.getReport(con, report1.getId());
             assertEquals(report1, report2);
         } finally {
             con.close();

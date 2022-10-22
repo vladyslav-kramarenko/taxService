@@ -1,6 +1,6 @@
 package com.my.kramarenko.taxService.xml;
 
-import com.my.kramarenko.taxService.db.XmlException;
+import com.my.kramarenko.taxService.exception.XmlException;
 import com.my.kramarenko.taxService.xml.entity.*;
 import com.my.kramarenko.taxService.xml.forms.F0103405;
 import com.my.kramarenko.taxService.xml.forms.ReportForm;
@@ -25,12 +25,11 @@ import java.util.List;
  */
 public class ReadXmlDOMController {
     private static final Logger LOG = Logger.getLogger(ReadXmlDOMController.class);
-    private final DocumentBuilderFactory documentBuilderFactory;
     private final DocumentBuilder documentBuilder;
 
     public ReadXmlDOMController() throws XmlException {
 
-        documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
         try {
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {

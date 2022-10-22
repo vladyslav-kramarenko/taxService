@@ -1,12 +1,13 @@
 package com.my.kramarenko.taxService.web.command.common;
 
-import com.my.kramarenko.taxService.db.DBException;
-import com.my.kramarenko.taxService.db.XmlException;
+import com.my.kramarenko.taxService.db.dao.ReportDAO;
+import com.my.kramarenko.taxService.db.mySQL.DBManager;
+import com.my.kramarenko.taxService.exception.DBException;
+import com.my.kramarenko.taxService.exception.XmlException;
 import com.my.kramarenko.taxService.db.entity.Report;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Role;
 import com.my.kramarenko.taxService.db.enums.Status;
-import com.my.kramarenko.taxService.db.mySQL.ReportManager;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.Path;
 import com.my.kramarenko.taxService.xml.ReadXmlDOMController;
@@ -20,6 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +33,7 @@ import java.util.Map;
  */
 public class ReportCommand extends Command {
 
+    @Serial
     private static final long serialVersionUID = -3071536593627692473L;
 
     private static final Logger LOG = Logger.getLogger(ReportCommand.class);
@@ -82,7 +85,7 @@ public class ReportCommand extends Command {
     }
 
     private Report openSavedReport(int reportId, HttpServletRequest request) throws XmlException, DBException {
-        ReportManager rm = new ReportManager();
+        ReportDAO rm = DBManager.getInstance().getReportDAO();
         Report report = rm.getReport(reportId);
         String fileName = report.getXmlPath();
 

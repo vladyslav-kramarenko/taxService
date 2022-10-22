@@ -1,7 +1,7 @@
 package com.my.kramarenko.taxService.web.command.util;
 
-import com.my.kramarenko.taxService.db.DBException;
-import com.my.kramarenko.taxService.db.dao.UserDao;
+import com.my.kramarenko.taxService.db.dao.UserDAO;
+import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +21,7 @@ public class UserUtil {
     }
 
     public static List<User> getUserListDependOnFilter(HttpServletRequest request) throws DBException {
-        UserDao userManager = DBManager.getInstance().getUserManager();
+        UserDAO userManager = DBManager.getInstance().getUserDAO();
         List<User> users;
         String userFilter = request.getParameter("userFilter");
         request.setAttribute("userFilter", userFilter);

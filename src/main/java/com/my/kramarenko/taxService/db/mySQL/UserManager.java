@@ -1,190 +1,181 @@
 package com.my.kramarenko.taxService.db.mySQL;
 
-import com.my.kramarenko.taxService.db.DBException;
-import com.my.kramarenko.taxService.db.dao.UserDao;
+import com.my.kramarenko.taxService.db.DbUtil;
+import com.my.kramarenko.taxService.db.dao.UserDAO;
 import com.my.kramarenko.taxService.db.entity.User;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Work with user entity in dataBase
- *
- * @author Vlad Kramarenko
- */
-public class UserManager implements UserDao {
+import static com.my.kramarenko.taxService.db.mySQL.requestFields.*;
 
-    private static final Logger LOG = Logger.getLogger(UserManager.class);
+public class UserManager {
+
+    private static final Logger LOG = Logger.getLogger(UserDAO.class);
 
     /**
-     * Search for all users
-     *
-     * @return list of users
-     * @throws DBException
+     * @param con  database connection
+     * @param user user to add
+     * @throws SQLException throwable exception
      */
-    @Override
-    public List<User> getAllUsers() throws DBException {
-        try (Connection con = DBManager.getInstance().getConnection()) {
-            con.setAutoCommit(true);
-            return LowLevelUserManager.getAllUsers(con);
-        } catch (SQLException e) {
-            String message = "Cannot obtain all users";
-            LOG.error(message, e);
-            throw new DBException(message, e);
-        }
-    }
-
-    /**
-     * Search for all users with filter
-     * @param userFilter part of user company name
-     * @return list of users
-     * @throws DBException
-     */
-    @Override
-    public List<User> getUsersByFilter(String userFilter) throws DBException {
-        try (Connection con = DBManager.getInstance().getConnection()) {
-            con.setAutoCommit(true);
-            return LowLevelUserManager.getAllUsersThatContainString(con, userFilter);
-        } catch (SQLException e) {
-            String message = "Cannot obtain all users";
-            LOG.error(message, e);
-            throw new DBException(message, e);
-        }
-    }
-
-    /**
-     * Search user by id
-     *
-     * @param userId user id
-     * @return user
-     * @throws DBException
-     */
-    @Override
-    public Optional<User> getUser(int userId) throws DBException {
-        try (Connection con = DBManager.getInstance().getConnection()) {
-            con.setAutoCommit(true);
-            return LowLevelUserManager.getUser(con, userId);
-        } catch (SQLException e) {
-            String message = "Cannot obtain user by id";
-            LOG.error(message, e);
-            throw new DBException(message, e);
+    public static void addUser(Connection con, User user) throws SQLException {
+        try (PreparedStatement pstmt = con.prepareStatement(SQL_INSERT_INTO_USERS,
+                Statement.RETURN_GENERATED_KEYS)) {
+            fillUserFields(user, pstmt);
+            LOG.trace(pstmt);
+            pstmt.executeUpdate();
+            ResultSet keys = pstmt.getGeneratedKeys();
+            keys.next();
+            user.setId(keys.getInt(1));
         }
     }
 
     /**
      * Update user
      *
+     * @param con  database connection
      * @param user user to update
-     * @throws DBException
+     * @throws SQLException
      */
-    @Override
-    public void updateUser(User user) throws DBException {
-        LOG.trace(user);
-        DBManager dbManager = DBManager.getInstance();
-        try (Connection con = dbManager.getConnection()) {
-            con.setAutoCommit(true);
-            LowLevelUserManager.updateUser(con, user);
-        } catch (SQLException e) {
-            String message = "Cannot update a user";
-            LOG.error(message, e);
-            throw new DBException(message, e);
+    public static void updateUser(Connection con, User user) throws SQLException {
+        try (PreparedStatement pstmt = con.prepareStatement(SQL_UPDATE_USER)) {
+            int k = fillUserFields(user, pstmt);
+            pstmt.setInt(k, user.getId());
+            System.out.println(pstmt);
+            pstmt.executeUpdate();
+            LOG.trace("user successfully updated");
+        }
+    }
+
+    private static int fillUserFields(User user, PreparedStatement pstmt) throws SQLException {
+        int k = 1;
+        pstmt.setString(k++, user.getPassword());
+        pstmt.setString(k++, user.getFirstName());
+        pstmt.setString(k++, user.getLastName());
+        pstmt.setString(k++, user.getPatronymic());
+        pstmt.setString(k++, user.getCode());
+        pstmt.setString(k++, user.getCompanyName());
+        pstmt.setInt(k++, user.isIndividual() ? 1 : 0);
+        pstmt.setInt(k++, user.getRoleId());
+        pstmt.setString(k++, user.getEmail());
+        pstmt.setString(k++, user.getPhone());
+        return k;
+    }
+
+
+    public static void updateUserRole(Connection con, int userId, int roleId) throws SQLException {
+        try (PreparedStatement pstmt = con.prepareStatement(SQL_UPDATE_USER_ROLE)) {
+            int k = 1;
+            pstmt.setInt(k++, roleId);
+            pstmt.setInt(k, userId);
+            LOG.trace(pstmt);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public static void setBanned(Connection con, int userId, boolean banned) throws SQLException {
+        try (PreparedStatement pstmt = con.prepareStatement(SQL_SET_USER_BANNED)) {
+            int k = 1;
+            pstmt.setInt(k++, banned ? 1 : 0);
+            pstmt.setInt(k, userId);
+            LOG.trace(pstmt);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public static Optional<User> findUserByEmail(Connection con, String email) throws SQLException {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            pstmt = con.prepareStatement(SQL_FIND_USER_BY_EMAIL);
+            pstmt.setString(1, email);
+            LOG.debug(pstmt);
+            rs = pstmt.executeQuery();
+            List<User> userList = parseResultSet(rs);
+            if (userList.size() > 0)
+                return Optional.of(userList.get(0));
+            else return Optional.empty();
+        } finally {
+            DbUtil.close(rs);
+            DbUtil.close(pstmt);
         }
     }
 
     /**
-     * Update user role
+     * Parse resultSet for select query
      *
-     * @param userId id of user to update
-     * @param banned is user banned
-     * @throws DBException
+     * @param rs ResultSEt
+     * @return list of users
+     * @throws SQLException
      */
-    @Override
-    public void setBanned(int userId, boolean banned) throws DBException {
-        LOG.trace("start update");
-        try (Connection con = DBManager.getInstance().getConnection()) {
-            LowLevelUserManager.setBanned(con, userId, banned);
-            con.commit();
-        } catch (SQLException e) {
-            String message = "Cannot update user's role";
-            LOG.error(message, e);
-            throw new DBException(message, e);
+    private static List<User> parseResultSet(ResultSet rs) throws SQLException {
+        LinkedList<User> result = new LinkedList<>();
+        while (rs.next()) {
+            User user = new User();
+            user.setId(rs.getInt(Fields.ENTITY_ID));
+            user.setFirstName(rs.getString(Fields.USER_FIRST_NAME));
+            user.setLastName(rs.getString(Fields.USER_LAST_NAME));
+            user.setPatronymic(rs.getString(Fields.USER_PATRONYMIC));
+//			user.setLogin(rs.getString(Fields.USER_LOGIN));
+            user.setPassword(rs.getString(Fields.USER_PASSWORD));
+            user.setCode(rs.getString(Fields.USER_CODE));
+            user.setPhone(rs.getString(Fields.USER_PHONE));
+            user.setEmail(rs.getString(Fields.USER_EMAIL));
+            user.setCompanyName(rs.getString(Fields.USER_COMPANY_NAME));
+            user.setRoleId(rs.getInt(Fields.USER_ROLE_ID));
+            user.setBanned(rs.getInt(Fields.USER_IS_BANNED));
+            user.setIndividual(rs.getInt(Fields.USER_IS_INDIVIDUAL));
+            result.add(user);
+        }
+        return result;
+    }
+
+    public static Optional<User> getUser(Connection con, int userId) throws SQLException {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            pstmt = con.prepareStatement(SQL_SELECT_USER_BY_ID);
+            pstmt.setInt(1, userId);
+            rs = pstmt.executeQuery();
+            List<User> list = parseResultSet(rs);
+            return list.size() > 0 ? Optional.ofNullable(list.get(0)) : Optional.empty();
+        } finally {
+            DbUtil.close(rs);
+            DbUtil.close(pstmt);
         }
     }
 
-    /**
-     * Update user role
-     *
-     * @param userId id of user to update
-     * @param roleId new role id
-     * @throws DBException
-     */
-    @Override
-    public void updateUserRole(int userId, int roleId) throws DBException {
-        LOG.trace("start update");
-        try (Connection con = DBManager.getInstance().getConnection()) {
-            con.setAutoCommit(true);
-            LowLevelUserManager.updateUserRole(con, userId, roleId);
-        } catch (SQLException e) {
-            String message = "Cannot update user's role";
-            LOG.error(message, e);
-            throw new DBException(message, e);
+
+    public static List<User> getAllUsers(Connection con) throws SQLException {
+        try (Statement stmt = con.createStatement();
+             ResultSet rs = stmt.executeQuery(SQL_SELECT_ALL_USERS)) {
+            return parseResultSet(rs);
         }
     }
 
+    public static List<User> getAllUsersThatContainString(Connection con, String partOfUserCompany) throws SQLException {
 
-    /**
-     * Delete user
-     *
-     * @param userId id of user to delete
-     * @throws DBException
-     */
-    @Override
-    public void deleteUser(int userId) throws DBException {
-        try (Connection con = DBManager.getInstance().getConnection()) {
-            con.setAutoCommit(true);
-            LowLevelUserManager.deleteUser(con, userId);
-        } catch (SQLException ex) {
-            String message = "Cannot delete a user";
-            LOG.error(message, ex);
-            throw new DBException(message, ex);
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            pstmt = con.prepareStatement(SQL_SELECT_ALL_USERS_THAT_CONTAIN_STRING);
+            pstmt.setString(1, partOfUserCompany);
+            LOG.trace(pstmt);
+            rs = pstmt.executeQuery();
+            return parseResultSet(rs);
+        } finally {
+            DbUtil.close(rs);
+            DbUtil.close(pstmt);
         }
     }
 
-    /**
-     * add new user
-     *
-     * @param user user to add
-     * @throws DBException
-     */
-    @Override
-    public void addUser(User user) throws DBException {
-        try (Connection con = DBManager.getInstance().getConnection()) {
-            LowLevelUserManager.addUser(con, user);
-            con.commit();
-        } catch (SQLException e) {
-            String message = "Cannot create a user";
-            LOG.error(message, e);
-            throw new DBException(message, e);
-        }
-    }
-
-    /**
-     * Returns a user with the given login.
-     *
-     * @param email User e-mail.
-     * @return User entity.
-     */
-    @Override
-    public Optional<User> findUserByEmail(String email) throws DBException {
-        try (Connection con = DBManager.getInstance().getConnection()) {
-            con.setAutoCommit(true);
-            return LowLevelUserManager.findUserByEmail(con, email);
-        } catch (SQLException ex) {
-            String message = "Cannot obtain a user by its e-mail (" + email + ")";
-            LOG.error(message, ex);
-            throw new DBException(message, ex);
+    public static void deleteUser(Connection con, int userId) throws SQLException {
+        try (PreparedStatement pstmt = con.prepareStatement(SQL_DELETE_USER)) {
+            pstmt.setInt(1, userId);
+            pstmt.executeUpdate();
         }
     }
 }

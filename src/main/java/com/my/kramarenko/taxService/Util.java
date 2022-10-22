@@ -39,4 +39,10 @@ public class Util {
         request.setAttribute("selectedPage", selectedPage);
         LOG.trace("set selectedPage=" + selectedPage);
     }
+
+    public static void resetAvailableError(HttpServletRequest request) {
+        String error = request.getParameter("error");
+        if (error != null && error.length() > 0)
+            request.setAttribute("errorMessage", error);
+    }
 }

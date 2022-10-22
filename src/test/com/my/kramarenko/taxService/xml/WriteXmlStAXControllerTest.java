@@ -1,6 +1,6 @@
 package com.my.kramarenko.taxService.xml;
 
-import com.my.kramarenko.taxService.db.XmlException;
+import com.my.kramarenko.taxService.exception.XmlException;
 import com.my.kramarenko.taxService.xml.entity.TaxForm;
 import com.my.kramarenko.taxService.xml.forms.ReportForm;
 import com.my.kramarenko.taxService.xml.forms.ReportFormContainer;

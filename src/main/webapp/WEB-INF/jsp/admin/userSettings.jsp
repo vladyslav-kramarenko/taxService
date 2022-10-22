@@ -34,7 +34,7 @@
                             </label>
                         </td>
                         <td class="leftAlignmentTD">
-                            <input id="first_name" value="${user.firstName}" name="first_name">
+                            <input id="first_name" value="${userEdit.firstName}" name="first_name">
                         </td>
                     </tr>
                     <tr>
@@ -44,7 +44,7 @@
                             </label>
                         </td>
                         <td class="leftAlignmentTD">
-                            <input id="last_name" value="${user.lastName}" name="last_name">
+                            <input id="last_name" value="${userEdit.lastName}" name="last_name">
                         </td>
                     </tr>
                     <tr>
@@ -54,7 +54,7 @@
                             </label>
                         </td>
                         <td class="leftAlignmentTD">
-                            <input id="patronymic" value="${user.patronymic}" name="patronymic">
+                            <input id="patronymic" value="${userEdit.patronymic}" name="patronymic">
                         </td>
                     </tr>
 
@@ -67,7 +67,7 @@
                             </label>
                         </td>
                         <td class="leftAlignmentTD">
-                            <input id="company_name" value="${user.companyName}" name="company_name">
+                            <input id="company_name" value="${userEdit.companyName}" name="company_name">
                         </td>
                     </tr>
 
@@ -81,7 +81,7 @@
                     </label>
                 </td>
                 <td class="leftAlignmentTD">
-                    <input id="code" value="${user.code}" name="code">
+                    <input id="code" value="${userEdit.code}" name="code">
                 </td>
             </tr>
 
@@ -92,7 +92,7 @@
                     </label>
                 </td>
                 <td class="leftAlignmentTD">
-                    <input id="phone" type="tel" value="${user.phone}" name="phone">
+                    <input id="phone" type="tel" value="${userEdit.phone}" name="phone">
                 </td>
             </tr>
             <tr>
@@ -102,19 +102,19 @@
                     </label>
                 </td>
                 <td class="leftAlignmentTD">
-                    <input id="email" value="${user.email}" name="email" required>
+                    <input id="email" value="${userEdit.email}" name="email" required>
                 </td>
             </tr>
-            <tr>
-                <td class="label">
-                    <label for="currentPassword">
-                        <fmt:message key="settings_jsp.current_password"/>*
-                    </label>
-                </td>
-                <td class="leftAlignmentTD">
-                    <input id="currentPassword" value="" type="password" name="currentPassword" required>
-                </td>
-            </tr>
+            <%--            <tr>--%>
+            <%--                <td class="label">--%>
+            <%--                    <label for="currentPassword">--%>
+            <%--                        <fmt:message key="settings_jsp.current_password"/>*--%>
+            <%--                    </label>--%>
+            <%--                </td>--%>
+            <%--                <td class="leftAlignmentTD">--%>
+            <%--                    <input id="currentPassword" value="" type="password" name="currentPassword" required>--%>
+            <%--                </td>--%>
+            <%--            </tr>--%>
             <tr>
                 <td class="label">
                     <label for="password">
@@ -133,7 +133,7 @@
                 <span id="settings">
                 <input id="update" class="btn" type="submit"
                        value='<fmt:message key="settings_jsp.button.update"/>'>
-                <a id="cancel" class="btn" href="controller?command=viewSettings">
+                <a id="cancel" class="btn" href="controller?command=editUser&userId=${userEdit.id}">
                     <fmt:message key="settings_jsp.button.cancel"/>
                 </a>
                 </span>

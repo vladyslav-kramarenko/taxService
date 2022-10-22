@@ -1,4 +1,4 @@
-package com.my.kramarenko.taxService.db;
+package com.my.kramarenko.taxService.db.mySQL;
 
 /**
  * Holder for fields names of DB tables.

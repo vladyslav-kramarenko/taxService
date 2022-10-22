@@ -127,9 +127,11 @@
                                            href="controller?command=deleteReport&reportId=${report.report.id}"
                                            onclick="return confirm('Are you sure?')">Delete</a>
                                     </c:when>
-                                    <c:when test="${report.status.id==2}">
+                                    <c:when test="${report.status.id!=1}">
                                         <a class="aButton"
                                            href="controller?command=editReport&reportId=${report.report.id}">Show</a>
+                                    </c:when>
+                                    <c:when test="${report.status.id==2}">
                                         <a class="aButton"
                                            href="controller?command=cancelReport&reportId=${report.report.id}"
                                            onclick="return confirm('Are you sure?')">Cancel</a>

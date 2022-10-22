@@ -1,6 +1,6 @@
 package com.my.kramarenko.taxService.web.listener;
 
-import com.my.kramarenko.taxService.db.DBException;
+import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.db.entity.Type;
 import com.my.kramarenko.taxService.db.enums.Role;
 import com.my.kramarenko.taxService.db.enums.Status;
@@ -70,7 +70,7 @@ public class ContextListener implements ServletContextListener {
     /**
      * Initializes list of available statuses
      *
-     * @param servletContext
+     * @param servletContext Servlet Context
      */
     private void initStatuses(ServletContext servletContext) {
         LOG.trace("Status list initialization started");
@@ -88,13 +88,13 @@ public class ContextListener implements ServletContextListener {
     /**
      * Initializes list of available report types
      *
-     * @param servletContext
+     * @param servletContext Servlet Context
      */
     private void initTypes(ServletContext servletContext) {
         LOG.trace("Types list initialization started");
         Map<String, Type> typeMap;
         try {
-            List<Type> types = DBManager.getInstance().getTypeManager().getAllTypes();
+            List<Type> types = DBManager.getInstance().getTypeDAO().getAllTypes();
             typeMap = types
                     .stream()
                     .collect(Collectors.toMap(Type::getId, x -> x));
@@ -110,7 +110,7 @@ public class ContextListener implements ServletContextListener {
     /**
      * Initializes list of available report types
      *
-     * @param servletContext
+     * @param servletContext Servlet Context
      */
     private void initRoles(ServletContext servletContext) {
         LOG.trace("Roles initialization started");
@@ -122,7 +122,7 @@ public class ContextListener implements ServletContextListener {
     /**
      * Initializes log4j framework.
      *
-     * @param servletContext
+     * @param servletContext Servlet Context
      */
     private void initLog4J(ServletContext servletContext) {
         log("Log4J initialization started");

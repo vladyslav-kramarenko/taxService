@@ -1,24 +1,21 @@
 package com.my.kramarenko.taxService.web.command.user;
 
-import com.my.kramarenko.taxService.db.DBException;
-import com.my.kramarenko.taxService.db.dao.ReportDao;
+import com.my.kramarenko.taxService.db.dao.ReportDAO;
+import com.my.kramarenko.taxService.db.mySQL.DBManager;
+import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Status;
-import com.my.kramarenko.taxService.db.mySQL.ReportManager;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.Path;
-import com.my.kramarenko.taxService.xml.forms.ReportForm;
-import com.my.kramarenko.taxService.xml.entity.ReportValue;
-import com.my.kramarenko.taxService.xml.entity.SubElement;
-import com.my.kramarenko.taxService.xml.entity.TaxForm;
-import com.my.kramarenko.taxService.xml.forms.ReportFormContainer;
-import jakarta.servlet.ServletContext;
+import com.my.kramarenko.taxService.xml.forms.*;
+import com.my.kramarenko.taxService.xml.entity.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.util.List;
 
 /**
@@ -26,11 +23,12 @@ import java.util.List;
  *
  * @author Vlad Kramarenko
  */
-public class SendReportCommand extends Command {
+public class SubmitReportCommand extends Command {
 
+    @Serial
     private static final long serialVersionUID = -3071536594787692473L;
 
-    private static final Logger LOG = Logger.getLogger(SendReportCommand.class);
+    private static final Logger LOG = Logger.getLogger(SubmitReportCommand.class);
 
     @Override
     public String execute(HttpServletRequest request,
@@ -43,7 +41,7 @@ public class SendReportCommand extends Command {
         TaxForm taxForm = getTaxForm(reportForm, request);
 
         User user = (User) request.getSession().getAttribute("user");
-        ReportDao reportDb = new ReportManager();
+        ReportDAO reportDAO = DBManager.getInstance().getReportDAO();
         int reportID = -1;
         String reportIdParam = request.getParameter("reportId");
         try {
@@ -65,15 +63,16 @@ public class SendReportCommand extends Command {
         }
         if (reportID >= 0) {
             LOG.trace("obtain report id: " + reportID + " => edit current report");
-            reportDb.editReport(status, reportID, user, taxForm, reportForm);
+            reportDAO.editReport(status, reportID, taxForm, reportForm);
         } else {
             LOG.trace("current report id is empty => create new report");
-            reportDb.addReport(status, user, taxForm, reportForm);
+            reportDAO.addReport(status, user, taxForm, reportForm);
         }
 
         LOG.trace("Command finished");
-        response.sendRedirect(Path.COMMAND_REPORT_LIST);
-        return null;
+//        response.sendRedirect(Path.COMMAND_REPORT_LIST);
+        return Path.COMMAND_REPORT_LIST;
+//        return null;
     }
 
     private static TaxForm getTaxForm(ReportForm reportForm, HttpServletRequest request) {

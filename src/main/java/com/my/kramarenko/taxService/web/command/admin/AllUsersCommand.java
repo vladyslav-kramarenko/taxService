@@ -1,8 +1,8 @@
 package com.my.kramarenko.taxService.web.command.admin;
 
 import com.my.kramarenko.taxService.Util;
-import com.my.kramarenko.taxService.db.DBException;
-import com.my.kramarenko.taxService.db.dao.UserDao;
+import com.my.kramarenko.taxService.db.dao.UserDAO;
+import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Role;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
@@ -52,7 +52,7 @@ public class AllUsersCommand extends Command {
     }
 
     private static void updateUserRole(HttpServletRequest request) throws DBException {
-        UserDao userManager = DBManager.getInstance().getUserManager();
+        UserDAO userManager = DBManager.getInstance().getUserDAO();
         int userId = Integer.parseInt(request.getParameter("user_id"));
         int userRoleId = Integer.parseInt(request.getParameter("role_id"));
         LOG.trace("changeUserRole to " + Role.getRole(userRoleId));
@@ -60,7 +60,7 @@ public class AllUsersCommand extends Command {
     }
 
     private static void setBanned(HttpServletRequest request) throws DBException {
-        UserDao userManager = DBManager.getInstance().getUserManager();
+        UserDAO userManager = DBManager.getInstance().getUserDAO();
         int userId = Integer.parseInt(request.getParameter("user_id"));
         String banned = request.getParameter("banned_status");
         LOG.trace("changeUserBannedStatus to " + banned);

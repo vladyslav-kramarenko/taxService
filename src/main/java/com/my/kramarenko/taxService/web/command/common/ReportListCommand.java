@@ -1,16 +1,16 @@
 package com.my.kramarenko.taxService.web.command.common;
 
 import com.my.kramarenko.taxService.Util;
-import com.my.kramarenko.taxService.db.DBException;
-import com.my.kramarenko.taxService.db.XmlException;
+import com.my.kramarenko.taxService.db.mySQL.DBManager;
+import com.my.kramarenko.taxService.exception.DBException;
+import com.my.kramarenko.taxService.exception.XmlException;
 import com.my.kramarenko.taxService.db.dto.ReportDTO;
-import com.my.kramarenko.taxService.db.dao.TypeDao;
 import com.my.kramarenko.taxService.db.dto.UserReportDTOBuilder;
 import com.my.kramarenko.taxService.db.entity.Type;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Role;
 import com.my.kramarenko.taxService.db.enums.Status;
-import com.my.kramarenko.taxService.db.mySQL.TypeManager;
+import com.my.kramarenko.taxService.db.dao.TypeDAO;
 import com.my.kramarenko.taxService.web.Path;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.command.util.UserUtil;
@@ -21,6 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.util.*;
 
 import static com.my.kramarenko.taxService.web.command.util.ReportUtil.getChosenStatusMap;
@@ -32,6 +33,7 @@ import static com.my.kramarenko.taxService.web.command.util.ReportUtil.getChosen
  */
 public class ReportListCommand extends Command {
 
+    @Serial
     private static final long serialVersionUID = -3071536593627692473L;
 
     private static final Logger LOG = Logger.getLogger(ReportListCommand.class);
@@ -60,7 +62,7 @@ public class ReportListCommand extends Command {
         if (roleMap.get(user.getRoleId()).equals(Role.USER)) {
             LOG.trace("user role == user -> go to user reports");
             reportsList = UserReportDTOBuilder.getAllUserReportsWithStatuses(user, chosenStatusMap, typeMap);
-            TypeDao tm = new TypeManager();
+            TypeDAO tm = DBManager.getInstance().getTypeDAO();
             reportTypes = tm.getAllTypes();
             request.setAttribute("reportTypeList", reportTypes);
         } else {

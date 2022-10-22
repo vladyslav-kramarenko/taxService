@@ -1,6 +1,4 @@
-package com.my.kramarenko.taxService.db;
-
-import org.apache.log4j.Logger;
+package com.my.kramarenko.taxService.exception;
 
 public class DBException extends Exception {
     public DBException(String message, Exception e) {

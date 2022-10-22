@@ -1,4 +1,4 @@
-package com.my.kramarenko.taxService.db;
+package com.my.kramarenko.taxService.db.mySQL;
 
 public class requestFields {
 

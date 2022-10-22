@@ -1,6 +1,6 @@
 package com.my.kramarenko.taxService.web.command.user;
 
-import com.my.kramarenko.taxService.db.DBException;
+import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.db.enums.Status;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
 import com.my.kramarenko.taxService.web.Path;
@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.io.Serial;
 
 /**
  * Login command.
@@ -19,6 +20,7 @@ import java.io.IOException;
  */
 public class CancelReportCommand extends Command {
 
+    @Serial
     private static final long serialVersionUID = -3071536594787692473L;
 
     private static final Logger LOG = Logger.getLogger(CancelReportCommand.class);
@@ -41,7 +43,7 @@ public class CancelReportCommand extends Command {
 
         if (reportID >= 0) {
             LOG.trace("obtain report id: " + reportID + " => cancel current report");
-            DBManager.getInstance().getReportManager().updateReportStatus(reportID, Status.DRAFT);
+            DBManager.getInstance().getReportDAO().updateReportStatus(reportID, Status.DRAFT);
         } else {
             LOG.trace("incorrect report id");
         }

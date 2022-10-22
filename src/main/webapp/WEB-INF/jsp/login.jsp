@@ -13,6 +13,9 @@
         $("#registerBtn").button({});
     });
 </script>
+<c:if test="${not empty errorMessage}">
+    <h3>${errorMessage}</h3>
+</c:if>
 <span class="content">
     <span id="inputForm">
         <form id="login_form" action="controller" method="post">

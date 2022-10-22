@@ -1,8 +1,9 @@
 package com.my.kramarenko.taxService.web.command.inspector;
 
-import com.my.kramarenko.taxService.db.DBException;
+import com.my.kramarenko.taxService.db.dao.ReportDAO;
+import com.my.kramarenko.taxService.db.mySQL.DBManager;
+import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.db.enums.Status;
-import com.my.kramarenko.taxService.db.mySQL.ReportManager;
 import com.my.kramarenko.taxService.web.Path;
 import com.my.kramarenko.taxService.web.command.Command;
 import jakarta.servlet.ServletContext;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.util.Map;
 
 /**
@@ -21,6 +23,7 @@ import java.util.Map;
  */
 public class UpdateReportStatus extends Command {
 
+    @Serial
     private static final long serialVersionUID = -3071536594787692473L;
 
     private static final Logger LOG = Logger.getLogger(UpdateReportStatus.class);
@@ -45,7 +48,7 @@ public class UpdateReportStatus extends Command {
             Status status = statusMap.get(Integer.parseInt(statusParam));//Status.getStatus(Integer.parseInt(statusParam));
             LOG.trace("status: " + status);
 
-            ReportManager rm = new ReportManager();
+            ReportDAO rm = DBManager.getInstance().getReportDAO();
             rm.updateReportStatus(reportId, status, comment);
         } else {
             LOG.trace("reportId is null");

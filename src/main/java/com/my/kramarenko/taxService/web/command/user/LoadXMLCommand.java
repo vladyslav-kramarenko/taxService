@@ -1,6 +1,6 @@
 package com.my.kramarenko.taxService.web.command.user;
 
-import com.my.kramarenko.taxService.db.XmlException;
+import com.my.kramarenko.taxService.exception.XmlException;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.Path;
 import com.my.kramarenko.taxService.xml.forms.ReportFormContainer;
@@ -14,11 +14,13 @@ import jakarta.servlet.http.Part;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.io.Serial;
 import java.util.List;
 import java.util.Map;
 
 public class LoadXMLCommand extends Command {
 
+    @Serial
     private static final long serialVersionUID = 1863978254689586513L;
 
     private static final Logger LOG = Logger.getLogger(LoadXMLCommand.class);

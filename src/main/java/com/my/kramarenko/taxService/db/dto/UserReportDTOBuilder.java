@@ -1,11 +1,11 @@
 package com.my.kramarenko.taxService.db.dto;
 
-import com.my.kramarenko.taxService.db.DBException;
+import com.my.kramarenko.taxService.db.dao.ReportDAO;
+import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.db.entity.Type;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Status;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
-import com.my.kramarenko.taxService.db.mySQL.ReportManager;
 import org.apache.log4j.Logger;
 
 import java.util.*;
@@ -16,7 +16,7 @@ public class UserReportDTOBuilder {
 
     public static List<ReportDTO> getAllUserReportsWithStatuses(User user, Map<Status, Boolean> statuses, Map<String, Type> typeMap) throws DBException {
         List<ReportDTO> reportsList = new ArrayList<>();
-        ReportManager reportManager = DBManager.getInstance().getReportManager();
+        ReportDAO reportManager = DBManager.getInstance().getReportDAO();
 
         List<Status> chosenStatuses = statuses.entrySet()
                 .stream()
