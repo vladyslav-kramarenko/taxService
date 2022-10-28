@@ -4,7 +4,7 @@
 
 <form class="cmxform" id="report_form" action="controller" method="post">
     <mylib:reportHeadInputs reportTypeId="F0134105"/>
-    <table>
+    <table id="reportTable">
         <tr>
             <td class="rowNumber" rowspan="4">1</td>
             <td class="title" rowspan="4" colspan="10">
@@ -15,28 +15,28 @@
             <td>01</td>
             <td colspan="3">
                 <mylib:formProperty propertyName="HZ" propertyType="checkbox" propertyClass="formType"/>
-                <label for="HZ">Звітна</label>
+                Звітна
             </td>
         </tr>
         <tr>
             <td>02</td>
             <td colspan="3">
                 <mylib:formProperty propertyName="HZN" propertyType="checkbox" propertyClass="formType"/>
-                <label for="HZN"> Звітна нова</label>
+                Звітна нова
             </td>
         </tr>
         <tr>
             <td>03</td>
             <td colspan="3">
                 <mylib:formProperty propertyName="HZU" propertyType="checkbox" propertyClass="formType"/>
-                <label for="HZU">Уточнююча</label>
+                Уточнююча
             </td>
         </tr>
         <tr>
             <td>04</td>
             <td colspan="3">
                 <mylib:formProperty propertyName="HD" propertyType="checkbox"/>
-                <label for="HD">Довідкова</label>
+                Довідкова
             </td>
         </tr>
         <tr>
@@ -82,13 +82,13 @@
         </tr>
         <tr>
             <td class="parameter"></td>
-            <td><input name="" type="checkbox"></td>
+            <td><input name="" type="checkbox" propertyClass="period"></td>
             <td>I квартал</td>
-            <td><input name="" type="checkbox"></td>
+            <td><input name="" type="checkbox" propertyClass="period"></td>
             <td>півріччя</td>
-            <td><input name="" type="checkbox"></td>
+            <td><input name="" type="checkbox" propertyClass="period"></td>
             <td>три квартали</td>
-            <td><input name="" type="checkbox"></td>
+            <td><input name="" type="checkbox" propertyClass="period"></td>
             <td>рік</td>
             <td><mylib:formProperty propertyName="HMONTH" propertyType="text"/></td>
             <td class="emptyBox"></td>
@@ -113,13 +113,13 @@
         </tr>
         <tr>
             <td class="emptyBox"></td>
-            <td><input name="" type="checkbox"></td>
+            <td><input name="" type="checkbox" propertyClass="period1"></td>
             <td>I квартал</td>
-            <td><input name="" type="checkbox"></td>
+            <td><input name="" type="checkbox" propertyClass="period1"></td>
             <td>півріччя</td>
-            <td><input name="" type="checkbox"></td>
+            <td><input name="" type="checkbox" propertyClass="period1"></td>
             <td>три квартали</td>
-            <td><input name="" type="checkbox"></td>
+            <td><input name="" type="checkbox" propertyClass="period1"></td>
             <td colspan="2">рік</td>
             <td class="emptyBox"></td>
             <td><mylib:formProperty propertyName="HZYP" propertyType="text"/></td>
@@ -137,13 +137,13 @@
             <td colspan="15">Тип форми:</td>
         </tr>
         <tr>
-            <td><mylib:formProperty propertyName="H01" propertyType="checkbox" propertyClass="formType"/></td>
+            <td><mylib:formProperty propertyName="H01" propertyType="checkbox" propertyClass="type"/></td>
             <td colspan="2">після припинення</td>
-            <td><mylib:formProperty propertyName="H02" propertyType="checkbox" propertyClass="formType"/></td>
+            <td><mylib:formProperty propertyName="H02" propertyType="checkbox" propertyClass="type"/></td>
             <td colspan="3">прзначення пенсії</td>
-            <td><mylib:formProperty propertyName="H03" propertyType="checkbox" propertyClass="formType"/></td>
+            <td><mylib:formProperty propertyName="H03" propertyType="checkbox" propertyClass="type"/></td>
             <td colspan="3">перехід на сплату інших податків і зборів</td>
-            <td><mylib:formProperty propertyName="H04" propertyType="checkbox" propertyClass="formType"/></td>
+            <td><mylib:formProperty propertyName="H04" propertyType="checkbox" propertyClass="type"/></td>
             <td colspan="3">призначення матеріального забезпечення, страхових випла</td>
         </tr>
         <tr>
@@ -353,3 +353,5 @@
     <br>
     <%@ include file="/WEB-INF/jspf/taxForms/reportButtons.jspf" %>
 </form>
+<script type="text/javascript" src="js/commonReportFunctions.js"></script>
+<script type="text/javascript" src="js/f0134105.js"></script>

@@ -7,4 +7,5 @@
     </c:if>
 
     <input  type="submit" name="downloadXML" id="downloadXnlBtn" value="Download XML">
+
     </span>

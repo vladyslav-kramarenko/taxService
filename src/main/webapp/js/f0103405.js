@@ -1,26 +1,6 @@
-var checkboxes = document.getElementsByClassName("formType");
-
-for (i = 0; i < checkboxes.length; i++) {
-    checkboxes[i].onclick = function () {
-        if (document.getElementById(this.id).checked == true) {
-            document.getElementById('HZ').checked = false;
-            document.getElementById('HZN').checked = false;
-            document.getElementById('HZU').checked = false;
-            document.getElementById(this.id).checked = true;
-        }
-    }
-}
-
-const init = function () {
-    document.getElementById('R001G3').addEventListener('input', calculate8);
-    document.getElementById('R002G3').addEventListener('input', listener247);
-    document.getElementById('R003G3').addEventListener('input', calculate8);
-    document.getElementById('R004G3').addEventListener('input', listener247);
-    document.getElementById('R005G3').addEventListener('input', listener5);
-    document.getElementById('R006G3').addEventListener('input', listener6);
-    document.getElementById('R007G3').addEventListener('input', listener247);
-    document.getElementById('R013G3').addEventListener('input', calculate14);
-}
+checkBoxFunction("formType");
+checkBocheckBoxFunction("period");
+checkBocheckBoxFunction("period1");
 
 const calculate8 = function () {
     let variables = [];
@@ -69,21 +49,6 @@ const calculate14 = function () {
     document.getElementById('R014G3').value = (getNumber('R012G3') - getNumber('R013G3')).toFixed(2);
 }
 
-const getNumber = function (name) {
-    return parseFloat(document.getElementById(name).value)
-}
-
-const getSum = function (variables) {
-    var res = 0;
-    for (i = 0; i < variables.length; i++) {
-        if (!isNaN(variables[i])) {
-            res += variables[i];
-        }
-    }
-    return res.toFixed(2);
-}
-
-
 const listener247 = function () {
     calculate8();
     calculate9();
@@ -96,6 +61,20 @@ const listener6 = function () {
     calculate8();
     calculate11();
 }
+
+const init = function () {
+    console.log("init functions")
+    document.getElementById('R001G3').addEventListener('input', calculate8);
+    document.getElementById('R002G3').addEventListener('input', listener247);
+    document.getElementById('R003G3').addEventListener('input', calculate8);
+    document.getElementById('R004G3').addEventListener('input', listener247);
+    document.getElementById('R005G3').addEventListener('input', listener5);
+    document.getElementById('R006G3').addEventListener('input', listener6);
+    document.getElementById('R007G3').addEventListener('input', listener247);
+    document.getElementById('R013G3').addEventListener('input', calculate14);
+}
+init();
+console.log("finish js")
 
 // // onload = function () {
 //     document.getElementById('R001G3').addEventListener('input', calculate8);

@@ -6,4 +6,7 @@
     <c:when test="${reportTypeId=='F0134105'}">
         <%@ include file="/WEB-INF/jspf/taxForms/F0134105.jspf" %>
     </c:when>
+    <c:when test="${reportTypeId=='J0100122'}">
+        <%@ include file="/WEB-INF/jspf/taxForms/J0100122.jspf" %>
+    </c:when>
 </c:choose>

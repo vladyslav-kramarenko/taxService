@@ -4,7 +4,7 @@
 
 <form class="cmxform" id="report_form" action="controller" method="post">
     <mylib:reportHeadInputs reportTypeId="F0103405"/>
-    <table>
+    <table id="reportTable">
         <tr>
             <td class="rowNumber" rowspan="4">1</td>
             <td class="title" rowspan="4" colspan="10">
@@ -15,7 +15,7 @@
             <td>01</td>
             <td colspan="3">
                 <mylib:formProperty propertyName="HZ" propertyType="checkbox" propertyClass="formType"/>
-                <label for="HZ">«в≥тна</label>
+                «в≥тна
             </td>
         </tr>
         <tr>
@@ -41,13 +41,13 @@
         </tr>
         <tr>
             <td class="parameter"></td>
-            <td><input name="" type="checkbox"></td>
+            <td><input name="" type="checkbox" propertyClass="period"></td>
             <td>I квартал</td>
-            <td><input name="" type="checkbox"></td>
+            <td><input name="" type="checkbox" propertyClass="period"></td>
             <td>п≥вр≥чч€</td>
-            <td><input name="" type="checkbox"></td>
+            <td><input name="" type="checkbox" propertyClass="period"></td>
             <td>три квартали</td>
-            <td><input name="" type="checkbox"></td>
+            <td><input name="" type="checkbox" propertyClass="period"></td>
             <td>р≥к</td>
             <td><mylib:formProperty propertyName="HMONTH" propertyType="text"/></td>
             <td class="emptyBox"></td>
@@ -72,13 +72,13 @@
         </tr>
         <tr>
             <td class="emptyBox"></td>
-            <td><input name="" type="checkbox"></td>
+            <td><input name="" type="checkbox" propertyClass="period1"></td>
             <td>I квартал</td>
-            <td><input name="" type="checkbox"></td>
+            <td><input name="" type="checkbox" propertyClass="period1"></td>
             <td>п≥вр≥чч€</td>
-            <td><input name="" type="checkbox"></td>
+            <td><input name="" type="checkbox" propertyClass="period1"></td>
             <td>три квартали</td>
-            <td><input name="" type="checkbox"></td>
+            <td><input name="" type="checkbox" propertyClass="period1"></td>
             <td colspan="2">р≥к</td>
             <td class="emptyBox"></td>
             <td><mylib:formProperty propertyName="HZYP" propertyType="text"/></td>
@@ -391,16 +391,5 @@
     </table>
     <%@ include file="/WEB-INF/jspf/taxForms/reportButtons.jspf" %>
 </form>
-<script src="js/f0103405.js"/>
-<script>
-    onload = function () {
-        document.getElementById('R001G3').addEventListener('input', calculate8);
-        document.getElementById('R002G3').addEventListener('input', listener247);
-        document.getElementById('R003G3').addEventListener('input', calculate8);
-        document.getElementById('R004G3').addEventListener('input', listener247);
-        document.getElementById('R005G3').addEventListener('input', listener5);
-        document.getElementById('R006G3').addEventListener('input', listener6);
-        document.getElementById('R007G3').addEventListener('input', listener247);
-        document.getElementById('R013G3').addEventListener('input', calculate14);
-    }
-</script>
+<script type="text/javascript" src="js/commonReportFunctions.js"></script>
+<script type="text/javascript" src="js/f0103405.js"></script>

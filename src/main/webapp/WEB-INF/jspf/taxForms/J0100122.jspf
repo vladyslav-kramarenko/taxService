@@ -1,0 +1,963 @@
+<%@ taglib prefix="mylib" tagdir="/WEB-INF/tags" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="windows-1251" %>
+<link rel="stylesheet" type="text/css" media="screen" href="style/reportForm.css"/>
+
+<form class="cmxform" id="report_form" action="controller" method="post">
+    <mylib:reportHeadInputs reportTypeId="J0100122"/>
+    <table id="reportTable">
+        <tr>
+            <td class="rowNumber" rowspan="3">1</td>
+            <td class="title" rowspan="3" colspan="10">
+                ПОДАТКОВА ДЕКЛАРАЦІЯ
+                <br>
+                з податку на прибуток підприємств
+            </td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="HZ" propertyType="checkbox" propertyClass="formType"/>
+                Звітна
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3"><mylib:formProperty propertyName="HZN" propertyType="checkbox" propertyClass="formType"/>
+                Звітна нова
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3"><mylib:formProperty propertyName="HZU" propertyType="checkbox" propertyClass="formType"/>
+                Уточнююча
+            </td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td rowspan="2">2</td>
+            <td rowspan="2" colspan="4">
+                Звітний (податковий) період
+                <mylib:formProperty propertyName="HZY" propertyType="text"/>
+                року
+            </td>
+            <td colspan="1">
+                <mylib:formProperty propertyName="H1KV" propertyType="checkbox" propertyClass="period"/>
+            </td>
+            <td colspan="1">
+                I квартал
+            </td>
+            <td colspan="1">
+                <mylib:formProperty propertyName="HHY" propertyType="checkbox" propertyClass="period"/>
+            </td>
+            <td colspan="1">
+                Півріччя
+            </td>
+            <td colspan="1">
+                <mylib:formProperty propertyName="H3KV" propertyType="checkbox" propertyClass="period"/>
+            </td>
+            <td colspan="1">
+                Три квартали
+            </td>
+            <td colspan="1">
+                <mylib:formProperty propertyName="HY" propertyType="checkbox" propertyClass="period"/>
+            </td>
+            <td colspan="1">
+                Рік
+            </td>
+        </tr>
+        <tr>
+
+            <td colspan="1">
+                <mylib:formProperty propertyName="H01" propertyType="checkbox" propertyClass="periodType"/>
+            </td>
+            <td colspan="3">
+                Базовий звітний період квартал
+            </td>
+            <td colspan="1">
+                <mylib:formProperty propertyName="H02" propertyType="checkbox" propertyClass="periodType"/>
+            </td>
+            <td colspan="3">
+                Базовий звітний період рік
+            </td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td rowspan="1">3</td>
+            <td colspan="4">
+                Звітний (податковий) період, що
+                уточнюється,
+                <mylib:formProperty propertyName="HZY" propertyType="text"/>
+                року
+            </td>
+            <td colspan="1">
+                <mylib:formProperty propertyName="H1KVP" propertyType="checkbox" propertyClass="period1"/>
+            </td>
+            <td colspan="1">
+                I квартал
+            </td>
+            <td colspan="1">
+                <mylib:formProperty propertyName="HHYP" propertyType="checkbox" propertyClass="period1"/>
+            </td>
+            <td colspan="1">
+                Півріччя
+            </td>
+            <td colspan="1">
+                <mylib:formProperty propertyName="H3KVP" propertyType="checkbox" propertyClass="period1"/>
+            </td>
+            <td colspan="1">
+                Три квартали
+            </td>
+            <td colspan="1">
+                <mylib:formProperty propertyName="HYP" propertyType="checkbox" propertyClass="period1"/>
+            </td>
+            <td colspan="1">
+                Рік
+            </td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td class="rowNumber" rowspan="3">4</td>
+            <td rowspan="2">Платник</td>
+            <td colspan="13"><mylib:formProperty propertyName="HNAME" propertyType="text"/></td>
+        </tr>
+        <tr>
+            <td colspan="13"></td>
+        </tr>
+        <tr class="bottomLine">
+            <td class="comment" colspan="15">(повне найменування платника податку згідно з реєстраційними документами)
+            </td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+
+        <tr>
+            <td class="rowNumber" rowspan="1">5</td>
+            <td colspan="4">
+                Податковий номер або серія
+                (за наявності) та номер
+                паспорта
+            </td>
+            <td colspan="3"><mylib:formProperty propertyName="HTIN" propertyType="text"/></td>
+            <td colspan="3">
+                Код виду економічної діяльності
+                (КВЕД)
+            </td>
+            <td colspan="2">
+                <mylib:formProperty propertyName="HKVED" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="rowNumber" rowspan="5">6</td>
+            <td rowspan="5" colspan="7">Податкова адреса
+                <mylib:formProperty propertyName="HLOC" propertyType="text"/></td>
+            <td colspan="3">
+                Поштовий індекс
+            </td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="HZIP" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                Телефон
+            </td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="HTEL" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                Моб. тел.
+            </td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="HMTEL" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                Факс
+            </td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="HFAX" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                E-mail
+            </td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="HEMAIL" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="rowNumber" rowspan="2">7</td>
+            <td rowspan="1" colspan="7">Повне найменування нерезидента
+                <mylib:formProperty propertyName="HNAMENR" propertyType="text"/>
+            </td>
+            <td colspan="5">
+                Назва країни резиденції нерезидента (за
+                Класифікацією країн світу, українською мовою)
+                <mylib:formProperty propertyName="H01G2S" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td rowspan="1" colspan="7">Місцезнаходження нерезидента
+                <mylib:formProperty propertyName="HLOCNR" propertyType="text"/>
+            </td>
+            <td colspan="4">Код країни резиденції (за Класифікацією
+                країн світу
+            </td>
+            <td><mylib:formProperty propertyName="H01G2" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td class="rowNumber" rowspan="4">7.1</td>
+            <td colspan="7" rowspan="2">Повне найменування постійного представництва/відокремленого
+                підрозділу, через який нерезидент здійснює діяльність в Україні
+                <mylib:formProperty propertyName="R071G1S" propertyType="text"/>
+            </td>
+            <td colspan="4">Код ЄДРПОУ постійного
+                представництва
+            </td>
+            <td><mylib:formProperty propertyName="R071G2S" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                Ідентифікатор об’єкта
+                оподаткування (за відсутності
+                коду ЄДРПОУ)
+            </td>
+            <td>
+                <mylib:formProperty propertyName="R071G3S" propertyType="text"/>
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="14">
+                Місцезнаходження постійного представництва/відокремленого підрозділу нерезидента
+                <mylib:formProperty propertyName="R071G4S" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="14">
+                Найменування контролюючого органу за місцем обліку постійного представництва/відокремленого підрозділу
+                нерезидента
+                <mylib:formProperty propertyName="R071G5S" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td class="rowNumber" rowspan="1">8</td>
+            <td colspan="14"><mylib:formProperty propertyName="HSTI" propertyType="text"/>
+                (найменування контролюючого органу, до якого подається Податкова декларація з податку на прибуток
+                підприємств)
+            </td>
+        </tr>
+        <tr>
+            <td class="rowNumber" rowspan="2">9</td>
+            <td colspan="7">
+                Повне найменування інституту спільного інвестування
+            </td>
+            <td colspan="7">
+                Реєстраційний код інституту спільного інвестування (за даними
+                Єдиного державного реєстру інститутів спільного інвестування,
+                ведення якого здійснюється Національною комісією з цінних
+                паперів та фондового ринку)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="7"></td>
+            <td colspan="7"></td>
+        </tr>
+        <tr>
+            <td class="rowNumber" rowspan="16">10</td>
+            <td colspan="14">
+                Особливі відмітки.
+                Податкова декларація платника податку на прибуток підприємств:
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="13">виробника сільськогосподарської продукції</td>
+        </tr>
+        <tr>
+            <td><mylib:formProperty propertyName="H092" propertyType="checkbox" propertyClass="organizationType"/>
+            </td>
+            <td colspan="13">банку</td>
+        </tr>
+        <tr>
+            <td><mylib:formProperty propertyName="H093" propertyType="checkbox" propertyClass="organizationType"/>
+            </td>
+            <td colspan="13">страховика</td>
+        </tr>
+        <tr>
+            <td><mylib:formProperty propertyName="H094" propertyType="checkbox" propertyClass="organizationType"/>
+            </td>
+            <td colspan="13">суб’єкта, який здійснює випуск та проведення лотерей</td>
+        </tr>
+        <tr>
+            <td><mylib:formProperty propertyName="H095" propertyType="checkbox" propertyClass="organizationType"/>
+            </td>
+            <td colspan="13">суб’єкта, що провадить азартні ігри з використанням гральних автоматів</td>
+        </tr>
+        <tr>
+            <td><mylib:formProperty propertyName="H096" propertyType="checkbox" propertyClass="organizationType"/>
+            </td>
+            <td colspan="13">суб’єкта, що провадить букмекерську діяльність та азартні ігри (у тому числі казино), крім
+                азартних ігор з використанням
+                гральних автоматів
+            </td>
+        </tr>
+        <tr>
+            <td><mylib:formProperty propertyName="H097" propertyType="checkbox" propertyClass="organizationType"/>
+            </td>
+            <td colspan="13">постійного представництва нерезидента</td>
+        </tr>
+        <tr>
+            <td><mylib:formProperty propertyName="H098" propertyType="checkbox" propertyClass="organizationType"/>
+            </td>
+            <td colspan="13">підприємства (організації) громадської організації осіб з інвалідністю, яке отримало дозвіл
+                на користування пільгою
+            </td>
+        </tr>
+        <tr>
+            <td><mylib:formProperty propertyName="HLIQ" propertyType="checkbox" propertyClass="organizationType"/>
+            </td>
+            <td colspan="13">платника податку, що подає декларацію за останній податковий (звітний) рік у періоді, на
+                який припадає дата його ліквідації
+            </td>
+        </tr>
+        <tr>
+            <td><mylib:formProperty propertyName="H099" propertyType="checkbox" propertyClass="organizationType"/>
+            </td>
+            <td colspan="13">суб’єкта господарювання – юридичної особи, яка обрала спрощену систему оподаткування</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="13">фізичної особи – підприємця, у тому числі такої, яка обрала спрощену систему оподаткування,
+                або фізичної особи, яка
+                провадить незалежну професійну діяльність
+            </td>
+        </tr>
+        <tr>
+            <td><mylib:formProperty propertyName="H0101" propertyType="checkbox" propertyClass="organizationType"/>
+            </td>
+            <td colspan="13">іноземної компанії</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="13">інституту спільного інвестування у вигляді утворення без статусу юридичної особи</td>
+        </tr>
+        <tr>
+            <td><mylib:formProperty propertyName="H0103" propertyType="checkbox" propertyClass="organizationType"/>
+            </td>
+            <td colspan="13">інвестора із значними інвестиціями</td>
+        </tr>
+        <tr>
+            <td><mylib:formProperty propertyName="H104" propertyType="checkbox" propertyClass="organizationType"/>
+            </td>
+            <td colspan="13">платника податку, що визначає податок на прибуток у вигляді мінімального податкового
+                зобов'язання
+            </td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td colspan="11">Показники</td>
+            <td colspan="1">Код рядка</td>
+            <td colspan="3">Сума (грн.)</td>
+        </tr>
+        <tr>
+            <td colspan="11">1</td>
+            <td colspan="1">2</td>
+            <td colspan="3">3</td>
+        </tr>
+        <tr>
+            <td colspan="11">Дохід від будь-якої діяльності (за вирахуванням непрямих податків), визначений за правилами
+                бухгалтерського обліку
+            </td>
+            <td colspan="1">01</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R001G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Фінансовий результат до оподаткування (прибуток або збиток), визначений у фінансовій
+                звітності відповідно
+                до національних положень (стандартів) бухгалтерського обліку або міжнародних стандартів фінансової
+                звітності (+, –)
+            </td>
+            <td colspan="1">02</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R002G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Різниці, які виникають відповідно до Податкового кодексу України (+, –)</td>
+            <td colspan="1">03 PI</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R003G3" propertyType="text"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="11">Сума перевищення ціни, визначеної за принципом «витягнутої руки», над договірною
+                (контрактною) вартістю
+                реалізованих товарів (робіт, послуг) при здійсненні контрольованих операцій платником податку –
+                інвестором
+                із значними інвестиціями
+            </td>
+            <td colspan="1">03.1</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R0031G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума перевищення договірної (контрактної) вартості придбаних товарів (робіт, послуг) над
+                ціною,
+                визначеною за принципом «витягнутої руки», при здійсненні контрольованих операцій платником податку –
+                інвестором із значними інвестиціями
+            </td>
+            <td colspan="1">03.2</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R0032G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Об’єкт оподаткування (рядок 02 + рядок 03 РІ + рядок 03.1 + рядок 03.2) (+, –)</td>
+            <td colspan="1">04</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R004G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Прибуток, звільнений від оподаткування, або збиток від діяльності, прибуток від якої
+                звільнений від
+                оподаткування (+, –)
+            </td>
+            <td colspan="1">05 ПЗ</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R005G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Податок на прибуток ((позитивне значення) (рядок 04 – рядок 05ПЗ) х R006G15
+                /100)
+            </td>
+            <td colspan="1">06</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R006G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Податок на прибуток контрольованої іноземної компанії</td>
+            <td colspan="1">06.1 КІК</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R0061G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Податок на прибуток у вигляді мінімального податкового зобов'язання</td>
+            <td colspan="1">06.2 МПЗ</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R0062G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Дохід за договорами страхування, співстрахування і перестрахування, визначений підпунктом
+                141.1.2
+                пункту 141.1 статті 141 розділу ІІІ Податкового кодексу України, у тому числі:
+            </td>
+            <td colspan="1">07</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R007G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">за договорами з довгострокового страхування життя, договорами добровільного медичного
+                страхування та
+                договорами страхування у межах недержавного пенсійного забезпечення, зокрема договорами страхування
+                додаткової пенсії, та визначений підпунктами 14.1.52, 14.1.521
+                , 14.1.522
+                і 14.1.116 пункту 14.1 статті 14
+                розділу І Податкового кодексу України
+            </td>
+            <td colspan="1">07.1</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R0071G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">страхові платежі, страхові внески, страхові премії за договорами перестрахування</td>
+            <td colspan="1">07.2</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R0072G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Податок на дохід за договорами страхування ((рядок 07 – рядок 07.1 – рядок 07.2) х R008G16
+                /100)
+            </td>
+            <td colspan="1">08</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R008G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума доходу, отриманого від діяльності з випуску та проведення лотерей (рядок 09.1 + рядок
+                09.2), у тому
+                числі:
+            </td>
+            <td colspan="1">09</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R009G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">сума доходу, що залишився після формування призового (виграшного) фонду (позитивне значення
+                (рядок 09.1.1 – рядок 09.1.2)):
+            </td>
+            <td colspan="1">09.1</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R0091G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">загальна сума доходів, отриманих від прийняття ставок у лотереї</td>
+            <td colspan="1">09.1.1</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R00911G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">сума сформованого призового (виграшного) фонду лотереї відповідно до умов її проведення
+            </td>
+            <td colspan="1">09.1.2</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R00912G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">сума безнадійної заборгованості, визначеної підпунктом «е» підпункту 14.1.11 пункту 14.1
+                статті 14 розділу І
+                Податкового кодексу України
+            </td>
+            <td colspan="1">09.2</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R0092G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Податок на дохід, отриманий від діяльності з випуску та проведення лотерей за звітний
+                (податковий) період
+                (рядок 09 х R010G17
+                /100)
+            </td>
+            <td colspan="1">10</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R010G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума доходу, отриманого від діяльності з проведення азартних ігор з використанням гральних
+                автоматів
+            </td>
+            <td colspan="1">11</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R011G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Податок на дохід від діяльності з проведення азартних ігор з використанням гральних
+                автоматів за звітний
+                (податковий) період (рядок 11 х R012G18
+                /100)
+            </td>
+            <td colspan="1">12</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R012G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума доходу від букмекерської діяльності, азартних ігор (у тому числі казино), крім доходу,
+                отриманого від
+                азартних ігор з використанням гральних автоматів
+            </td>
+            <td colspan="1">13</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R013G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума виплачених гравцю виплат</td>
+            <td colspan="1">14</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R014G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Податок на дохід від букмекерської діяльності, азартних ігор (у тому числі казино), крім
+                доходу, отриманого
+                від азартних ігор з використанням гральних автоматів, за звітний (податковий) період (позитивне значення
+                (рядок 13 – рядок 14) х R015G19
+                /100)
+            </td>
+            <td colspan="1">15</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R015G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Зменшення нарахованої суми податку</td>
+            <td colspan="1">16 ЗП</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R016G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Податок на прибуток за звітний (податковий) період (рядок 06 + рядок 06.1 КІК + рядок 06.2
+                МПЗ + рядок 08
+                + рядок 10 + рядок 12 + рядок 15 – рядок 16 ЗП)
+            </td>
+            <td colspan="1">17</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R017G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Податок на прибуток за результатами попереднього звітного (податкового) періоду поточного
+                року з
+                урахуванням уточнень (рядок 17 Податкової декларації з податку на прибуток підприємств за попередній
+                звітний (податковий) період поточного року)
+            </td>
+            <td colspan="1">18</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R018G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Податок на прибуток, нарахований за результатами останнього (звітного) податкового періоду
+                (рядок 17 – рядок 18) (+, –)
+            </td>
+            <td colspan="1">19</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R019G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума авансового внеску при виплаті дивідендів, що має бути сплачена у звітному
+                (податковому) періоді
+            </td>
+            <td colspan="1">20 АВ</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R020G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума авансового внеску при виплаті дивідендів, що має бути сплачена за результатами
+                попереднього звітного
+                (податкового) періоду поточного року, з урахуванням уточнень (рядок 20 АВ Податкової декларації з
+                податку
+                на прибуток підприємств за попередній звітний (податковий) період поточного року)1
+            </td>
+            <td colspan="1">21</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R021G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума авансового внеску при виплаті дивідендів, нарахована за результатами останнього
+                (звітного)
+                податкового періоду (рядок 20 АВ – рядок 21)
+            </td>
+            <td colspan="1">22</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R022G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума податків, які утримуються при виплаті доходів (прибутків) нерезидентам, нарахованих за
+                звітний
+                (податковий) період
+            </td>
+            <td colspan="1">23 ПН</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R023G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума податків, які утримуються при виплаті доходів (прибутків) нерезидентам за результатами
+                попереднього
+                звітного (податкового) періоду поточного року, з урахуванням уточнень (рядок 23 ПН Податкової декларації
+                з
+                податку на прибуток підприємств за попередній звітний (податковий) період поточного року)10
+            </td>
+            <td colspan="1">24</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R024G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума податків, які утримуються при виплаті доходів (прибутків) нерезидентам, нарахованих за
+                результатами останнього (звітного) податкового періоду (рядок 23 ПН – рядок 24)
+            </td>
+            <td colspan="1">25</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R025G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="15">Виправлення помилок</td>
+        </tr>
+        <tr>
+            <td colspan="11">Збільшення (зменшення) податкового зобов’язання звітного (податкового) періоду, що
+                уточнюється
+                (позитивне (від’ємне) значення (рядок 19 – рядок 19 Податкової декларації з податку на прибуток
+                підприємств,
+                яка уточнюється, або рядок 35 – рядок 35 Податкової декларації з податку на прибуток підприємств, яка
+                уточнюється)) або рядок 26 таблиці 2 додатка ВП до рядків 26 – 29, 31 – 33, 35 Податкової декларації з
+                податку на прибуток підприємств (+, –)
+            </td>
+            <td colspan="1">26</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R026G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Збільшення (зменшення) податкового зобов’язання звітного (податкового) періоду з авансового
+                внеску при
+                виплаті дивідендів, що уточнюється (позитивне (від’ємне) значення (рядок 22 – рядок 22 Податкової
+                декларації з податку на прибуток підприємств, яка уточнюється)) або рядок 27 таблиці 2 додатка ВП до
+                рядків
+                26 – 29, 31 – 33 Податкової декларації з податку на прибуток підприємств (+, –)
+            </td>
+            <td colspan="1">27</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R027G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума штрафу (5 %) при відображенні недоплати у складі Податкової декларації з податку на
+                прибуток
+                підприємств, що подається за звітний (податковий) період, наступний за періодом, у якому виявлено факт
+                заниження податкового зобов’язання (рядок 28 таблиці 2 додатка ВП до рядків 26 – 29, 31 – 33 Податкової
+                декларації з податку на прибуток підприємств)
+            </td>
+            <td colspan="1">28</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R028G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Пеня, нарахована на виконання вимог підпункту 129.1.3 пункту 129.1 статті 129 розділу ІІ
+                Податкового
+                кодексу України, або рядок 29 таблиці 2 додатка ВП до рядків 26 – 29, 31 – 33 Податкової декларації з
+                податку
+                на прибуток підприємств
+            </td>
+            <td colspan="1">29</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R029G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума штрафу (3 %) при відображенні недоплати в уточнюючій Податковій декларації з податку
+                на прибуток
+                підприємств
+            </td>
+            <td colspan="1">30</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R030G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="15">Виправлення помилок з податку на прибуток, який утримується при виплаті доходів (прибутків)
+                нерезидентів
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Збільшення (зменшення) податкового зобов’язання звітного (податкового) періоду, що
+                уточнюється(позитивне
+                (від’ємне) значення (рядок 25 – рядок 25 Податкової декларації з податку на прибуток підприємств, яка
+                уточнюється)) або рядок 30 таблиці 2 додатка ВП до рядків 26 – 29, 31 – 33 Податкової декларації з
+                податку на
+                прибуток підприємств (+, –)
+            </td>
+            <td colspan="1">31</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R031G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума штрафу (5 %) при відображенні недоплати у складі Податкової декларації з податку на
+                прибуток
+                підприємств, що подається за звітний (податковий) період, наступний за періодом, у якому виявлено факт
+                заниження податкового зобов’язання (рядок 31 таблиці 2 додатка ВП до рядків 26 – 29, 31 – 33 Податкової
+                декларації з податку на прибуток підприємств)
+            </td>
+            <td colspan="1">32</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R032G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Пеня, нарахована на виконання вимог підпункту 129.1.3 пункту 129.1 статті 129 розділу ІІ
+                Податкового
+                кодексу України, або рядок 32 таблиці 2 додатка ВП до рядків 26 – 29, 31 – 33 Податкової декларації з
+                податку
+                на прибуток підприємств
+            </td>
+            <td colspan="1">33</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R033G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума штрафу (3 %) при відображенні недоплати в уточнюючій Податковій декларації з податку
+                на прибуток
+                підприємств
+            </td>
+            <td colspan="1">34</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R034G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="15">Податкові зобов’язання, інші штрафні санкції та пені, визначені відповідно до Податкового
+                кодексу України,
+                не пов’язані з виправленням помилок
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Сума збільшення податкового зобов’язання за порушення вимог цільового використання
+                вивільнених від
+                оподаткування коштів відповідно до пунктів 142.1 – 142.3 статті 142 розділу ІІІ, пунктів 41, 57
+                підрозділу 4
+                розділу ХХ Податкового кодексу України
+            </td>
+            <td colspan="1">35</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R035G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Штрафні санкції за порушення положень пунктів 41, 57 підрозділу 4 розділу ХХ Податкового
+                кодексу
+                України
+            </td>
+            <td colspan="1">36</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R036G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="11">Пеня, нарахована на виконання вимог статті 1231
+                глави 11 розділу ІІ, пунктів 142.1 – 142.3 статті 142
+                розділу ІІІ, пунктів 41, 57 підрозділу 4 розділу ХХ Податкового кодексу України
+            </td>
+            <td colspan="1">37</td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="R037G3" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td colspan="15">Інформація, наведена в Податковій декларації з податку на прибуток підприємств та додатках
+                до неї, є
+                достовірною.
+            </td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td colspan="6">
+                Керівник (уповноважена особа)
+            </td>
+            <td colspan="3"></td>
+            <td colspan="6">
+                <mylib:formProperty propertyName="HBOS" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6">
+                <mylib:formProperty propertyName="HKBOS" propertyType="text"/>
+                (реєстраційний номер облікової картки
+                платника податків або серія (за
+                наявності) та номер паспорта)
+            </td>
+            <td colspan="3">(підпис)</td>
+            <td colspan="6"> (власне ім’я, прізвище)</td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td colspan="15">
+                М.П. (за наявності)
+            </td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td colspan="6">
+                Головний бухгалтер (особа, відповідальна за ведення бухгалтерського
+                обліку)
+            </td>
+            <td colspan="3"></td>
+            <td colspan="6">
+                <mylib:formProperty propertyName="HBUH" propertyType="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="6">
+                <mylib:formProperty propertyName="HKBUH" propertyType="text"/>
+                (реєстраційний номер облікової картки
+                платника податків або серія (за
+                наявності) та номер паспорта)
+            </td>
+            <td colspan="3">(підпис)</td>
+            <td colspan="6"> (власне ім’я, прізвище)</td>
+        </tr>
+        <tr>
+            <td class="emptyRow" colspan="15"></td>
+        </tr>
+        <tr>
+            <td colspan="6">
+                Дата подання
+            </td>
+            <td colspan="3">
+                <mylib:formProperty propertyName="HFILL" propertyType="text"/>
+
+            </td>
+        </tr>
+    </table>
+    <%@ include file="/WEB-INF/jspf/taxForms/reportButtons.jspf" %>
+</form>
+<%--<script type="text/javascript" src="js/commonReportFunctions.js"/>--%>
+
+<script type="text/javascript" src="js/commonReportFunctions.js"></script>
+<script type="text/javascript" src="js/j0100122.js">
+    // onload = function () {
+        // document.getElementById('R001G3').addEventListener('input', calculate8);
+        // document.getElementById('R002G3').addEventListener('input', listener247);
+        // document.getElementById('R003G3').addEventListener('input', calculate8);
+        // document.getElementById('R004G3').addEventListener('input', listener247);
+        // document.getElementById('R005G3').addEventListener('input', listener5);
+        // document.getElementById('R006G3').addEventListener('input', listener6);
+        // document.getElementById('R007G3').addEventListener('input', listener247);
+        // document.getElementById('R013G3').addEventListener('input', calculate14);
+    // }
+</script>

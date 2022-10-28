@@ -12,9 +12,13 @@ public class ReportFormContainer {
     private static final Map<String, ReportForm> commands = new HashMap<>();
 
     static {
-        // common commands
+        // individual
         commands.put("F0103405", new F0103405());
         commands.put("F0134105", new F0134105());
+        // organization
+        commands.put("J0100122", new J0100122());
+
+
         LOG.trace("Report form container was successfully initialized");
         LOG.trace("Number of forms --> " + commands.size());
     }

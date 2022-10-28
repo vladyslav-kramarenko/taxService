@@ -42,6 +42,21 @@
         <input class="aButton" type="submit" name="Update status">
     </form>
 </c:if>
+<script>
+    const submitpdf = function (element) {
+        var htmlString = document.getElementsByTagName("table")[0];
+        document.getElementById('htmlString').value = htmlString.innerHTML;
+        alert(document.getElementById('htmlString').value);
+        element.form.submit();
+    }
+</script>
+<form action="controller" method="post">
+    <input type="hidden" name="command" value='downloadReport'/>
+    <input type="hidden" name="htmlString" id="htmlString" value="">
+    <input type="button" name="downloadXML" id="downloadPdfBtn" value="Download PDF" onclick="submitpdf(this)">
+</form>
+<a href="controller?command=downloadXml">Download PDF</a>
+
 
 <script>
     const showComment = function (element) {
