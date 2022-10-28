@@ -13,8 +13,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import javax.annotation.Resource;
-import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.Serial;
 import java.util.ArrayList;
@@ -33,6 +31,7 @@ public class Controller extends HttpServlet {
     @Serial
     private static final long serialVersionUID = 2423353715955164816L;
     private static final Logger LOG = Logger.getLogger(Controller.class);
+
     /**
      * Init servlet config
      */
@@ -49,13 +48,13 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response) throws ServletException, IOException {
+                         HttpServletResponse response) throws IOException {
         process(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response) throws ServletException, IOException {
+                          HttpServletResponse response) throws IOException {
         process(request, response);
 
     }
@@ -75,13 +74,17 @@ public class Controller extends HttpServlet {
             String commandName = request.getParameter("command");
             Command command = CommandContainer.getCommand(commandName);
             address = command.execute(request, response);
-            LOG.trace("Forward address --> " + address);
-
-            if (method.equals("GET")) {
-                dispatcher = request.getRequestDispatcher(address);
-                dispatcher.forward(request, response);
+            if (address != null) {
+                if (method.equals("GET")) {
+                    dispatcher = request.getRequestDispatcher(address);
+                    LOG.trace("Forward to: " + address);
+                    dispatcher.forward(request, response);
+                } else {
+                    LOG.trace("Redirect to: " + address);
+                    response.sendRedirect(address);
+                }
             } else {
-                response.sendRedirect(address);
+                LOG.trace("forward address is null");
             }
         } catch (Exception e) {
             LOG.error(e.getMessage());

@@ -42,11 +42,12 @@
         <input class="aButton" type="submit" name="Update status">
     </form>
 </c:if>
+
 <script>
     const showComment = function (element) {
-        if(element.value==4){
+        if (element.value == 4) {
             document.getElementById("comment").style.display = "inline-block";
-        }else{
+        } else {
             document.getElementById("comment").style.display = "none";
         }
     };

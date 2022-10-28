@@ -91,11 +91,11 @@
         </init-param>
         <init-param>
             <param-name>user</param-name>
-            <param-value>cancelReport loadXML submitReport deleteReport</param-value>
+            <param-value>cancelReport loadXML deleteReport</param-value>
         </init-param>
         <init-param>
             <param-name>common</param-name>
-            <param-value>reportList editReport viewSettings</param-value>
+            <param-value>submitReport downloadReport reportList editReport viewSettings</param-value>
         </init-param>
         <init-param>
             <param-name>out-of-control</param-name>

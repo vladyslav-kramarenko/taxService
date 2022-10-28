@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.Serial;
 import java.util.Map;
 
+import static com.my.kramarenko.taxService.Util.resetAvailableError;
 import static com.my.kramarenko.taxService.web.command.util.UserUtil.createCompanyName;
 
 public class RegistrationCommand extends Command {
@@ -35,63 +36,69 @@ public class RegistrationCommand extends Command {
     public String execute(HttpServletRequest request,
                           HttpServletResponse response) throws IOException, ServletException, DBException {
         LOG.debug("Command starts");
-        HttpSession session = request.getSession();
-        String forward = Path.PAGE_ERROR_PAGE;
+        if (request.getMethod().equals("GET")) {
+            resetAvailableError(request);
+            return Path.PAGE_REGISTRATION;
+        }
+
         String email = request.getParameter("email");
 
-        String errorMessage;
         if (email == null || email.isEmpty()) {
-            forward = Path.PAGE_REGISTRATION;
-        } else {
-            LOG.trace("Request parameter: registration --> " + email);
-            User user = createUserBean(request);
-            if (user.getPassword() == null || user.getPassword().isEmpty()) {
-                errorMessage = "Login/password cannot be empty" + "<br>";
-                request.setAttribute("errorMessage", errorMessage);
-                forward = Path.PAGE_REGISTRATION;
-            } else {
-                UserDAO userManager = DBManager.getInstance().getUserDAO();
-                if (userManager.findUserByEmail(email).isPresent()) {
-                    error("Such email is forbidden", request);
-                } else {
-                    try {
-                        LOG.trace("everything is ok => write user to DB");
-                        user.setPassword(PasswordCreator.getPassword(user.getPassword()));
-                        UserUtil.setUserFields(user, request);
-                        if (user.isIndividual()) {
-                            LOG.debug("user is individual -> create company name:");
-                            user.setCompanyName(createCompanyName(user));
-                            LOG.debug(user.getCompanyName());
-                        } else {
-                            LOG.debug("isIndividual = " + user.isIndividual());
-                        }
-                        user.setRoleId(Role.USER.getId());
-                        userManager.addUser(user);
-                        ServletContext sc = request.getServletContext();
-                        Map<Integer, Role> roleMap = (Map<Integer, Role>) sc.getAttribute("roleMap");
-                        setSessionAttributes(session, user, roleMap);
-                        forward = LastPage.getPage((String) session
-                                .getAttribute("page"));
-                        if (forward.isEmpty()) {
-                            forward = Path.COMMAND_SETTINGS;
-                        }
-                        response.sendRedirect(forward);
-                        return null;
-                    } catch (DBException e) {
-                        error("Cannot create the user", request);
-                        throw new DBException(e.getMessage(), e);
-                    }
-                }
-            }
-            setRequestAttributes(request, user);
+            return error("Login/password cannot be empty", request);
         }
-        LOG.debug("Command finished");
+
+        LOG.trace("Request parameter: registration --> " + email);
+        User user = createUserBean(request);
+
+        if (user.getPassword() == null || user.getPassword().isEmpty()) {
+            return error("Login/password cannot be empty", request);
+        }
+
+        UserDAO userManager = DBManager.getInstance().getUserDAO();
+        if (userManager.findUserByEmail(email).isPresent()) {
+            return error("Such email is forbidden", request);
+        }
+        try {
+            return createUser(user, request);
+        } catch (DBException e) {
+            LOG.error(e.getMessage());
+            return error("Cannot create such user", request);
+        }
+//                setRequestAttributes(request, user);
+    }
+
+    private String createUser(User user, HttpServletRequest request) throws DBException {
+        HttpSession session = request.getSession();
+        LOG.trace("everything is ok => write user to DB");
+        user.setPassword(PasswordCreator.getPassword(user.getPassword()));
+        UserUtil.setUserFields(user, request);
+
+        LOG.debug("isIndividual = " + user.isIndividual());
+        if (user.isIndividual()) {
+            user.setCompanyName(createCompanyName(user));
+            LOG.debug("create company name:" + user.getCompanyName());
+        }
+
+        user.setRoleId(Role.USER.getId());
+        UserDAO userManager = DBManager.getInstance().getUserDAO();
+        userManager.addUser(user);
+
+        ServletContext sc = request.getServletContext();
+        Map<Integer, Role> roleMap = (Map<Integer, Role>) sc.getAttribute("roleMap");
+        setSessionAttributes(session, user, roleMap);
+
+        String forward = LastPage.getPage((String) session
+                .getAttribute("page"));
+        if (forward.isEmpty()) {
+            forward = Path.COMMAND_SETTINGS;
+        }
         return forward;
     }
 
-    private void error(String errorMessage, HttpServletRequest request) {
-        request.setAttribute("errorMessage", errorMessage);
-        LOG.debug("errorMessage --> " + errorMessage);
+    private String error(String errorMessage, HttpServletRequest request) {
+        LOG.trace(errorMessage);
+        String forward = Path.COMMAND_REGISTRATION + "&error=" + errorMessage;
+        return forward;
     }
 
     private void setSessionAttributes(HttpSession session, User user, Map<Integer, Role> roleMap) {

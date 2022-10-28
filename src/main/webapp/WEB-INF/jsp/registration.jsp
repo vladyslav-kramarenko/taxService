@@ -7,6 +7,13 @@
 <body>
 <%@ include file="/WEB-INF/jspf/menu.jspf" %>
 <br>
+<c:if test="${not empty errorMessage}">
+    <span class="errorSpan">
+<%--        <h3>--%>
+                ${errorMessage}
+<%--        </h3>--%>
+    </span>
+</c:if>
 <div align="center" class="content">
     <div class="tab">
         <button id="individualBtn" class="aButton tablinks active" onclick="openTab('individual')">

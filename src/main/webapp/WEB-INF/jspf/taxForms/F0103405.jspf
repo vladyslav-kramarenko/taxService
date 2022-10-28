@@ -1,11 +1,9 @@
 <%@ taglib prefix="mylib" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="windows-1251" %>
-<link rel="stylesheet" type="text/css" media="screen" href="style/reportForm.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="style/reportForm.css"/>
 
 <form class="cmxform" id="report_form" action="controller" method="post">
-    <input type="hidden" name="reportId" value="${reportId}"/>
-    <input type="hidden" name="command" value="submitReport"/>
-    <input type="hidden" name="reportName" value="F0103405"/>
+    <mylib:reportHeadInputs reportTypeId="F0103405"/>
     <table>
         <tr>
             <td class="rowNumber" rowspan="4">1</td>
@@ -391,11 +389,7 @@
             </td>
         </tr>
     </table>
-    <c:if test="${userRole.name=='user'}">
-        <input type="submit" name="save" id="saveReportBtn" value='Save report'>
-        <input type="submit" name="send" id="sendReportBtn" value='Send report'>
-    </c:if>
-
+    <%@ include file="/WEB-INF/jspf/taxForms/reportButtons.jspf" %>
 </form>
 <script src="js/f0103405.js"/>
 <script>

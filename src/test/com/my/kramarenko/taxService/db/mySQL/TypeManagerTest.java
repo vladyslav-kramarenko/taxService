@@ -18,13 +18,11 @@ class TypeManagerTest {
     void typeTests() throws SQLException {
         try {
             con = DriverManager.getConnection(CONNECTION_URL);
-            TypeManager typeManager = new TypeManager();
-
-            List<Type> types = typeManager.getAllTypes(con);
+            List<Type> types = TypeManager.getAllTypes(con);
             assertTrue(types.size() > 0);
 
             Type type1 = types.get(0);
-            Type type2 = typeManager.getType(con, type1.getId());
+            Type type2 = TypeManager.getType(con, type1.getId());
             assertEquals(type1, type2);
         } finally {
             con.close();

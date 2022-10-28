@@ -14,7 +14,9 @@
     });
 </script>
 <c:if test="${not empty errorMessage}">
+<span class="errorSpan">
     <h3>${errorMessage}</h3>
+</span>
 </c:if>
 <span class="content">
     <span id="inputForm">

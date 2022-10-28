@@ -1,12 +1,15 @@
 package com.my.kramarenko.taxService.web.command.user;
 
+import com.my.kramarenko.taxService.Util;
 import com.my.kramarenko.taxService.db.dao.ReportDAO;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
-import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Status;
+import com.my.kramarenko.taxService.exception.DBException;
+import com.my.kramarenko.taxService.exception.XmlException;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.Path;
+import com.my.kramarenko.taxService.xml.WriteXmlStAXController;
 import com.my.kramarenko.taxService.xml.forms.*;
 import com.my.kramarenko.taxService.xml.entity.*;
 import jakarta.servlet.ServletException;
@@ -14,9 +17,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
-import java.io.Serial;
-import java.util.List;
+import javax.xml.stream.XMLStreamException;
+import java.io.*;
+
+import static com.my.kramarenko.taxService.web.command.util.ReportUtil.*;
 
 /**
  * Login command.
@@ -24,82 +28,72 @@ import java.util.List;
  * @author Vlad Kramarenko
  */
 public class SubmitReportCommand extends Command {
-
     @Serial
     private static final long serialVersionUID = -3071536594787692473L;
-
     private static final Logger LOG = Logger.getLogger(SubmitReportCommand.class);
 
     @Override
     public String execute(HttpServletRequest request,
-                          HttpServletResponse response) throws IOException, ServletException, DBException {
-
+                          HttpServletResponse response) throws ServletException {
         LOG.debug("Command starts");
-        String reportName = request.getParameter("reportName");
-        ReportForm reportForm = ReportFormContainer.getForm(reportName);
+        if (request.getParameter("downloadXML") != null) {
+            return downloadXml(request, response);
+        }
 
-        TaxForm taxForm = getTaxForm(reportForm, request);
+        Status status = getStatus(request);
+        if (status == null) {
+            throw new ServletException("Cannot submit the report");
+        }
 
-        User user = (User) request.getSession().getAttribute("user");
-        ReportDAO reportDAO = DBManager.getInstance().getReportDAO();
-        int reportID = -1;
-        String reportIdParam = request.getParameter("reportId");
         try {
-            if (reportIdParam != null && !reportIdParam.isEmpty()) {
-                reportID = Integer.parseInt(reportIdParam);
+            String reportTypeId = request.getParameter("reportTypeId");
+            ReportForm reportForm = ReportFormContainer.getForm(reportTypeId);
+            TaxForm taxForm = getTaxFormFromRequest(reportForm, request);
+
+            User user = (User) request.getSession().getAttribute("user");
+
+            int reportID = Util.getIntValue(-1, request.getParameter("reportId"));
+            ReportDAO reportDAO = DBManager.getInstance().getReportDAO();
+            if (reportID >= 0) {
+                LOG.trace("obtain report id: " + reportID + " => edit current report");
+                reportDAO.editReport(status, reportID, taxForm, reportForm);
+            } else {
+                LOG.trace("current report id is empty => create new report");
+                reportDAO.addReport(status, user, taxForm, reportForm);
             }
-        } catch (Exception e) {
-            LOG.error("incorrect report ID:" + reportIdParam);
+        } catch (DBException e) {
+            LOG.error(e.getMessage());
+            throw new ServletException("Cannot submit the report", e);
         }
-        String save = request.getParameter("save");
-        String send = request.getParameter("send");
-
-        Status status = Status.DRAFT;
-        if (save == null) {
-            LOG.trace("action = " + send);
-            status = Status.SENT;
-        } else {
-            LOG.trace("action = " + save);
-        }
-        if (reportID >= 0) {
-            LOG.trace("obtain report id: " + reportID + " => edit current report");
-            reportDAO.editReport(status, reportID, taxForm, reportForm);
-        } else {
-            LOG.trace("current report id is empty => create new report");
-            reportDAO.addReport(status, user, taxForm, reportForm);
-        }
-
-        LOG.trace("Command finished");
-//        response.sendRedirect(Path.COMMAND_REPORT_LIST);
         return Path.COMMAND_REPORT_LIST;
-//        return null;
     }
 
-    private static TaxForm getTaxForm(ReportForm reportForm, HttpServletRequest request) {
-        TaxForm taxForm = new TaxForm();
-
-        SubElement declarHead = new SubElement();
-
-
-        for (ReportValue entity : reportForm.getHead()) {
-            String parameter = request.getParameter(entity.name);
-            if (parameter != null) {
-                List list = List.of(parameter);
-                declarHead.addParameter(entity.name, list);
-            }
+    private static String downloadXml(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+        String reportTypeId = request.getParameter("reportTypeId");
+        ReportForm reportForm = ReportFormContainer.getForm(reportTypeId);
+        TaxForm taxForm = getTaxFormFromRequest(reportForm, request);
+        LOG.trace(taxForm);
+        try {
+            String xml = new WriteXmlStAXController().writeToString(taxForm, reportForm);
+            printXmlToResponse(xml, response);
+            return null;
+        } catch (XmlException | XMLStreamException e) {
+            LOG.error(e.getMessage());
+            throw new ServletException("Can't create download link", e);
         }
-        taxForm.setDeclarHead(declarHead);
+    }
 
-        SubElement declarBody = new SubElement();
-        for (ReportValue entity : reportForm.getBody()) {
-            String parameter = request.getParameter(entity.name);
-            if (parameter != null) {
-                List list = List.of(parameter);
-                declarBody.addParameter(entity.name, list);
-            }
+    private static Status getStatus(HttpServletRequest request) {
+        String save = request.getParameter("save");
+        String send = request.getParameter("send");
+        if (send != null) {
+            LOG.trace("action = " + send);
+            return Status.SENT;
         }
-        taxForm.setDeclarBody(declarBody);
-
-        return taxForm;
+        if (save != null) {
+            LOG.trace("action = " + save);
+            return Status.DRAFT;
+        }
+        return null;
     }
 }

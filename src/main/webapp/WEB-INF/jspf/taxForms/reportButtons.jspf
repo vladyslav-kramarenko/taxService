@@ -1,0 +1,10 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<span id="reportButtons">
+    <c:if test="${userRole.name=='user'}">
+        <input  type="submit" name="save" id="saveReportBtn" value='Save report'>
+        <input  type="submit" name="send" id="sendReportBtn" value='Send report'>
+    </c:if>
+
+    <input  type="submit" name="downloadXML" id="downloadXnlBtn" value="Download XML">
+    </span>

@@ -26,6 +26,7 @@ public final class Path {
 
     // commands
     public static final String COMMAND_LOGIN = "controller?command=login";
+    public static final String COMMAND_LOAD_XML = "controller?command=loadXML";
     public static final String COMMAND_REGISTRATION = "controller?command=registration";
     public static final String COMMAND_ALL_USERS = "controller?command=allUsers";
     public static final String COMMAND_INFO = "controller?command=info";

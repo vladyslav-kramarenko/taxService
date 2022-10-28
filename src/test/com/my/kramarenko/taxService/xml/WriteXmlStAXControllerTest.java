@@ -28,4 +28,23 @@ class WriteXmlStAXControllerTest {
 
         assertEquals(taxForm.getDeclarHead().getParameter("TIN").get(0), taxForm1.getDeclarHead().getParameter("TIN").get(0));
     }
+
+    @Test
+    void readFileAndWriteToString() throws XmlException, XMLStreamException, IOException {
+        String xmlFileName = "zvit_main.XML";
+        ReadXmlDOMController domController = new ReadXmlDOMController();
+
+        ReportForm reportForm = ReportFormContainer.getForm("F0103405");
+        TaxForm taxForm = domController.loadFile(reportForm, xmlFileName);
+
+        WriteXmlStAXController write = new WriteXmlStAXController();
+        String result=write.writeToString(taxForm, reportForm);
+//        String newFile = "test.xml";
+//        write.writeToXML(taxForm, reportForm, newFile);
+        System.out.println(result);
+        assertTrue(result.length()>0);
+//        TaxForm taxForm1 = domController.loadFile(reportForm, newFile);
+//
+//        assertEquals(taxForm.getDeclarHead().getParameter("TIN").get(0), taxForm1.getDeclarHead().getParameter("TIN").get(0));
+    }
 }

@@ -30,6 +30,7 @@ public class CommandContainer {
         commands.put("logout", new LogoutCommand());
         commands.put("noCommand", new NoCommand());
         commands.put("updateLocale", new UpdateLocaleCommand());
+        commands.put("downloadReport", new DownloadXmlReportCommand());
 //        commands.put("complete", new CompleteCommand());
         commands.put("viewSettings", new ViewSettingsCommand());
 
@@ -39,8 +40,6 @@ public class CommandContainer {
         commands.put("deleteReport", new DeleteReportCommand());
         commands.put("reportList", new ReportListCommand());
         commands.put("cancelReport", new CancelReportCommand());
-
-
 
         // inspector commands
         commands.put("updateReportStatus", new UpdateReportStatus());

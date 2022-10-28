@@ -3,9 +3,7 @@
 <link rel="stylesheet" type="text/css" media="screen" href="style/reportForm.css"/>
 
 <form class="cmxform" id="report_form" action="controller" method="post">
-    <input type="hidden" name="reportId" value="${reportId}"/>
-    <input type="hidden" name="command" value="submitReport"/>
-    <input type="hidden" name="reportName" value="F0134105"/>
+    <mylib:reportHeadInputs reportTypeId="F0134105"/>
     <table>
         <tr>
             <td class="rowNumber" rowspan="4">1</td>
@@ -353,24 +351,5 @@
         </tr>
     </table>
     <br>
-    <span id="reportButtons">
-    <c:if test="${userRole.name=='user'}">
-        <input class="aButton" type="submit" name="save" id="saveReportBtn" value='Save report'>
-        <input class="aButton" type="submit" name="send" id="sendReportBtn" value='Send report'>
-    </c:if>
-    </span>
-
+    <%@ include file="/WEB-INF/jspf/taxForms/reportButtons.jspf" %>
 </form>
-<script src="js/f0103405.js"/>
-<script>
-    onload = function () {
-        document.getElementById('R001G3').addEventListener('input', calculate8);
-        document.getElementById('R002G3').addEventListener('input', listener247);
-        document.getElementById('R003G3').addEventListener('input', calculate8);
-        document.getElementById('R004G3').addEventListener('input', listener247);
-        document.getElementById('R005G3').addEventListener('input', listener5);
-        document.getElementById('R006G3').addEventListener('input', listener6);
-        document.getElementById('R007G3').addEventListener('input', listener247);
-        document.getElementById('R013G3').addEventListener('input', calculate14);
-    }
-</script>
