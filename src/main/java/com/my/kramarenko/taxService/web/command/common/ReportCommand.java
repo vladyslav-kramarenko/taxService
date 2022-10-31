@@ -71,7 +71,7 @@ public class ReportCommand extends Command {
 
 
         if (roleMap.get(user.getRoleId()).equals(Role.INSPECTOR)) {
-            Status[] statusValues = {Status.SENT, Status.ACCEPTED, Status.REFUSED};
+            Status[] statusValues = {Status.SUBMITTED, Status.ACCEPTED, Status.NOT_ACCEPTED};
 //            Status[] statusValues = {Status.SENT, Status.ACCEPTED, Status.REFUSED};
             request.setAttribute("statusTypes", statusValues);
             LOG.trace("set report statuses to request attribute: \n" + Arrays.toString(statusValues));

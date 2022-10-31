@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 public enum Status implements Serializable {
-    DRAFT(1), SENT(2), ACCEPTED(3), REFUSED(4);
+    DRAFT(1), SUBMITTED(2), ACCEPTED(3), NOT_ACCEPTED(4);
     final int id;
     final String name;
 

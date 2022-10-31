@@ -88,7 +88,7 @@ public class SubmitReportCommand extends Command {
         String send = request.getParameter("send");
         if (send != null) {
             LOG.trace("action = " + send);
-            return Status.SENT;
+            return Status.SUBMITTED;
         }
         if (save != null) {
             LOG.trace("action = " + save);

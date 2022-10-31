@@ -19,7 +19,7 @@ class StatusTest {
 
     @Test
     void values() {
-        Status[] statuses = {Status.DRAFT, Status.SENT, Status.ACCEPTED, Status.REFUSED};
+        Status[] statuses = {Status.DRAFT, Status.SUBMITTED, Status.ACCEPTED, Status.NOT_ACCEPTED};
         assertEquals(statuses.length, Status.values().length);
         assertEquals(statuses[0], Status.values()[0]);
         assertEquals(statuses[1], Status.values()[1]);
