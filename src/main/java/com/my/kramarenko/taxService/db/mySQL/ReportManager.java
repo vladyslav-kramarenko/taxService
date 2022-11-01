@@ -112,6 +112,31 @@ public class ReportManager {
         return reportsList;
     }
 
+    public static List<Report> getUserReportsWithStatusesAndTypeFilter(Connection con, int userId, List<Status> statuses, String typePattern) throws SQLException {
+        List<Report> reportsList;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            String parameters = statuses.stream().map(x -> "?").collect(Collectors.joining(","));
+            String sql = SQL_SELECT_USER_REPORTS_WITH_STATUSES_AND_TYPE_FILTER.replace("%", parameters);
+
+            pstmt = con.prepareStatement(sql);
+            int index = 1;
+            pstmt.setInt(index++, userId);
+            for (int i = 0; i < statuses.size(); i++) {
+                pstmt.setInt(index++, statuses.get(i).getId());
+            }
+            pstmt.setString(index, typePattern);
+            LOG.trace(pstmt);
+            rs = pstmt.executeQuery();
+            reportsList = parseResultSet(rs);
+        } finally {
+            DbUtil.close(rs);
+            DbUtil.close(pstmt);
+        }
+        return reportsList;
+    }
+
 //    public static List<Report> getPatternUserReportsWithStatuses(Connection con, String pattern, List<Status> statuses) throws SQLException {
 //        List<Report> reportsList;
 //        PreparedStatement pstmt = null;

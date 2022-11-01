@@ -14,6 +14,11 @@ public class requestFields {
             "WHERE id IN (SELECT report_id FROM user_report WHERE user_id=?) " +
             "AND status_id IN (%)";
 
+    public static final String SQL_SELECT_USER_REPORTS_WITH_STATUSES_AND_TYPE_FILTER = "SELECT * FROM report " +
+            "WHERE id IN (SELECT report_id FROM user_report WHERE user_id=?) " +
+            "AND status_id IN (%) "+
+            "AND type_id IN (SELECT type.id FROM type WHERE LOCATE(?, type.name) > 0)";
+
     public static final String SQL_SELECT_ALL_USERS_REPORTS_STATISTICS = "SELECT user.id, user.company_name, report.status_id\n" +
             "FROM report " +
             "JOIN user_report ON report.id=user_report.report_id " +

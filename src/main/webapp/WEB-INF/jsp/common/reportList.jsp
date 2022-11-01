@@ -119,7 +119,7 @@
                 </c:if>
                 <td>${report.report.date}</td>
                 <td>${report.report.lastUpdate}</td>
-                <td>${report.type.name}</td>
+                <td><fmt:message key='report.type.${report.type.id}'/></td>
                 <td>${report.status.name}</td>
                 <td>
                     <span class="actions">

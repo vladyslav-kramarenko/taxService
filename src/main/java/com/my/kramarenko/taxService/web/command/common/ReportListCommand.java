@@ -59,15 +59,19 @@ public class ReportListCommand extends Command {
 
         List<Type> reportTypes;
 
+        String typeFilter = request.getParameter("typeFilter");
+        request.setAttribute("typeFilter", typeFilter);
+
         if (roleMap.get(user.getRoleId()).equals(Role.USER)) {
             LOG.trace("user role == user -> go to user reports");
-            reportsList = UserReportDTOBuilder.getAllUserReportsWithStatuses(user, chosenStatusMap, typeMap);
+//            reportsList = UserReportDTOBuilder.getUserReportsWithStatuses(user, chosenStatusMap, typeMap);
+            reportsList = UserReportDTOBuilder.getUserReportsWithStatusesWithTypeFilter(chosenStatusMap, typeMap, user, typeFilter);
             TypeDAO tm = DBManager.getInstance().getTypeDAO();
             reportTypes = tm.getAllTypes();
             request.setAttribute("reportTypeList", reportTypes);
         } else {
             List<User> users = UserUtil.getUserListDependOnFilter(request);
-            reportsList = UserReportDTOBuilder.getUsersReportsWithStatuses(chosenStatusMap, typeMap, users);
+            reportsList = UserReportDTOBuilder.getUsersReportsWithStatusesAndTypeFilter(chosenStatusMap, typeMap, users, typeFilter);
 //            if (roleMap.get(user.getRoleId()).equals(Role.ADMIN)) {
 //            }
         }

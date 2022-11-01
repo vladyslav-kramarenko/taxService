@@ -47,6 +47,7 @@ public class TypeManager {
             Type type = new Type();
             type.setId(rs.getString(Fields.ENTITY_ID));
             type.setName(rs.getString(Fields.ENTITY_NAME));
+            type.setIsIndividual(rs.getInt(Fields.REPORT_IS_INDIVIDUAL));
             result.add(type);
         }
         return result;

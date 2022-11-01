@@ -16,7 +16,9 @@ import javax.sql.DataSource;
 import javax.xml.stream.XMLStreamException;
 import java.io.IOException;
 import java.sql.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.my.kramarenko.taxService.db.mySQL.ReportManager.setReportStatusAndXmlPath;
 import static com.my.kramarenko.taxService.db.mySQL.requestFields.*;
@@ -94,6 +96,56 @@ public class ReportDAO {
         return reportsList;
     }
 
+    public List<Report> getUserReportsWithStatusesAndTypeFilter(int userId, List<Status> statuses, String typePattern) throws DBException {
+        List<Report> reportsList;
+        Connection con = null;
+        try {
+            con = ds.getConnection();
+            if (typePattern == null || typePattern.length() == 0) {
+                LOG.trace("type pattern is empty");
+                reportsList = ReportManager.getUserReportsWithStatuses(con, userId, statuses);
+            } else {
+                LOG.trace("type pattern = " + typePattern);
+                reportsList = ReportManager.getUserReportsWithStatusesAndTypeFilter(con, userId, statuses, typePattern);
+            }
+            con.commit();
+        } catch (SQLException e) {
+            DbUtil.rollback(con);
+            LOG.error(e.getMessage());
+            throw new DBException("Cannot obtain reports with statuses by user id", e);
+        } finally {
+            DbUtil.close(con);
+        }
+        return reportsList;
+    }
+
+    public Map<User, List<Report>> getUsersReportsWithStatusesAndTypeFilter(List<User> users, List<Status> statuses, String typePattern) throws DBException {
+        Map<User, List<Report>> reportsMap = new HashMap<>();
+        Connection con = null;
+        try {
+            con = ds.getConnection();
+            for (User user : users) {
+                List<Report> reportsList;
+                if (typePattern == null || typePattern.length() == 0) {
+                    LOG.trace("type pattern is empty");
+                    reportsList = ReportManager.getUserReportsWithStatuses(con, user.getId(), statuses);
+                } else {
+                    LOG.trace("type pattern = " + typePattern);
+                    reportsList = ReportManager.getUserReportsWithStatusesAndTypeFilter(con, user.getId(), statuses, typePattern);
+                }
+                reportsMap.put(user, reportsList);
+            }
+            con.commit();
+        } catch (SQLException e) {
+            DbUtil.rollback(con);
+            LOG.error(e.getMessage());
+            throw new DBException("Cannot obtain reports with statuses by user id", e);
+        } finally {
+            DbUtil.close(con);
+        }
+        return reportsMap;
+    }
+
 
     public Report getReport(int reportId) throws DBException {
         Report report;
@@ -115,7 +167,7 @@ public class ReportDAO {
                 LOG.trace("search pattern is empty");
                 statistics = ReportManager.getAllUserReportStatistics(con);
             } else {
-                LOG.trace("search pattern = "+pattern);
+                LOG.trace("search pattern = " + pattern);
                 statistics = ReportManager.getFilterUserReportStatistics(con, pattern);
             }
         } catch (SQLException e) {

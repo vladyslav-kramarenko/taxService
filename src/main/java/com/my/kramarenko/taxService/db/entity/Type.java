@@ -3,7 +3,14 @@ package com.my.kramarenko.taxService.db.entity;
 public class Type {
     private String id;
     private String name;
-//    private String xml;
+    private int isIndividual;
+    public int getIsIndividual() {
+        return isIndividual;
+    }
+
+    public void setIsIndividual(int isIndividual) {
+        this.isIndividual = isIndividual;
+    }
 
     public String getId() {
         return id;
