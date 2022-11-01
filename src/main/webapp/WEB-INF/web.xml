@@ -87,7 +87,7 @@
         </init-param>
         <init-param>
             <param-name>inspector</param-name>
-            <param-value>submitReport updateReportStatus</param-value>
+            <param-value>statistic submitReport updateReportStatus</param-value>
         </init-param>
         <init-param>
             <param-name>user</param-name>

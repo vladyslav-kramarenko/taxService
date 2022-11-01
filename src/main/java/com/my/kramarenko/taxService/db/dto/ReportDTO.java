@@ -1,11 +1,14 @@
 package com.my.kramarenko.taxService.db.dto;
 
+import com.my.kramarenko.taxService.db.entity.Entity;
 import com.my.kramarenko.taxService.db.entity.Report;
 import com.my.kramarenko.taxService.db.entity.Type;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Status;
 
-public class ReportDTO {
+import java.io.Serializable;
+
+public class ReportDTO implements Serializable {
 
     private User user;
     private Report report;

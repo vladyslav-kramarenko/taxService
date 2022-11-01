@@ -23,6 +23,7 @@ public final class Path {
 
     public static final String PAGE_ALL_USERS = "/WEB-INF/jsp/admin/all_users.jsp";
     public static final String PAGE_EDIT_USER = "/WEB-INF/jsp/admin/userSettings.jsp";
+    public static final String PAGE_STATISTICS = "/WEB-INF/jsp/inspector/statistics.jsp";
 
     // commands
     public static final String COMMAND_LOGIN = "controller?command=login";
@@ -35,6 +36,7 @@ public final class Path {
 
     public static final String COMMAND_REPORT = "controller?command=editReport";
     public static final String COMMAND_REPORT_LIST = "controller?command=reportList";
+    public static final String COMMAND_STATISTICS = "controller?command=statistics";
     public static final String COMMAND_DELETE_REPORT = "controller?command=deleteReport";
 }
 

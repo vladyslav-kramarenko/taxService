@@ -9,7 +9,12 @@
                 <fmt:message key="header_jspf.anchor.all_users"/>
             </a> &nbsp;
         </c:when>
-        <c:when test="${userRole.name == 'inspector'||userRole.name == 'user' }">
+        <c:when test="${userRole.name == 'inspector'}">
+            <a href="controller?command=statistic" id="users">
+                <fmt:message key="header_jspf.anchor.statistics"/>
+            </a> &nbsp;
+        </c:when>
+        <c:when test="${userRole.name == 'user' }">
         </c:when>
     </c:choose>
 

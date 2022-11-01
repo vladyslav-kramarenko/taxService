@@ -34,11 +34,17 @@
         <form id="filterForm" action="controller" method="get"> <input type="hidden" name="command" value="reportList"/>
         <input type="hidden" name="recordsPerPage" value="${recordsPerPage}">
         <c:if test="${userRole.id!=2}">
-            <label for="userFilter">Filter by user: </label>
+            <label for="userFilter"><fmt:message key='label.filter_by_user'/>: </label>
             <input id="userFilter" name="userFilter" value="${userFilter}" type="text" onchange="this.form.submit()">
+            <br>
         </c:if>
+             <label for="typeFilter"><fmt:message key='label.filter_by_type'/>: </label>
+            <input id="typeFilter" name="typeFilter" value="${typeFilter}" type="text" onchange="this.form.submit()">
+
+            <br>
+            <label><fmt:message key='label.filter_by_status'/>: </label>
             <c:forEach var="entry" items="${chosenStatusMap}">
-                ${entry.key.name}
+                <fmt:message key='report.status.${entry.key.name}'/>
                 <c:choose>
                     <c:when test="${entry.value}">
                          <input type="checkbox" name="chosen_status_id"

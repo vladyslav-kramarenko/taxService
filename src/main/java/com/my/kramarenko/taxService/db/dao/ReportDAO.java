@@ -1,5 +1,6 @@
 package com.my.kramarenko.taxService.db.dao;
 
+import com.my.kramarenko.taxService.db.dto.UserStatisticDTO;
 import com.my.kramarenko.taxService.db.mySQL.ReportManager;
 import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.db.DbUtil;
@@ -106,6 +107,24 @@ public class ReportDAO {
         return report;
     }
 
+    public List<UserStatisticDTO> getFilterUserReportStatistics(String pattern) throws DBException {
+        List<UserStatisticDTO> statistics;
+        try (Connection con = ds.getConnection()) {
+            con.setAutoCommit(true);
+            if (pattern == null || pattern.length() == 0) {
+                LOG.trace("search pattern is empty");
+                statistics = ReportManager.getAllUserReportStatistics(con);
+            } else {
+                LOG.trace("search pattern = "+pattern);
+                statistics = ReportManager.getFilterUserReportStatistics(con, pattern);
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            throw new DBException("Cannot get users statistics", e);
+        }
+        return statistics;
+    }
+
 
     public void editReport(Status status, int reportId, TaxForm taxForm, ReportForm reportForm) throws DBException {
         Connection con = null;
@@ -193,7 +212,6 @@ public class ReportDAO {
             DbUtil.close(con);
         }
     }
-
 
 
     public void deleteReport(int id) throws DBException {
