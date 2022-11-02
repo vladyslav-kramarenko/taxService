@@ -20,7 +20,7 @@ public class DbUtil {
             try {
                 connection.close();
             } catch (SQLException e) {
-                LOG.error("Can't close the connection");
+                LOG.error("Can't close the connection",e);
             }
         }
     }
@@ -35,7 +35,7 @@ public class DbUtil {
             try {
                 statement.close();
             } catch (SQLException e) {
-                LOG.error("Can't close the statement");
+                LOG.error("Can't close the statement",e);
             }
         }
     }
@@ -50,7 +50,7 @@ public class DbUtil {
             try {
                 resultSet.close();
             } catch (SQLException e) {
-                LOG.error("Can't close the resultSet");
+                LOG.error("Can't close the resultSet",e);
             }
         }
     }
@@ -64,8 +64,8 @@ public class DbUtil {
         if (con != null) {
             try {
                 con.rollback();
-            } catch (SQLException ex) {
-                LOG.error("Cannot rollback transaction", ex);
+            } catch (SQLException e) {
+                LOG.error("Cannot rollback transaction", e);
             }
         }
     }

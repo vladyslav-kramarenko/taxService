@@ -40,6 +40,7 @@ public class requestFields {
     public static final String SQL_INSERT_INTO_USERS = "INSERT INTO user (password, first_name, last_name,patronymic,code,company_name,is_individual, role_id,email,phone) \n"
             + "VALUES (?, ?, ?, ?,?, ?,?,?,?,?)";
     public static final String SQL_SELECT_USER_BY_ID = "SELECT * FROM user where id = ?";
+    public static final String SQL_SELECT_USER_BY_REPORT_ID = "SELECT * FROM user WHERE id IN (SELECT DISTINCT user_id FROM user_report WHERE report_id = ?)";
     public static final String SQL_UPDATE_USER = "UPDATE user SET " +
             "password=?, " +
             "first_name=?, " +

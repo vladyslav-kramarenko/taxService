@@ -1,6 +1,6 @@
 <%@ taglib prefix="mylib" tagdir="/WEB-INF/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="windows-1251" %>
-<link rel="stylesheet" type="text/css" media="screen" href="style/reportForm.css"/>
+<link rel="stylesheet" type="text/css" media="screen" href="css/reportForm.css"/>
 
 <form class="cmxform" id="report_form" action="controller" method="post">
     <mylib:reportHeadInputs reportTypeId="F0103405"/>
@@ -391,5 +391,5 @@
     </table>
     <%@ include file="/WEB-INF/jspf/taxForms/reportButtons.jspf" %>
 </form>
-<script type="text/javascript" src="js/commonReportFunctions.js"></script>
-<script type="text/javascript" src="js/f0103405.js"></script>
+<script type="text/javascript" src="js/taxForms/commonReportFunctions.js"></script>
+<script type="text/javascript" src="js/taxForms/f0103405.js"></script>

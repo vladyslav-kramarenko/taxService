@@ -26,7 +26,7 @@ public class WriteXmlStAXController {
             writeToFileOutputStream(out, taxForm, reportForm);
         } catch (XMLStreamException | IOException e) {
             e.printStackTrace();
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(),e);
             throw new XMLStreamException("Can't write the XML", e);
         }
     }

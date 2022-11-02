@@ -73,7 +73,7 @@ public class ViewSettingsCommand extends Command {
                 userManager.updateUser(userInSession);
                 session.setAttribute("user", userInSession);
             } catch (DBException e) {
-                LOG.error(e.getMessage());
+                LOG.error(e.getMessage(),e);
                 throw new CommandException(e.getMessage(), e);
             }
         } else {

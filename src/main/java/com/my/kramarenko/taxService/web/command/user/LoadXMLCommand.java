@@ -48,7 +48,7 @@ public class LoadXMLCommand extends Command {
                 session.setAttribute(TAX_FORM_ATTRIBUTE_NAME, taxForm);
                 return Path.COMMAND_LOAD_XML + "&" + REPORT_TYPE_ID_ATTRIBUTE_NAME + "=" + typeId;
             } catch (XmlException | IOException | ServletException e) {
-                LOG.error(e.getMessage());
+                LOG.error(e.getMessage(),e);
                 throw new XmlException("Can't parse the XML file: ", e);
             }
         }

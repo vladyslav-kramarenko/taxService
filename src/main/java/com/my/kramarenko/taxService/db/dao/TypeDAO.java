@@ -22,7 +22,7 @@ public class TypeDAO {
             con.setAutoCommit(true);
             return TypeManager.getAllTypes(con);
         } catch (SQLException e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(),e);
             throw new DBException("Cannot obtain all types", e);
         }
     }

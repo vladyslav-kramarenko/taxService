@@ -51,8 +51,6 @@ public class DeleteReportCommand extends Command {
         }
 
         LOG.trace("Command finished");
-//        response.sendRedirect(Path.COMMAND_REPORT_LIST);
-//        return null;
         return Path.COMMAND_REPORT_LIST;
     }
 }

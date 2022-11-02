@@ -77,7 +77,7 @@ public class ReportUtil {
             while ((readBytes = in.read()) != -1)
                 out.write(readBytes);
         } catch (IOException e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(),e);
             throw new XmlException("can't create download link", e);
         }
     }

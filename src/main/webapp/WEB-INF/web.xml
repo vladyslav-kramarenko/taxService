@@ -99,7 +99,7 @@
         </init-param>
         <init-param>
             <param-name>out-of-control</param-name>
-            <param-value>logout info login registration updateLocale complete
+            <param-value>resetPassword logout info login registration updateLocale complete
             </param-value>
         </init-param>
     </filter>

@@ -134,11 +134,15 @@ public class UserManager {
     }
 
     public static Optional<User> getUser(Connection con, int userId) throws SQLException {
+        return getUserById(con, SQL_SELECT_USER_BY_ID, userId);
+    }
+
+    private static Optional<User> getUserById(Connection con, String SQL, int id) throws SQLException {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            pstmt = con.prepareStatement(SQL_SELECT_USER_BY_ID);
-            pstmt.setInt(1, userId);
+            pstmt = con.prepareStatement(SQL);
+            pstmt.setInt(1, id);
             rs = pstmt.executeQuery();
             List<User> list = parseResultSet(rs);
             return list.size() > 0 ? Optional.ofNullable(list.get(0)) : Optional.empty();
@@ -146,6 +150,10 @@ public class UserManager {
             DbUtil.close(rs);
             DbUtil.close(pstmt);
         }
+    }
+
+    public static Optional<User> getUserByReportId(Connection con, int reportId) throws SQLException {
+        return getUserById(con, SQL_SELECT_USER_BY_REPORT_ID, reportId);
     }
 
 

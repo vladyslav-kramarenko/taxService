@@ -88,7 +88,7 @@ public class ReportDAO {
             con.commit();
         } catch (SQLException e) {
             DbUtil.rollback(con);
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(),e);
             throw new DBException("Cannot obtain reports with statuses by user id", e);
         } finally {
             DbUtil.close(con);
@@ -111,7 +111,7 @@ public class ReportDAO {
             con.commit();
         } catch (SQLException e) {
             DbUtil.rollback(con);
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(),e);
             throw new DBException("Cannot obtain reports with statuses by user id", e);
         } finally {
             DbUtil.close(con);
@@ -138,7 +138,7 @@ public class ReportDAO {
             con.commit();
         } catch (SQLException e) {
             DbUtil.rollback(con);
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(),e);
             throw new DBException("Cannot obtain reports with statuses by user id", e);
         } finally {
             DbUtil.close(con);
@@ -153,7 +153,7 @@ public class ReportDAO {
             con.setAutoCommit(true);
             report = ReportManager.getReport(con, reportId);
         } catch (SQLException e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(),e);
             throw new DBException("Cannot get the report", e);
         }
         return report;
@@ -171,7 +171,7 @@ public class ReportDAO {
                 statistics = ReportManager.getFilterUserReportStatistics(con, pattern);
             }
         } catch (SQLException e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(),e);
             throw new DBException("Cannot get users statistics", e);
         }
         return statistics;
@@ -198,9 +198,8 @@ public class ReportDAO {
             con.commit();
         } catch (SQLException | XMLStreamException | IOException e) {
             DbUtil.rollback(con);
-            String message = "Cannot edit the report";
-            LOG.error(message + ":\n" + e.getMessage(), e);
-            throw new DBException(message, e);
+            LOG.error(e.getMessage(), e);
+            throw new DBException("Cannot edit the report", e);
         } finally {
             DbUtil.close(con);
         }
@@ -217,9 +216,8 @@ public class ReportDAO {
             pstmt.executeUpdate();
             con.commit();
         } catch (SQLException e) {
-            String message = "Cannot update the report's status";
-            LOG.error(message + ":\n" + e.getMessage(), e);
-            throw new DBException(message, e);
+            LOG.error(e.getMessage(), e);
+            throw new DBException("Cannot update the report's status", e);
         }
     }
 
@@ -257,9 +255,8 @@ public class ReportDAO {
             con.commit();
         } catch (SQLException | XMLStreamException | IOException e) {
             DbUtil.rollback(con);
-            String message = "Cannot add a report";
-            LOG.error(message + ":\n" + e.getMessage(), e);
-            throw new DBException(message, e);
+            LOG.error(e.getMessage(), e);
+            throw new DBException("Cannot add a report", e);
         } finally {
             DbUtil.close(con);
         }
@@ -282,7 +279,7 @@ public class ReportDAO {
                 con.commit();
             }
         } catch (SQLException e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(),e);
             throw new DBException("Can't delete the report", e);
         }
     }

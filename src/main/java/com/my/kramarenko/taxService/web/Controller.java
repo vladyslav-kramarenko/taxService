@@ -72,22 +72,22 @@ public class Controller extends HttpServlet {
         RequestDispatcher dispatcher;
         try {
             String commandName = request.getParameter("command");
-            Command command = CommandContainer.getCommand(commandName);
-            address = command.execute(request, response);
-            if (address != null) {
-                if (method.equals("GET")) {
-                    dispatcher = request.getRequestDispatcher(address);
-                    LOG.trace("Forward to: " + address);
-                    dispatcher.forward(request, response);
+                Command command = CommandContainer.getCommand(commandName);
+                address = command.execute(request, response);
+                if (address != null) {
+                    if (method.equals("GET")) {
+                        dispatcher = request.getRequestDispatcher(address);
+                        LOG.trace("Forward to: " + address);
+                        dispatcher.forward(request, response);
+                    } else {
+                        LOG.trace("Redirect to: " + address);
+                        response.sendRedirect(address);
+                    }
                 } else {
-                    LOG.trace("Redirect to: " + address);
-                    response.sendRedirect(address);
+                    LOG.trace("forward address is null");
                 }
-            } else {
-                LOG.trace("forward address is null");
-            }
         } catch (Exception e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(),e);
             response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
         }
     }

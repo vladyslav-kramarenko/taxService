@@ -130,7 +130,7 @@ public class ContextListener implements ServletContextListener {
             PropertyConfigurator.configure(servletContext
                     .getRealPath("WEB-INF/log4j.properties"));
         } catch (Exception ex) {
-            LOG.error(ex);
+            LOG.error(ex.getMessage(),ex);
         }
 
         log("Log4J initialization finished");
@@ -149,7 +149,7 @@ public class ContextListener implements ServletContextListener {
         try {
             Class.forName("com.my.kramarenko.taxService.web.command.CommandContainer");
         } catch (ClassNotFoundException ex) {
-            LOG.error(ex);
+            LOG.error(ex.getMessage(),ex);
         }
         LOG.trace("Command container initialization finished");
     }

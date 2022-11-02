@@ -15,7 +15,7 @@ import java.util.Optional;
  *
  * @author Vlad Kramarenko
  */
-public class UserDAO{
+public class UserDAO {
 
     DataSource ds;
 
@@ -81,6 +81,18 @@ public class UserDAO{
         }
     }
 
+
+    public Optional<User> getUserByReportId(int reportId) throws DBException {
+        try (Connection con = ds.getConnection()) {
+            con.setAutoCommit(true);
+            return UserManager.getUserByReportId(con, reportId);
+        } catch (SQLException e) {
+            String message = "Cannot obtain user by id";
+            LOG.error(message, e);
+            throw new DBException(message, e);
+        }
+    }
+
     /**
      * Update user
      *
@@ -99,6 +111,7 @@ public class UserDAO{
             throw new DBException(message, e);
         }
     }
+
 
     /**
      * Update user role

@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.io.Serial;
 import java.util.Map;
 
+import static com.my.kramarenko.taxService.web.mail.MailCreator.createReportUpdateNotification;
+
 /**
  * Login command.
  *
@@ -48,14 +50,14 @@ public class UpdateReportStatus extends Command {
             Status status = statusMap.get(Integer.parseInt(statusParam));//Status.getStatus(Integer.parseInt(statusParam));
             LOG.trace("status: " + status);
 
-            ReportDAO rm = DBManager.getInstance().getReportDAO();
-            rm.updateReportStatus(reportId, status, comment);
+            ReportDAO reportDAO = DBManager.getInstance().getReportDAO();
+            reportDAO.updateReportStatus(reportId, status, comment);
+            createReportUpdateNotification(request, reportId);
         } else {
             LOG.trace("reportId is null");
         }
         LOG.trace("Command finished");
-        response.sendRedirect(Path.COMMAND_REPORT_LIST);
-        return null;
+        return Path.COMMAND_REPORT_LIST;
     }
 
 //    private static TaxForm getTaxForm(ReportForm reportForm, HttpServletRequest request) {

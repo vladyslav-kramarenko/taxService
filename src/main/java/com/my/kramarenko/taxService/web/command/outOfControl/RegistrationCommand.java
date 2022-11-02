@@ -44,25 +44,25 @@ public class RegistrationCommand extends Command {
         String email = request.getParameter("email");
 
         if (email == null || email.isEmpty()) {
-            return error("Login/password cannot be empty", request);
+            return forwardError("Login/password cannot be empty");
         }
 
         LOG.trace("Request parameter: registration --> " + email);
         User user = createUserBean(request);
 
         if (user.getPassword() == null || user.getPassword().isEmpty()) {
-            return error("Login/password cannot be empty", request);
+            return forwardError("Login/password cannot be empty");
         }
 
         UserDAO userManager = DBManager.getInstance().getUserDAO();
         if (userManager.findUserByEmail(email).isPresent()) {
-            return error("Such email is forbidden", request);
+            return forwardError("Such email is forbidden");
         }
         try {
             return createUser(user, request);
         } catch (DBException e) {
-            LOG.error(e.getMessage());
-            return error("Cannot create such user", request);
+            LOG.error(e.getMessage(),e);
+            return forwardError("Cannot create such user");
         }
 //                setRequestAttributes(request, user);
     }
@@ -95,7 +95,7 @@ public class RegistrationCommand extends Command {
         return forward;
     }
 
-    private String error(String errorMessage, HttpServletRequest request) {
+    private String forwardError(String errorMessage) {
         LOG.trace(errorMessage);
         String forward = Path.COMMAND_REGISTRATION + "&error=" + errorMessage;
         return forward;

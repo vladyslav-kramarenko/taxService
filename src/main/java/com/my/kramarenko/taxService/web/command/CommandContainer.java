@@ -8,6 +8,7 @@ import com.my.kramarenko.taxService.web.command.inspector.StatisticCommand;
 import com.my.kramarenko.taxService.web.command.inspector.UpdateReportStatus;
 import com.my.kramarenko.taxService.web.command.outOfControl.LoginCommand;
 import com.my.kramarenko.taxService.web.command.outOfControl.RegistrationCommand;
+import com.my.kramarenko.taxService.web.command.outOfControl.ResetPasswordCommand;
 import com.my.kramarenko.taxService.web.command.outOfControl.UpdateLocaleCommand;
 import com.my.kramarenko.taxService.web.command.user.*;
 import com.my.kramarenko.taxService.web.command.common.ReportCommand;
@@ -32,6 +33,8 @@ public class CommandContainer {
         commands.put("noCommand", new NoCommand());
         commands.put("updateLocale", new UpdateLocaleCommand());
         commands.put("downloadReport", new DownloadXmlReportCommand());
+        commands.put("resetPassword", new ResetPasswordCommand());
+
 //        commands.put("complete", new CompleteCommand());
         commands.put("viewSettings", new ViewSettingsCommand());
 
@@ -68,6 +71,10 @@ public class CommandContainer {
      * @return Command object.
      */
     public static Command getCommand(String commandName) {
+        if (commandName == null || commandName.isEmpty()) {
+            LOG.debug("command name is empty");
+            return commands.get("noCommand");
+        }
         LOG.trace("Looking for a command [" + commandName + "]");
         commandName = commandName.trim();
         LOG.trace("Command after trim [" + commandName + "]");

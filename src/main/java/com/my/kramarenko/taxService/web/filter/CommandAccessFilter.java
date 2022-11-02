@@ -50,10 +50,15 @@ public class CommandAccessFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
 
         String commandName = request.getParameter("command");
+
+        if (commandName == null) {
+            LOG.trace("CommandName is null");
+            return true;
+        }
         commandName = commandName.trim();
         if (commandName.isEmpty()) {
             LOG.trace("CommandName is empty");
-            return false;
+            return true;
         }
 
         if (outOfControl.contains(commandName)) {

@@ -6,20 +6,20 @@
 <%@ include file="/WEB-INF/jspf/head.jspf" %>
 <body>
 <%@ include file="/WEB-INF/jspf/menu.jspf" %>
-<script>
-    $(function () {
-        $("#log").buttonset();
-        $("#loginBtn").button({});
-        $("#registerBtn").button({});
-    });
-</script>
+<%--<script>--%>
+<%--    $(function () {--%>
+<%--        $("#log").buttonset();--%>
+<%--        $("#loginBtn").button({});--%>
+<%--        $("#registerBtn").button({});--%>
+<%--    });--%>
+<%--</script>--%>
 <c:if test="${not empty errorMessage}">
 <span class="errorSpan">
     <h3>${errorMessage}</h3>
 </span>
 </c:if>
-<span class="content">
-    <span id="inputForm">
+<div class="content">
+    <div id="individual" class="tabcontent">
         <form id="login_form" action="controller" method="post">
             <input type="hidden" name="command" value="login"/>
             <fieldset>
@@ -39,15 +39,20 @@
             <span id="log">
                 <input type="submit" class="btn" id="loginBtn"
                        value='<fmt:message key="login_jsp.button.login"/>'>
-                <input type="submit" class="btn" id="registerBtn"
-                       value='<fmt:message key="login_jsp.button.registration"/>'>
+                <a href="controller?command=registration" class="btn" id="registerBtn">
+                    <fmt:message key="login_jsp.button.registration"/>
+                </a>
             </span>
         </form>
-    </span>
-</span>
-<script>
-    $("#login_form").validate();
-</script>
+        <a href="controller?command=resetPassword">
+            <fmt:message key="login_jsp.label.resetPassword"/>
+        </a>
+    </div>
+</div>
+<script type="text/javascript" src="js/login.js"></script>
+<%--<script>--%>
+<%--    $("#login_form").validate();--%>
+<%--</script>--%>
 </body>
 <%@ include file="/WEB-INF/jspf/footer.jspf" %>
 </html>

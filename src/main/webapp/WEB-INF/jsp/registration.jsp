@@ -111,11 +111,12 @@
         </form>
     </div>
 </div>
-<script src="js/openTab.js">
-    $("#registration_form_individual").validate();
-    $("#registration_form_company").validate();
-</script>
+<%--<script src="js/openTab.js">--%>
+<%--    $("#registration_form_individual").validate();--%>
+<%--    $("#registration_form_company").validate();--%>
+<%--</script>--%>
 
+<script type="text/javascript" src="js/registration.js"></script>
 </body>
 <%@ include file="/WEB-INF/jspf/footer.jspf" %>
 </html>

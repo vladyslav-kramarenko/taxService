@@ -1,70 +1,81 @@
 package com.my.kramarenko.taxService.web.mail;
 
+import com.my.kramarenko.taxService.db.PasswordCreator;
+import com.my.kramarenko.taxService.db.entity.Report;
+import com.my.kramarenko.taxService.db.entity.Type;
 import com.my.kramarenko.taxService.db.entity.User;
+import com.my.kramarenko.taxService.db.enums.Status;
+import com.my.kramarenko.taxService.db.mySQL.DBManager;
+import com.my.kramarenko.taxService.exception.DBException;
+import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 
-public class MailCreator {
+import java.util.Map;
 
+public class MailCreator {
     private static final Logger LOG = Logger.getLogger(MailCreator.class);
 
-//	public static String createMail(User user, Order order) {
-//
-//		StringBuffer mail = new StringBuffer();
-//		mail.append("������������, " + user.getFirstName() + " "
-//				+ user.getLastName() + "!");
-//
-//		if (order.getStatusId() == 0) {
-//			mail.append("\n�� ������� ������� � ����� ��������.<br>����� ������ ������ �"
-//					+ order.getId() + "<br>������: ");
-//		} else {
-//			mail.append("\n������ ������ ������ �" + order.getId()
-//					+ " ������� ��: ");
-//		}
-//		mail.append(Status.values()[order.getStatusId()]);
-//		mail.append("\n������ ������:");
-//		mail.append("\n��������\t���-��\t����");
-//		mail.append("\n_________________________________________");
-//		OrdersProductsDb ordersProductsDb = new OrdersProductsDb();
-//		ShoppingCart cart = new ShoppingCart(
-//				ordersProductsDb.getAllOrderProducts(order.getId()));
-//		System.out.println("order=" + order.getId());
-//		for (ShoppingCartItem sci : cart.getItems()) {
-//			mail.append("\n");
-//			mail.append(sci.getProduct().getName()).append("\t\t");
-//			mail.append(sci.getQuantity());
-//			mail.append("\t").append(sci.getTotal()).append("$");
-//			mail.append("\n");
-//		}
-//		mail.append("\n_________________________________________");
-//
-//		mail.append("\n");
-//		mail.append("�����").append("\t\t");
-//		mail.append(cart.getNumberOfItems()).append("\t");
-//		mail.append(cart.getTotal()).append("$");
-//		mail.append("\n");
-//
-//		mail.append("������� �� �������!");
-//		LOG.trace("sent mail: "+mail.toString());
-//		System.out.println(mail.toString());
-//		return mail.toString();
-//	}
+    public static void createReportUpdateNotification(HttpServletRequest request, int reportID) {
+        LOG.trace("Command starts");
+        try {
+            Report report = DBManager.getInstance().getReportDAO().getReport(reportID);
+            ServletContext sc = request.getServletContext();
+            Map<String, Type> typeMap = (Map<String, Type>) sc.getAttribute("typeMap");
 
-//	public static void sentMail(int orderId) {
-//		OrderDb orderDb = new OrderDb();
-//		Order order = orderDb.getOrderByID(orderId);
-//		UserDb userDb = new UserDb();
-//		User user = userDb.getUser(order.getUserId());
-//		sentMail(user, order);
-//	}
+            User user = DBManager.getInstance().getUserDAO().getUserByReportId(reportID).get();
 
-//	public static void sentMail(User user, Order order) {
-//		String message = createMail(user, order);
-//		String subject = "New order";
-//		String mail = order.getEmail();
-//		try {
-//			MailHelper.sendMail(mail, subject, message);
-//		} catch (Exception e) {
-//			LOG.trace(e);
-//		}
-//	}
+            String reportType = typeMap.get(report.getTypeId()).getName();
+            String reportStatus = Status.getStatus(report.getStatusId()).getName();
+            String updateTime = report.getLastUpdate().toLocalDateTime().toString();
+            MailCreator.sentReportUpdateStatus(reportType, reportStatus, updateTime, user.getEmail());
+        } catch (DBException e) {
+            LOG.error(e.getMessage(), e);
+        }
+        LOG.trace("Command finished");
+    }
+
+    public static void sentReportUpdateStatus(String reportTypeName, String reportStatus, String date, String email) {
+        LOG.trace("Command starts");
+        String message = "Your report '" + reportTypeName + "' was updated " + date + "\n Current report status: " + reportStatus;
+        String subject = "Update for your report";
+        LOG.trace("email to " + email + ":\n" + subject + "\n" + message);
+        try {
+            MailHelper.sendMail(email, subject, message);
+        } catch (Throwable e) {
+            LOG.error(e.getMessage(), e);
+        }
+        LOG.trace("Command finished");
+    }
+
+    public static void resetPassword(String email, User user) throws ServletException {
+        LOG.trace("Command starts");
+        String password = PasswordCreator.generatePassword();
+        String oldPassword = user.getPassword();
+        try {
+            user.setPassword(PasswordCreator.getPassword(password));
+            DBManager.getInstance().getUserDAO().updateUser(user);
+        } catch (Exception e) {
+            throw new ServletException("Can't reset password", e);
+        }
+        try {
+            String message = "Hi, this is your new password: "
+                    + password
+                    + "\nNote: for security reason, "
+                    + "you must change your password after logging in.";
+            String subject = "Your Password has been reset";
+            MailHelper.sendMail(email, subject, message);
+        } catch (Exception e) {
+            LOG.trace(e.getMessage());
+            try {
+                user.setPassword(oldPassword);
+                DBManager.getInstance().getUserDAO().updateUser(user);
+            } catch (DBException ex) {
+                LOG.error(ex.getMessage());
+            }
+            throw new ServletException("Can't reset password", e);
+        }
+        LOG.trace("Command finished");
+    }
 }

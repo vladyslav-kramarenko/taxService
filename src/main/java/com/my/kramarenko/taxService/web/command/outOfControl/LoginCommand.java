@@ -106,7 +106,7 @@ public class LoginCommand extends Command {
                 }
             }
         } catch (DBException e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(),e);
         }
         return Optional.empty();
     }

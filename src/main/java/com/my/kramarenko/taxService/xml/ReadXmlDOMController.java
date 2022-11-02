@@ -45,7 +45,7 @@ public class ReadXmlDOMController {
             Document doc = documentBuilder.parse(inputFile);
             return load(reportForm, doc);
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(),e);
             throw new XmlException("Can't open this XML file", e);
         }
     }
@@ -55,7 +55,7 @@ public class ReadXmlDOMController {
             Document doc = documentBuilder.parse(inputStream);
             return load(reportForm, doc);
         } catch (ParserConfigurationException | IOException | SAXException e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(),e);
             throw new XmlException("Can't load this input stream", e);
         }
     }

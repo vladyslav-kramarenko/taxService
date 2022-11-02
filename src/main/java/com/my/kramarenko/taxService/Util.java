@@ -12,7 +12,7 @@ public class Util {
             try {
                 defaultValue = Integer.parseInt(value.trim());
             } catch (NumberFormatException e) {
-                LOG.error(e.getMessage());
+                LOG.error(e.getMessage(),e);
             }
         }
         return defaultValue;

@@ -27,7 +27,7 @@ public class StatisticCommand extends Command {
 
             Util.setReportsWithPagination(statistics, request);
         } catch (DBException e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(),e);
             throw new CommandException("Can't load users statistic", e);
         }
         return Path.PAGE_STATISTICS;

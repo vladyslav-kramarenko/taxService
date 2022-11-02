@@ -21,59 +21,51 @@
         <h3>${errorMessage}</h3>
     </c:if>
     <form id="settings_form" action="controller" method="post">
+        <input type="hidden" name="command" value="editUser"/>
+        <input type="hidden" name="save" value="true">
+        <input type="hidden" name="userId" value="${userEdit.id}">
         <table id="userData" class="centerTable">
-            <c:choose>
-                <%--                <c:when test="${user.isIndividual==true}">--%>
-                <c:when test="${1==1}">
-                    <tr>
-                        <td class="label">
-                            <input type="hidden" name="command" value="viewSettings"/>
-                            <input type="hidden" name="save" value="true">
-                            <label for="first_name">
-                                <fmt:message key="user.first_name"/>
-                            </label>
-                        </td>
-                        <td class="leftAlignmentTD">
-                            <input id="first_name" value="${userEdit.firstName}" name="first_name">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label">
-                            <label for="last_name">
-                                <fmt:message key="user.last_name"/>
-                            </label>
-                        </td>
-                        <td class="leftAlignmentTD">
-                            <input id="last_name" value="${userEdit.lastName}" name="last_name">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="label">
-                            <label for="patronymic">
-                                <fmt:message key="user.patronymic"/>
-                            </label>
-                        </td>
-                        <td class="leftAlignmentTD">
-                            <input id="patronymic" value="${userEdit.patronymic}" name="patronymic">
-                        </td>
-                    </tr>
+            <tr>
+                <td class="label">
 
-                </c:when>
-                <c:otherwise>
-                    <tr>
-                        <td class="label">
-                            <label for="company_name">
-                                <fmt:message key="user.patronymic"/>
-                            </label>
-                        </td>
-                        <td class="leftAlignmentTD">
-                            <input id="company_name" value="${userEdit.companyName}" name="company_name">
-                        </td>
-                    </tr>
-
-                </c:otherwise>
-            </c:choose>
-
+                    <label for="first_name">
+                        <fmt:message key="user.first_name"/>
+                    </label>
+                </td>
+                <td class="leftAlignmentTD">
+                    <input id="first_name" value="${userEdit.firstName}" name="first_name">
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    <label for="last_name">
+                        <fmt:message key="user.last_name"/>
+                    </label>
+                </td>
+                <td class="leftAlignmentTD">
+                    <input id="last_name" value="${userEdit.lastName}" name="last_name">
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    <label for="patronymic">
+                        <fmt:message key="user.patronymic"/>
+                    </label>
+                </td>
+                <td class="leftAlignmentTD">
+                    <input id="patronymic" value="${userEdit.patronymic}" name="patronymic">
+                </td>
+            </tr>
+            <tr>
+                <td class="label">
+                    <label for="company_name">
+                        <fmt:message key="user.company_name"/>
+                    </label>
+                </td>
+                <td class="leftAlignmentTD">
+                    <input id="company_name" value="${userEdit.companyName}" name="company_name">
+                </td>
+            </tr>
             <tr>
                 <td class="label">
                     <label for="code">
@@ -115,16 +107,16 @@
             <%--                    <input id="currentPassword" value="" type="password" name="currentPassword" required>--%>
             <%--                </td>--%>
             <%--            </tr>--%>
-            <tr>
-                <td class="label">
-                    <label for="password">
-                        <fmt:message key="user.password"/>
-                    </label>
-                </td>
-                <td class="leftAlignmentTD">
-                    <input id="password" type="password" name="password">
-                </td>
-            </tr>
+            <%--            <tr>--%>
+            <%--                <td class="label">--%>
+            <%--                    <label for="password">--%>
+            <%--                        <fmt:message key="user.password"/>--%>
+            <%--                    </label>--%>
+            <%--                </td>--%>
+            <%--                <td class="leftAlignmentTD">--%>
+            <%--                    <input id="password" type="password" name="password">--%>
+            <%--                </td>--%>
+            <%--            </tr>--%>
             <tr>
                 <td>${error}</td>
             </tr>

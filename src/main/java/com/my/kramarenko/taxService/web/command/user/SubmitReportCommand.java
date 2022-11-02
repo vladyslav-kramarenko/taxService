@@ -62,7 +62,7 @@ public class SubmitReportCommand extends Command {
                 reportDAO.addReport(status, user, taxForm, reportForm);
             }
         } catch (DBException e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(),e);
             throw new ServletException("Cannot submit the report", e);
         }
         return Path.COMMAND_REPORT_LIST;
@@ -78,7 +78,7 @@ public class SubmitReportCommand extends Command {
             printXmlToResponse(xml, response);
             return null;
         } catch (XmlException | XMLStreamException e) {
-            LOG.error(e.getMessage());
+            LOG.error(e.getMessage(),e);
             throw new ServletException("Can't create download link", e);
         }
     }
