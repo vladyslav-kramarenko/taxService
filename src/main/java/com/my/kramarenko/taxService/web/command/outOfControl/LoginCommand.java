@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.my.kramarenko.taxService.Util.resetAvailableError;
+import static com.my.kramarenko.taxService.Util.updateLastPageIfEmpty;
 
 /**
  * Login command.
@@ -37,13 +38,7 @@ public class LoginCommand extends Command {
 
         LOG.debug("Command starts");
 
-        String lastPage = LastPage.getPage((String) request.getSession().getAttribute("page"));
-
-        if (lastPage.isEmpty()) {
-            LOG.trace("Last psage is empty => set login page as last page");
-            lastPage = Path.PAGE_LOGIN;
-            request.getSession().setAttribute("page", lastPage);
-        }
+        String lastPage = updateLastPageIfEmpty(request,Path.PAGE_LOGIN);
 
         if (request.getMethod().equals("GET")) {
             resetAvailableError(request);
@@ -65,7 +60,7 @@ public class LoginCommand extends Command {
                 return Path.COMMAND_LOGIN + "&error=" + message;
             } else {
                 setUserInSession(user.get(), request);
-                forward = LastPage.getPage((String) request.getSession().getAttribute("page"));
+                forward = lastPage;
                 LOG.debug("Last page = " + forward);
                 if (forward.isEmpty() || forward.equals(Path.PAGE_LOGIN)) {
                     forward = Path.COMMAND_SETTINGS;
@@ -74,11 +69,6 @@ public class LoginCommand extends Command {
             }
         }
     }
-
-//    private void error(String errorMessage, HttpServletRequest request) {
-//        request.setAttribute("errorMessage", errorMessage);
-//        LOG.error("errorMessage --> " + errorMessage);
-//    }
 
     private void setUserInSession(User user, HttpServletRequest request) {
         ServletContext sc = request.getServletContext();

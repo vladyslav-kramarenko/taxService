@@ -22,6 +22,7 @@ import java.io.Serial;
 import java.util.Map;
 
 import static com.my.kramarenko.taxService.Util.resetAvailableError;
+import static com.my.kramarenko.taxService.Util.updateLastPageIfEmpty;
 import static com.my.kramarenko.taxService.web.command.util.UserUtil.createCompanyName;
 
 public class RegistrationCommand extends Command {
@@ -36,6 +37,9 @@ public class RegistrationCommand extends Command {
     public String execute(HttpServletRequest request,
                           HttpServletResponse response) throws IOException, ServletException, DBException {
         LOG.debug("Command starts");
+
+        updateLastPageIfEmpty(request, Path.PAGE_REGISTRATION);
+
         if (request.getMethod().equals("GET")) {
             resetAvailableError(request);
             return Path.PAGE_REGISTRATION;
@@ -61,7 +65,7 @@ public class RegistrationCommand extends Command {
         try {
             return createUser(user, request);
         } catch (DBException e) {
-            LOG.error(e.getMessage(),e);
+            LOG.error(e.getMessage(), e);
             return forwardError("Cannot create such user");
         }
 //                setRequestAttributes(request, user);
@@ -89,7 +93,7 @@ public class RegistrationCommand extends Command {
 
         String forward = LastPage.getPage((String) session
                 .getAttribute("page"));
-        if (forward.isEmpty()) {
+        if (forward.isEmpty() || forward.equals(Path.PAGE_REGISTRATION)) {
             forward = Path.COMMAND_SETTINGS;
         }
         return forward;
@@ -112,16 +116,32 @@ public class RegistrationCommand extends Command {
                 + role.getName());
     }
 
-    private void setRequestAttributes(HttpServletRequest request, User user) {
-        request.setAttribute("email", user.getEmail());
-        request.setAttribute("phone", user.getPhone());
-        request.setAttribute("name", user.getFirstName());
-        request.setAttribute("lastName", user.getLastName());
-        request.setAttribute("patronymic", user.getPatronymic());
-        request.setAttribute("company_name", user.getCompanyName());
-        request.setAttribute("is_individual", user.isIndividual());
-        request.setAttribute("code", user.getCode());
-    }
+//    private void setRequestAttributes(HttpServletRequest request, User user) {
+//        request.setAttribute("email", user.getEmail());
+//        request.setAttribute("phone", user.getPhone());
+//        request.setAttribute("name", user.getFirstName());
+//        request.setAttribute("lastName", user.getLastName());
+//        request.setAttribute("patronymic", user.getPatronymic());
+//        request.setAttribute("company_name", user.getCompanyName());
+//        request.setAttribute("is_individual", user.isIndividual());
+//        request.setAttribute("code", user.getCode());
+//    }
+
+//    private String getRequestAttributes(HttpServletRequest request) {
+//        StringBuilder stringBuilder = new StringBuilder();
+//        String email=request.getParameter("email");
+//        if (email != null && !email.isEmpty())
+//            stringBuilder.append("&email=" + email);
+////            request.setAttribute("email", user.getEmail());
+////        request.setAttribute("phone", user.getPhone());
+////        request.setAttribute("name", user.getFirstName());
+////        request.setAttribute("lastName", user.getLastName());
+////        request.setAttribute("patronymic", user.getPatronymic());
+////        request.setAttribute("company_name", user.getCompanyName());
+////        request.setAttribute("is_individual", user.isIndividual());
+////        request.setAttribute("code", user.getCode());
+//        return stringBuilder.toString();
+//    }
 
     private User createUserBean(HttpServletRequest request) {
         int id = Role.USER.getId();

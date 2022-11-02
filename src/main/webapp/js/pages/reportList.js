@@ -45,3 +45,10 @@ function sortTable(column, header) {
         header.value = 'asc';
     }
 }
+$(function () {
+    $(".actions").buttonset();
+    $(".reportActionButton").button({});
+    $("#newReportBtn").button({});
+    $("#newReportType").selectmenu({});
+});
+

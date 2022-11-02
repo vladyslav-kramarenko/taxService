@@ -59,7 +59,7 @@ body {
     font-size: smaller;
     padding: 20px;
     color: #555;
-    align: center;
+    /*align: center;*/
 }
 
 table {
@@ -131,10 +131,6 @@ a:hover {
     font-size: 1.1em;
 }
 
-.btn {
-    width: 200px;
-}
-
 hr {
     border: none;
     background-color: red;
@@ -147,45 +143,6 @@ hr {
     text-align: center;
     align-content: center;
     child-align: middle;
-}
-
-.aButton {
-    padding: 2px 4px;
-    width: 60px;
-    line-height: normal;
-    margin-right: 0.1em;
-    cursor: pointer;
-    vertical-align: middle;
-    text-align: center;
-    overflow: visible;
-    position: relative;
-    display: inline-block;
-    font-weight: normal;
-    color: #3f3731;
-    background: #ede4d4;
-    border: 1px solid #cdc3b7;
-    border-radius: 6px;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 1em;
-}
-
-.aButton:hover {
-    color: #a46313;
-    background: #f5f0e5;
-    border: 1px solid #f5ad66;
-    text-decoration: none;
-}
-
-#saveReportBtn {
-    width: 150px;
-}
-
-#sendReportBtn {
-    width: 150px;
-}
-
-#topLoginButtons {
-    float: right;
 }
 
 footer {
@@ -214,20 +171,12 @@ footer {
     font-weight: bold;
 }
 
-
 /* pagination hover effect on non-active */
 .pagination_section a:hover:not(.active) {
     background-color: #031F3B;
     color: white;
 }
 
-#editUserBtn {
-    width: 100px;
-}
-
-#deleteUserBtn {
-    width: 100px;
-}
 
 /* Style the tab */
 /*.tab {*/
@@ -239,6 +188,16 @@ footer {
 /*}*/
 
 /*!* Style the buttons that are used to open the tab content *!*/
+#individual {
+    display: inline-block;
+    border: none;
+}
+
+#company {
+    display: none;
+    border: none;
+}
+
 .tab button {
     width: 200px;
     height: 30px;
@@ -252,14 +211,16 @@ footer {
     border-color: #b85700;
 }
 
-#individual {
-    display: inline-block;
-    border: none;
+.btn {
+    width: 200px;
 }
 
-#company {
-    display: none;
-    border: none;
+#editUserBtn {
+    width: 100px;
+}
+
+#deleteUserBtn {
+    width: 100px;
 }
 
 #regBtnComp {
@@ -272,6 +233,44 @@ footer {
     height: 30px;
 }
 
+.tabButton {
+    padding: 2px 4px;
+    line-height: normal;
+    margin-right: 0.1em;
+    cursor: pointer;
+    vertical-align: middle;
+    text-align: center;
+    overflow: visible;
+    position: relative;
+    display: inline-block;
+    font-weight: normal;
+    color: #3f3731;
+    background: #ede4d4;
+    border: 1px solid #cdc3b7;
+    border-radius: 6px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 1em;
+}
+
+.tabButton:hover {
+    color: #a46313;
+    background: #f5f0e5;
+    border: 1px solid #f5ad66;
+    text-decoration: none;
+}
+
+#saveReportBtn {
+    width: 150px;
+}
+
+#sendReportBtn {
+    width: 150px;
+}
+
+#topLoginButtons {
+    float: right;
+}
+
 #comment {
     display: none;
     width: auto;
@@ -282,7 +281,33 @@ footer {
     text-align: right;
 }
 
-.errorSpan{
+.errorSpan {
     text-align: center;
 }
+
+#reportButtons {
+    text-align: center;
+    display: block;
+    align-content: center;
+    align-items: center;
+    alignment: center;
+}
+
+#newReportType {
+    vertical-align: middle;
+    text-align: center;
+}
+#newReportBtn{
+    height: 34px;
+    margin-right: 0;
+    /*margin-top: 2px;*/
+    vertical-align: top;
+}
+
+/*#newReportType{*/
+/*    vertical-align: middle;*/
+/*}*/
+/*#newReportForm{*/
+/*    display: inline-block;*/
+/*}*/
 

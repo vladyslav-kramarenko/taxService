@@ -16,10 +16,10 @@
 </c:if>
 <div align="center" class="content">
     <div class="tab">
-        <button id="individualBtn" class="aButton tablinks active" onclick="openTab('individual')">
+        <button id="individualBtn" class="tabButton tablinks active" onclick="openTab('individual')">
             <fmt:message key="label.individual"/>
         </button>
-        <button id="companyBtn" class="aButton tablinks" onclick="openTab('company')">
+        <button id="companyBtn" class="tabButton tablinks" onclick="openTab('company')">
             <fmt:message key="label.company"/>
         </button>
     </div>
@@ -101,6 +101,12 @@
             </fieldset>
             <fieldset>
                 <legend>
+                    <fmt:message key="company.code"/>*
+                </legend>
+                <input type="text" name="code" required/>
+            </fieldset>
+            <fieldset>
+                <legend>
                     <fmt:message key="user.phone"/>
                 </legend>
                 <input type="tel" name="phone"/>
@@ -111,12 +117,7 @@
         </form>
     </div>
 </div>
-<%--<script src="js/openTab.js">--%>
-<%--    $("#registration_form_individual").validate();--%>
-<%--    $("#registration_form_company").validate();--%>
-<%--</script>--%>
-
-<script type="text/javascript" src="js/registration.js"></script>
+<script type="text/javascript" src="js/pages/registration.js"></script>
 </body>
 <%@ include file="/WEB-INF/jspf/footer.jspf" %>
 </html>

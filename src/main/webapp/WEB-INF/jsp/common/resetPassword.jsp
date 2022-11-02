@@ -34,7 +34,7 @@
         </form>
     </div>
 </div>
-<script type="text/javascript" src="js/resetPassword.js"></script>
+<script type="text/javascript" src="js/pages/resetPassword.js"></script>
 </body>
 <%@ include file="/WEB-INF/jspf/footer.jspf" %>
 </html>

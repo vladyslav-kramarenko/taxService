@@ -4,7 +4,7 @@ table {
 
 td {
 	border: 1px solid black;
-	margin: 0px;
+	margin: 0;
 }
 
 td.title {
@@ -32,16 +32,16 @@ td.rowNumber {
 }
 
 td.emptyRow {
-	border: 0px
+	border: 0
 }
 
 td.emptyBox {
-	border: 0px;
+	border: 0;
 	border-collapse: unset;
 }
 
 td.comment {
-	border: 0px
+	border: 0
 }
 input[type=text] {
 	width: 100%;

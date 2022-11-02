@@ -1,6 +1,6 @@
 checkBoxFunction("formType");
-checkBocheckBoxFunction("period");
-checkBocheckBoxFunction("period1");
+checkBoxFunction("period");
+checkBoxFunction("period1");
 
 const calculate8 = function () {
     let variables = [];

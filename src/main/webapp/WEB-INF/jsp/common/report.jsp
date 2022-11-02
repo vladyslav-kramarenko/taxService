@@ -9,11 +9,11 @@
 <c:if test="${userRole.name=='user' and reportStatus.id==1}">
     <form action="controller" class="cmxform" id="loadXML_form" method="post" enctype="multipart/form-data">
         <fieldset>
-            <legend>Load XML</legend>
+            <legend><fmt:message key='report.label.loadXML'/></legend>
             <input name="file" type="file"/>
             <input type="hidden" name="command" value='loadXML'/>
             <input type="hidden" name="reportTypeId" value='${reportTypeId}'/>
-            <input class="aButton" type="submit" id="loadBtn" value='Load'/>
+            <input class="aButton" type="submit" id="loadBtn" value="<fmt:message key='button.load'/>"/>
         </fieldset>
     </form>
 </c:if>
@@ -39,33 +39,26 @@
             </c:forEach>
         </select>
         <input class="comment" id="comment" type="text" name="comment" value="Your comment">
-        <input class="aButton" type="submit" name="Update status">
+        <input class="aButton" id="updateStatusBtn" type="submit" name="Update status">
     </form>
 </c:if>
-<script>
-    const submitpdf = function (element) {
-        var htmlString = document.getElementsByTagName("table")[0];
-        document.getElementById('htmlString').value = htmlString.innerHTML;
-        alert(document.getElementById('htmlString').value);
-        element.form.submit();
-    }
-</script>
-<form action="controller" method="post">
-    <input type="hidden" name="command" value='downloadReport'/>
-    <input type="hidden" name="htmlString" id="htmlString" value="">
-    <input type="button" name="downloadXML" id="downloadPdfBtn" value="Download PDF" onclick="submitpdf(this)">
-</form>
-<a href="controller?command=downloadXml">Download PDF</a>
+<%--<script>--%>
+<%--    const submitpdf = function (element) {--%>
+<%--        var htmlString = document.getElementsByTagName("table")[0];--%>
+<%--        document.getElementById('htmlString').value = htmlString.innerHTML;--%>
+<%--        alert(document.getElementById('htmlString').value);--%>
+<%--        element.form.submit();--%>
+<%--    }--%>
+<%--</script>--%>
+<%--<form action="controller" method="post">--%>
+<%--    <input type="hidden" name="command" value='downloadReport'/>--%>
+<%--    <input type="hidden" name="htmlString" id="htmlString" value="">--%>
+<%--    <input type="button" name="downloadXML" id="downloadPdfBtn" value="Download PDF" onclick="submitpdf(this)">--%>
+<%--</form>--%>
+<%--<a href="controller?command=downloadXml">Download PDF</a>--%>
 
 
-<script>
-    const showComment = function (element) {
-        if (element.value == 4) {
-            document.getElementById("comment").style.display = "inline-block";
-        } else {
-            document.getElementById("comment").style.display = "none";
-        }
-    };
+<script type="text/javascript" src="js/pages/report.js">
 </script>
 <%@ include file="/WEB-INF/jspf/taxForms/chooseReportForm.jspf" %>
 </body>
