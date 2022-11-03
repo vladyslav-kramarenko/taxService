@@ -1,5 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="mylib" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="mylib2" uri="http://com.my/mylib2" %>
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 
@@ -28,7 +29,10 @@
     </div>
 
     <form action="controller" method="get">
-        <%@ include file="/WEB-INF/jspf/recordsPerPageChooser.jspf" %>
+        <mylib2:recordsPerPageChooserTag pageCommand="reportList"
+                                         pageQuantity="1,2,10,20"
+                                         recordsPerPage="${recordsPerPage}"
+        />
     </form>
     <span id="filter">
         <form id="filterForm" action="controller" method="get"> <input type="hidden" name="command" value="reportList"/>

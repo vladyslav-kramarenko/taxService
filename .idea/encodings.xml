@@ -27,7 +27,7 @@
     <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/listener/ContextListener.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/mail/MailCreator.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/mail/MailHelper.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/tags/MyTag.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/tags/RecordsPerPageChooserTag.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/resources.properties" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/resources_en.properties" charset="UTF-8" />

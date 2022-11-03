@@ -1,5 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
 <%@ taglib prefix="mylib" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="mylib2" uri="http://com.my/mylib2" %>
 <%@ include file="/WEB-INF/jspf/directive/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
 
@@ -15,7 +16,10 @@
 <form>
     <label for="userFilter">Filter by company name:</label>
     <input id="userFilter" type="text" value="${userFilter}" name="userFilter" onchange="this.form.submit()">
-    <%@ include file="/WEB-INF/jspf/recordsPerPageChooser.jspf" %>
+    <mylib2:recordsPerPageChooserTag pageCommand="statistic"
+                                     pageQuantity="1,2,10,20"
+                                     recordsPerPage="${recordsPerPage}"
+    />
 </form>
 <table>
     <thead>

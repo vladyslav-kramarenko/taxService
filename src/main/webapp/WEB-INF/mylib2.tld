@@ -1,0 +1,32 @@
+<taglib xmlns="http://java.sun.com/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
+        version="2.1">
+
+    <tlib-version>2.0</tlib-version>
+    <short-name>mylib2</short-name>
+    <uri>http://com.my/mylib2</uri>
+    <tag>
+        <name>recordsPerPageChooserTag</name>
+        <tag-class>com.my.kramarenko.taxService.web.tags.RecordsPerPageChooserTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>pageCommand</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <name>pageQuantity</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+        <attribute>
+            <name>recordsPerPage</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
+</taglib>
