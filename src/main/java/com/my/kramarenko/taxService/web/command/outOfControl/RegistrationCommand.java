@@ -9,6 +9,7 @@ import com.my.kramarenko.taxService.db.dao.UserDAO;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.command.LastPage;
 import com.my.kramarenko.taxService.web.Path;
+import com.my.kramarenko.taxService.web.command.common.VerifyRecaptcha;
 import com.my.kramarenko.taxService.web.command.util.UserUtil;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
@@ -48,25 +49,32 @@ public class RegistrationCommand extends Command {
         String email = request.getParameter("email");
 
         if (email == null || email.isEmpty()) {
-            return forwardError("Login/password cannot be empty");
+            return forwardError("error.empty_credentials");
+        }
+
+        String gRecaptchaResponse = request
+                .getParameter("g-recaptcha-response");
+        boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+        if (!verify) {
+            return forwardError("error.invalid_captcha");
         }
 
         LOG.trace("Request parameter: registration --> " + email);
         User user = createUserBean(request);
 
         if (user.getPassword() == null || user.getPassword().isEmpty()) {
-            return forwardError("Login/password cannot be empty");
+            return forwardError("error.empty_credentials");
         }
 
         UserDAO userManager = DBManager.getInstance().getUserDAO();
         if (userManager.findUserByEmail(email).isPresent()) {
-            return forwardError("Such email is forbidden");
+            return forwardError("error.email_forbidden");
         }
         try {
             return createUser(user, request);
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);
-            return forwardError("Cannot create such user");
+            return forwardError("error.can_not_create_user");
         }
 //                setRequestAttributes(request, user);
     }

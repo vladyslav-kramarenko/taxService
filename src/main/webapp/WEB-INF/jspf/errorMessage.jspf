@@ -1,0 +1,10 @@
+<%--<%@ include file="/WEB-INF/jspf/directive/page.jspf" %>--%>
+<%@ include file="/WEB-INF/jspf/directive/taglib.jspf" %>
+
+<c:if test="${not empty errorMessage}">
+<span class="errorSpan">
+    <h3><fmt:message key="${errorMessage}"/></h3>
+</span>
+</c:if>
+
+

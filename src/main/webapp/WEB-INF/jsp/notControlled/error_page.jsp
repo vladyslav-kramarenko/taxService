@@ -25,7 +25,7 @@
         <div class="error mx-auto" data-text=${code}>${code}</div>
         <p class="lead text-gray-800 mb-5">
             <c:if test="${message==null or message==''}">
-                <fmt:message key="error.notFound"/>
+                <fmt:message key="error.not_found"/>
             </c:if>
             ${message}</p>
         <p>

@@ -6,14 +6,15 @@ import com.my.kramarenko.taxService.db.PasswordCreator;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Role;
 import com.my.kramarenko.taxService.web.command.Command;
-import com.my.kramarenko.taxService.web.command.LastPage;
 import com.my.kramarenko.taxService.web.Path;
+import com.my.kramarenko.taxService.web.command.common.VerifyRecaptcha;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
+import java.io.IOException;
 import java.io.Serial;
 import java.util.Map;
 import java.util.Optional;
@@ -34,11 +35,11 @@ public class LoginCommand extends Command {
 
     @Override
     public String execute(HttpServletRequest request,
-                          HttpServletResponse response) {
+                          HttpServletResponse response) throws IOException {
 
         LOG.debug("Command starts");
 
-        String lastPage = updateLastPageIfEmpty(request,Path.PAGE_LOGIN);
+        String lastPage = updateLastPageIfEmpty(request, Path.PAGE_LOGIN);
 
         if (request.getMethod().equals("GET")) {
             resetAvailableError(request);
@@ -49,25 +50,36 @@ public class LoginCommand extends Command {
 
         String forward;
         if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
-            String message = "password or email is empty";
-            return Path.COMMAND_LOGIN + "&error=" + message;
+            return forwardError("error.empty_credentials");
         } else {
+            // get reCAPTCHA request param
+            String gRecaptchaResponse = request
+                    .getParameter("g-recaptcha-response");
+            LOG.trace(gRecaptchaResponse);
+            boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+            if (!verify) {
+                return forwardError("error.invalid_captcha");
+            }
+            LOG.trace("captcha is OK");
             Optional<User> user = findUser(email, password);
             if (user.isEmpty()) {
-                String message = "Cannot find user with such login/password";
-                LOG.trace(message);
-                request.setAttribute("error", message);
-                return Path.COMMAND_LOGIN + "&error=" + message;
+                return forwardError("error.cannot_find_user");
             } else {
                 setUserInSession(user.get(), request);
                 forward = lastPage;
-                LOG.debug("Last page = " + forward);
+
                 if (forward.isEmpty() || forward.equals(Path.PAGE_LOGIN)) {
                     forward = Path.COMMAND_SETTINGS;
                 }
                 return forward;
             }
         }
+    }
+
+    private String forwardError(String errorMessage) {
+        LOG.trace(errorMessage);
+        String forward = Path.COMMAND_LOGIN + "&error=" + errorMessage;
+        return forward;
     }
 
     private void setUserInSession(User user, HttpServletRequest request) {
@@ -96,7 +108,7 @@ public class LoginCommand extends Command {
                 }
             }
         } catch (DBException e) {
-            LOG.error(e.getMessage(),e);
+            LOG.error(e.getMessage(), e);
         }
         return Optional.empty();
     }

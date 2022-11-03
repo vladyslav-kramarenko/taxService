@@ -13,7 +13,7 @@
     <h3>${errorMessage}</h3>
 </span>
     </c:if>
-    <h2><fmt:message key="resetPassword_jsp.label.resetPassword"/></h2>
+    <h2><fmt:message key="resetPassword_jsp.label.reset_password"/></h2>
     <p>
         <fmt:message key="resetPassword_jsp.label.description"/>:
     </p>
@@ -26,10 +26,12 @@
                 </legend>
                 <input type="text" name="email" id="email" size="20" required><br/>
             </fieldset>
+            <div class="g-recaptcha"
+                 data-sitekey="6LeCWdkiAAAAABblWg_dmJHRAaP9EUHsq8uQ7x4w"></div>
             <br>
             <span id="log">
                 <input type="submit" class="btn" id="resetBtn"
-                       value='<fmt:message key="resetPassword_jsp.button.resetPassword"/>'>
+                       value='<fmt:message key="resetPassword_jsp.button.reset_password"/>'>
             </span>
         </form>
     </div>

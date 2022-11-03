@@ -13,11 +13,12 @@
 <%--        $("#registerBtn").button({});--%>
 <%--    });--%>
 <%--</script>--%>
-<c:if test="${not empty errorMessage}">
-<span class="errorSpan">
-    <h3>${errorMessage}</h3>
-</span>
-</c:if>
+<%@ include file="/WEB-INF/jspf/errorMessage.jspf" %>
+<%--<c:if test="${not empty errorMessage}">--%>
+<%--<span class="errorSpan">--%>
+<%--    <h3><fmt:message key="login_jsp.label.password${errorMessage}"/></h3>--%>
+<%--</span>--%>
+<%--</c:if>--%>
 <div class="content">
     <div id="individual" class="tabcontent">
         <form id="login_form" action="controller" method="post">
@@ -36,6 +37,8 @@
                 <input id="password" type="password" name="password" required/>
             </fieldset>
             <br/>
+            <div class="g-recaptcha"
+                 data-sitekey="6LeCWdkiAAAAABblWg_dmJHRAaP9EUHsq8uQ7x4w"></div>
             <span id="log">
                 <input type="submit" class="btn" id="loginBtn"
                        value='<fmt:message key="login_jsp.button.login"/>'>
@@ -45,10 +48,12 @@
             </span>
         </form>
         <a href="controller?command=resetPassword">
-            <fmt:message key="login_jsp.label.resetPassword"/>
+            <fmt:message key="login_jsp.label.reset_password"/>
         </a>
     </div>
 </div>
+
+<script src="https://www.google.com/recaptcha/api.js"></script>
 <script type="text/javascript" src="js/pages/login.js"></script>
 </body>
 <%@ include file="/WEB-INF/jspf/footer.jspf" %>

@@ -109,8 +109,8 @@
                 <%--                <a href="controller?command=reportList&reportId=${report.id}">Edit</a>--%>
                 Created
             </td>
-            <td value="asc" onclick='sortTable(3,this);'><fmt:message key='header.lastUpdate'/></td>
-            <td value="asc" onclick='sortTable(4,this);'><fmt:message key='header.reportType'/></td>
+            <td value="asc" onclick='sortTable(3,this);'><fmt:message key='header.last_update'/></td>
+            <td value="asc" onclick='sortTable(4,this);'><fmt:message key='header.report_type'/></td>
             <td value="asc" onclick='sortTable(5,this);'><fmt:message key='header.status'/></td>
             <td><fmt:message key='header.actions'/></td>
         </tr>

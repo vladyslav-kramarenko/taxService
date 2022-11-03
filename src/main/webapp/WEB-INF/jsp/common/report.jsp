@@ -9,7 +9,7 @@
 <c:if test="${userRole.name=='user' and reportStatus.id==1}">
     <form action="controller" class="cmxform" id="loadXML_form" method="post" enctype="multipart/form-data">
         <fieldset>
-            <legend><fmt:message key='report.label.loadXML'/></legend>
+            <legend><fmt:message key='report.label.load_xml'/></legend>
             <input name="file" type="file"/>
             <input type="hidden" name="command" value='loadXML'/>
             <input type="hidden" name="reportTypeId" value='${reportTypeId}'/>

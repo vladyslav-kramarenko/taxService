@@ -7,13 +7,7 @@
 <body>
 <%@ include file="/WEB-INF/jspf/menu.jspf" %>
 <br>
-<c:if test="${not empty errorMessage}">
-    <span class="errorSpan">
-<%--        <h3>--%>
-                ${errorMessage}
-<%--        </h3>--%>
-    </span>
-</c:if>
+<%@ include file="/WEB-INF/jspf/errorMessage.jspf" %>
 <div align="center" class="content">
     <div class="tab">
         <button id="individualBtn" class="tabButton tablinks active" onclick="openTab('individual')">
@@ -70,7 +64,8 @@
                 </legend>
                 <input type="tel" name="phone"/>
             </fieldset>
-
+            <div class="g-recaptcha"
+                 data-sitekey="6LeCWdkiAAAAABblWg_dmJHRAaP9EUHsq8uQ7x4w"></div>
             <br>
             <input id="regBtnInd" class="aButton" type="submit"
                    value='<fmt:message key="registration_jsp.button.registration"/>'>
@@ -111,6 +106,8 @@
                 </legend>
                 <input type="tel" name="phone"/>
             </fieldset>
+            <div class="g-recaptcha"
+                 data-sitekey="6LeCWdkiAAAAABblWg_dmJHRAaP9EUHsq8uQ7x4w"></div>
             <br>
             <input id="regBtnComp" class="aButton" type="submit"
                    value='<fmt:message key="registration_jsp.button.registration"/>'>
