@@ -6,19 +6,8 @@
 <%@ include file="/WEB-INF/jspf/head.jspf" %>
 <body>
 <%@ include file="/WEB-INF/jspf/menu.jspf" %>
-<%--<script>--%>
-<%--    $(function () {--%>
-<%--        $("#log").buttonset();--%>
-<%--        $("#loginBtn").button({});--%>
-<%--        $("#registerBtn").button({});--%>
-<%--    });--%>
-<%--</script>--%>
+<br>
 <%@ include file="/WEB-INF/jspf/errorMessage.jspf" %>
-<%--<c:if test="${not empty errorMessage}">--%>
-<%--<span class="errorSpan">--%>
-<%--    <h3><fmt:message key="login_jsp.label.password${errorMessage}"/></h3>--%>
-<%--</span>--%>
-<%--</c:if>--%>
 <div class="content">
     <div id="individual" class="tabcontent">
         <form id="login_form" action="controller" method="post">
@@ -36,9 +25,10 @@
                 </legend>
                 <input id="password" type="password" name="password" required/>
             </fieldset>
-            <br/>
+            <br>
             <div class="g-recaptcha"
                  data-sitekey="6LeCWdkiAAAAABblWg_dmJHRAaP9EUHsq8uQ7x4w"></div>
+            <br>
             <span id="log">
                 <input type="submit" class="btn" id="loginBtn"
                        value='<fmt:message key="login_jsp.button.login"/>'>

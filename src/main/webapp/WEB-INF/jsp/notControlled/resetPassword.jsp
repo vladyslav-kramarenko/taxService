@@ -30,7 +30,7 @@
                  data-sitekey="6LeCWdkiAAAAABblWg_dmJHRAaP9EUHsq8uQ7x4w"></div>
             <br>
             <span id="log">
-                <input type="submit" class="btn" id="resetBtn"
+                <input type="submit" id="resetBtn"
                        value='<fmt:message key="resetPassword_jsp.button.reset_password"/>'>
             </span>
         </form>
