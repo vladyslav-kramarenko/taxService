@@ -37,7 +37,7 @@ public final class Path {
 
     public static final String COMMAND_REPORT = "controller?command=editReport";
     public static final String COMMAND_REPORT_LIST = "controller?command=reportList";
-    public static final String COMMAND_STATISTICS = "controller?command=statistics";
+    public static final String COMMAND_STATISTICS = "controller?command=statistic";
     public static final String COMMAND_DELETE_REPORT = "controller?command=deleteReport";
 }
 

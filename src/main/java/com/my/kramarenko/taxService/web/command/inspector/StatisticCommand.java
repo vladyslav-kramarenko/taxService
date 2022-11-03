@@ -20,6 +20,7 @@ public class StatisticCommand extends Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         List<UserStatisticDTO> statistics;
         try {
+            Util.updateLastPageIfEmpty(request,Path.COMMAND_STATISTICS);
             String userFilter = request.getParameter("userFilter");
             request.setAttribute("userFilter", userFilter);
 

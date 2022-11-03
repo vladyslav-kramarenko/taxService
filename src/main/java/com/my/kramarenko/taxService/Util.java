@@ -53,7 +53,7 @@ public class Util {
     public static String updateLastPageIfEmpty(HttpServletRequest request, String currentPage) {
         String lastPage = LastPage.getPage((String) request.getSession().getAttribute("page"));
         if (lastPage.isEmpty()) {
-            LOG.trace("Last psage is empty => set login page as last page");
+            LOG.trace("Last page is empty => set " + currentPage + " page as last page");
             lastPage = currentPage;
             request.getSession().setAttribute("page", lastPage);
         }
