@@ -7,7 +7,7 @@ import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Role;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.Path;
-import com.my.kramarenko.taxService.web.command.common.VerifyRecaptcha;
+import com.my.kramarenko.taxService.web.VerifyRecaptcha;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -19,8 +19,8 @@ import java.io.Serial;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.my.kramarenko.taxService.Util.resetAvailableError;
-import static com.my.kramarenko.taxService.Util.updateLastPageIfEmpty;
+import static com.my.kramarenko.taxService.web.Util.resetAvailableError;
+import static com.my.kramarenko.taxService.web.Util.updateLastPageIfEmpty;
 
 /**
  * Login command.
@@ -52,10 +52,8 @@ public class LoginCommand extends Command {
         if (email == null || email.isEmpty() || password == null || password.isEmpty()) {
             return forwardError("error.empty_credentials");
         } else {
-            // get reCAPTCHA request param
             String gRecaptchaResponse = request
                     .getParameter("g-recaptcha-response");
-            LOG.trace(gRecaptchaResponse);
             boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
             if (!verify) {
                 return forwardError("error.invalid_captcha");

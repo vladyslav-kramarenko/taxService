@@ -12,6 +12,5 @@ $(function () {
     $("#saveReportBtn").button({});
     $("#sendReportBtn").button({});
     $("#downloadXnlBtn").button({});
-
-
+    // $("#statusSelect").selectmenu({});
 });

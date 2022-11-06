@@ -79,7 +79,7 @@
                         <form action="controller">
                             <input type="hidden" name="command" value="changeUserRole"/>
                             <input type="hidden" name="user_id" value="${userItem.id}"/>
-                            <select name="role_id" onChange="this.form.submit();">
+                            <select class="roleSelect" name="role_id" onChange="this.form.submit();">
                                 <c:forEach var="role" items="${roleMap}" varStatus="loop">
                                     <c:choose>
                                         <c:when test="${role.key != userItem.roleId}">
@@ -103,10 +103,10 @@
                 </c:choose>
             </td>
             <td>
-                <a class="aButton" id="editUserBtn" href="controller?command=editUser&userId=${userItem.id}">
+                <a class="editButton" href="controller?command=editUser&userId=${userItem.id}">
                     <fmt:message key="all_users.jsp.edit_user"/>
                 </a>
-                <a class="aButton" id="deleteUserBtn" href="controller?command=deleteUser&userId=${userItem.id}"
+                <a class="deleteButton" href="controller?command=deleteUser&userId=${userItem.id}"
                    onclick="return confirm('Are you sure?')">
                     <fmt:message key="all_users.jsp.delete_user"/>
                 </a>
@@ -116,7 +116,7 @@
 </table>
 
 <mylib:paginationFooter pageCommand="allUsers"/>
-
+<script src="js/pages/users.js"></script>
 </body>
 <%@ include file="/WEB-INF/jspf/footer.jspf" %>
 </html>

@@ -14,14 +14,16 @@ public final class Path {
     public static final String PAGE_ERROR_PAGE = "/WEB-INF/jsp/notControlled/error_page.jsp";
     public static final String PAGE_REGISTRATION = "/WEB-INF/jsp/notControlled/registration.jsp";
     // COMMON
-    public static final String PAGE_REPORT = "/WEB-INF/jsp/common/report.jsp";
+    public static final String PAGE_REPORT = "/WEB-INF/jsp/common/editReport.jsp";
     public static final String PAGE_USER_REPORT_LIST = "/WEB-INF/jsp/common/reportList.jsp";
     public static final String PAGE_RESET_PASSWORD = "/WEB-INF/jsp/common/resetPassword.jsp";
     public static final String PAGE_SETTINGS = "/WEB-INF/jsp/common/settings.jsp";
     // ADMIN
+    public static final String ADMIN_REPORT = "/WEB-INF/jsp/common/showReport.jsp";
     public static final String PAGE_ALL_USERS = "/WEB-INF/jsp/admin/all_users.jsp";
     public static final String PAGE_EDIT_USER = "/WEB-INF/jsp/admin/userSettings.jsp";
     // INSPECTOR
+    public static final String INSPECTOR_REPORT = "/WEB-INF/jsp/inspector/inspectorReport.jsp";
     public static final String PAGE_STATISTICS = "/WEB-INF/jsp/inspector/statistics.jsp";
     // COMMANDS
     public static final String COMMAND_LOGIN = "controller?command=login";

@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="windows-1251" %>
 <link rel="stylesheet" type="text/css" media="screen" href="css/reportForm.css"/>
 
-<form class="cmxform" id="report_form" action="controller" method="post">
+<form name="report_form" class="cmxform" id="report_form" action="controller" method="post">
     <mylib:reportHeadInputs reportTypeId="J0100122"/>
     <table id="reportTable">
         <tr>
@@ -944,20 +944,8 @@
             </td>
         </tr>
     </table>
+
     <%@ include file="/WEB-INF/jspf/taxForms/reportButtons.jspf" %>
 </form>
-<%--<script type="text/javascript" src="js/commonReportFunctions.js"/>--%>
-
 <script type="text/javascript" src="js/taxForms/commonReportFunctions.js"></script>
-<script type="text/javascript" src="js/taxForms/j0100122.js">
-    // onload = function () {
-        // document.getElementById('R001G3').addEventListener('input', calculate8);
-        // document.getElementById('R002G3').addEventListener('input', listener247);
-        // document.getElementById('R003G3').addEventListener('input', calculate8);
-        // document.getElementById('R004G3').addEventListener('input', listener247);
-        // document.getElementById('R005G3').addEventListener('input', listener5);
-        // document.getElementById('R006G3').addEventListener('input', listener6);
-        // document.getElementById('R007G3').addEventListener('input', listener247);
-        // document.getElementById('R013G3').addEventListener('input', calculate14);
-    // }
-</script>
+<script type="text/javascript" src="js/taxForms/j0100122.js"></script>

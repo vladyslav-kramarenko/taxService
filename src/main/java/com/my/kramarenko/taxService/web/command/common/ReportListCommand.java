@@ -1,6 +1,6 @@
 package com.my.kramarenko.taxService.web.command.common;
 
-import com.my.kramarenko.taxService.Util;
+import com.my.kramarenko.taxService.web.Util;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
 import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.exception.XmlException;
@@ -13,7 +13,6 @@ import com.my.kramarenko.taxService.db.enums.Status;
 import com.my.kramarenko.taxService.db.dao.TypeDAO;
 import com.my.kramarenko.taxService.web.Path;
 import com.my.kramarenko.taxService.web.command.Command;
-import com.my.kramarenko.taxService.web.command.util.UserUtil;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +23,7 @@ import java.io.IOException;
 import java.io.Serial;
 import java.util.*;
 
-import static com.my.kramarenko.taxService.web.command.util.ReportUtil.getChosenStatusMap;
+import static com.my.kramarenko.taxService.web.Util.getChosenStatusMap;
 
 /**
  * ReportList command.
@@ -70,7 +69,10 @@ public class ReportListCommand extends Command {
             reportTypes = tm.getAllTypes();
             request.setAttribute("reportTypeList", reportTypes);
         } else {
-            List<User> users = UserUtil.getUserListDependOnFilter(request);
+            if (roleMap.get(user.getRoleId()).equals(Role.INSPECTOR)) {
+                chosenStatusMap.remove(Status.DRAFT);
+            }
+            List<User> users = Util.getUserListDependOnFilterInRequest(request);
             reportsList = UserReportDTOBuilder.getUsersReportsWithStatusesAndTypeFilter(chosenStatusMap, typeMap, users, typeFilter);
 //            if (roleMap.get(user.getRoleId()).equals(Role.ADMIN)) {
 //            }

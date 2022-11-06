@@ -177,6 +177,7 @@ public class ReportManager {
             report.setXmlPath(rs.getString(Fields.REPORT_XML));
             report.setStatusId(rs.getInt(Fields.REPORT_STATUS_ID));
             report.setTypeId(rs.getString(Fields.REPORT_TYPE_ID));
+            report.setComment(rs.getString(Fields.REPORT_COMMENT));
             result.add(report);
         }
         return result;

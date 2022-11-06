@@ -46,8 +46,30 @@ function sortTable(column, header) {
     }
 }
 $(function () {
-    $(".actions").buttonset();
-    $(".reportActionButton").button({});
+    $(".reportActionEditButton").button({
+        text: false,
+        icons: {
+            primary: "ui-icon-document"
+        }
+    });
+    $(".reportActionCancelButton").button({
+        text: false,
+        icons: {
+            primary: "ui-icon-closethick"
+        }
+    });
+    $(".reportActionTrashButton").button({
+        text: false,
+        icons: {
+            primary: "ui-icon-trash"
+        }
+    });
+    $(".reportActionButton").button({
+        text: true,
+        icons: {
+            primary: "ui-icon-gear"
+        }
+    });
     $("#newReportBtn").button({});
     $("#newReportType").selectmenu({});
 });

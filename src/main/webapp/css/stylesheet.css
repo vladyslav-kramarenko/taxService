@@ -9,11 +9,6 @@
     display: inline-block;
 }
 
-table {
-    width: 100%;
-    text-align: center;
-    alignment: center;
-}
 
 .label {
     text-align: right;
@@ -63,8 +58,11 @@ body {
 }
 
 table {
+    width: 100%;
+    text-align: center;
+    alignment: center;
     padding: 5px;
-    background-color: #f9faff;
+    /*background-color: #f9faff;*/
     /*text-align: center;*/
     alignment: center;
     margin-left: auto;
@@ -297,17 +295,56 @@ footer {
     vertical-align: middle;
     text-align: center;
 }
-#newReportBtn{
+
+#newReportBtn {
     height: 34px;
     margin-right: 0;
-    /*margin-top: 2px;*/
     vertical-align: top;
 }
 
-/*#newReportType{*/
-/*    vertical-align: middle;*/
-/*}*/
-/*#newReportForm{*/
-/*    display: inline-block;*/
-/*}*/
+fieldset {
+    border-radius: 6px;
+}
 
+#changeStatusSpan {
+    align-content: center;
+    display: inline-block;
+}
+
+#updateStatusForm {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#statusSelectLabel {
+    vertical-align: center;
+}
+
+#updateStatusBtn {
+    vertical-align: center;
+    text-align: center;
+}
+.status{
+    padding: 2px;
+    border-radius: 6px;
+    border-style: solid;
+    display: block;
+}
+.accepted {
+    background-color: lightgreen;
+    border: darkgreen;
+}
+
+.not_accepted {
+    background-color: lightpink;
+    border: darkred;
+}
+
+.submitted {
+    background-color: beige;
+    border: yellow;
+}
+
+footer{
+    background-color: white;
+}

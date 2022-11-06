@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="windows-1251" %>
 <link rel="stylesheet" type="text/css" media="screen" href="css/reportForm.css"/>
 
-<form class="cmxform" id="report_form" action="controller" method="post">
+<form name="report_form" class="cmxform" id="report_form" action="controller" method="post">
     <mylib:reportHeadInputs reportTypeId="F0103405"/>
     <table id="reportTable">
         <tr>
@@ -389,6 +389,7 @@
             </td>
         </tr>
     </table>
+
     <%@ include file="/WEB-INF/jspf/taxForms/reportButtons.jspf" %>
 </form>
 <script type="text/javascript" src="js/taxForms/commonReportFunctions.js"></script>

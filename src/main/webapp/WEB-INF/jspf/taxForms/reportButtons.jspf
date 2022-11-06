@@ -2,10 +2,14 @@
 <br>
 <fieldset>
 <span id="reportButtons">
-    <c:if test="${userRole.name=='user'}">
-        <input type="submit" name="save" id="saveReportBtn" value='Save report'>
-        <input type="submit" name="send" id="sendReportBtn" value='Send report'>
+    <c:if test="${editable=='true'}">
+        <input button="submit" name="save" id="saveReportBtn" value='<fmt:message key='button.submitReport'/>'
+               onclick="submitForm('submitReport')">
+        <input button="submit" name="send" id="sendReportBtn" value='<fmt:message key='button.saveReport'/>'
+               onclick="submitForm('saveReport')">
     </c:if>
-    <input type="submit" name="downloadXML" id="downloadXnlBtn" value="Download XML">
+    <input type="button" name="downloadXML" id="downloadXnlBtn" value='<fmt:message key='button.downloadXML'/>'
+           onclick="submitForm('downloadXML')">
     </span>
 </fieldset>
+<script type="text/javascript" src="js/taxForms/reportButtons.js"></script>

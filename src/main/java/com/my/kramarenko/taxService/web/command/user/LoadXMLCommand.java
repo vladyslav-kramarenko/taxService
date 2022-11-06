@@ -59,7 +59,7 @@ public class LoadXMLCommand extends Command {
 
         String typeId = request.getParameter(REPORT_TYPE_ID_ATTRIBUTE_NAME);
         request.setAttribute(REPORT_TYPE_ID_ATTRIBUTE_NAME, typeId);
-
+        request.setAttribute("editable", true);
         setParameters(taxForm, request);
 
         LOG.debug("Command finished");

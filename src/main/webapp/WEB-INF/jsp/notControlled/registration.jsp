@@ -62,7 +62,7 @@
                 <legend>
                     <fmt:message key="user.phone"/>
                 </legend>
-                <input type="tel" name="phone"/>
+                <input type="tel" name="phone" placeholder="000-000-0000" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>
             </fieldset>
             <div class="g-recaptcha"
                  data-sitekey="6LeCWdkiAAAAABblWg_dmJHRAaP9EUHsq8uQ7x4w"></div>

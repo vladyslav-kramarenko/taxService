@@ -32,15 +32,19 @@ public class CommandContainer {
         commands.put("logout", new LogoutCommand());
         commands.put("noCommand", new NoCommand());
         commands.put("updateLocale", new UpdateLocaleCommand());
-        commands.put("downloadReport", new DownloadXmlReportCommand());
+        commands.put("downloadReport", new PdfDownloadCommand());
         commands.put("resetPassword", new ResetPasswordCommand());
+        commands.put("viewReport", new ShowReportCommand());
 
 //        commands.put("complete", new CompleteCommand());
         commands.put("viewSettings", new ViewSettingsCommand());
+        commands.put("downloadXML", new DownloadReportAsXmlCommand());
 
         // user commands
         commands.put("loadXML", new LoadXMLCommand());
         commands.put("submitReport", new SubmitReportCommand());
+        commands.put("saveReport", new SubmitReportCommand());
+
         commands.put("deleteReport", new DeleteReportCommand());
         commands.put("reportList", new ReportListCommand());
         commands.put("cancelReport", new CancelReportCommand());
@@ -51,7 +55,6 @@ public class CommandContainer {
 
         //user & inspector commands
         commands.put("editReport", new ReportCommand());
-        commands.put("viewReport", new ReportCommand());
 
         // admin commands
         commands.put("changeUserBannedStatus", new AllUsersCommand());
@@ -75,9 +78,8 @@ public class CommandContainer {
             LOG.debug("command name is empty");
             return commands.get("noCommand");
         }
-        LOG.trace("Looking for a command [" + commandName + "]");
         commandName = commandName.trim();
-        LOG.trace("Command after trim [" + commandName + "]");
+        LOG.trace("Looking for a command [" + commandName + "]");
         if (!commands.containsKey(commandName)) {
             LOG.debug("Command not found, name --> [" + commandName + "]");
             return commands.get("noCommand");

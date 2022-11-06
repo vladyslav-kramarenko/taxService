@@ -6,11 +6,11 @@ import com.my.kramarenko.taxService.db.PasswordCreator;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Role;
 import com.my.kramarenko.taxService.db.dao.UserDAO;
+import com.my.kramarenko.taxService.web.Util;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.command.LastPage;
 import com.my.kramarenko.taxService.web.Path;
-import com.my.kramarenko.taxService.web.command.common.VerifyRecaptcha;
-import com.my.kramarenko.taxService.web.command.util.UserUtil;
+import com.my.kramarenko.taxService.web.VerifyRecaptcha;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,9 +22,9 @@ import java.io.IOException;
 import java.io.Serial;
 import java.util.Map;
 
-import static com.my.kramarenko.taxService.Util.resetAvailableError;
-import static com.my.kramarenko.taxService.Util.updateLastPageIfEmpty;
-import static com.my.kramarenko.taxService.web.command.util.UserUtil.createCompanyName;
+import static com.my.kramarenko.taxService.web.Util.createCompanyName;
+import static com.my.kramarenko.taxService.web.Util.resetAvailableError;
+import static com.my.kramarenko.taxService.web.Util.updateLastPageIfEmpty;
 
 public class RegistrationCommand extends Command {
 
@@ -83,7 +83,7 @@ public class RegistrationCommand extends Command {
         HttpSession session = request.getSession();
         LOG.trace("everything is ok => write user to DB");
         user.setPassword(PasswordCreator.getPassword(user.getPassword()));
-        UserUtil.setUserFields(user, request);
+        Util.setUserFieldsFromRequest(user, request);
 
         LOG.debug("isIndividual = " + user.isIndividual());
         if (user.isIndividual()) {
@@ -157,7 +157,7 @@ public class RegistrationCommand extends Command {
         user.setId(id);
         String password = request.getParameter("password");
         user.setPassword(password);
-        UserUtil.setUserFields(user, request);
+        Util.setUserFieldsFromRequest(user, request);
         return user;
     }
 }

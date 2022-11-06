@@ -6,7 +6,8 @@
 <body>
 <%@ include file="/WEB-INF/jspf/menu.jspf" %>
 <br>
-<c:if test="${userRole.name=='user' and reportStatus.id==1}">
+
+<c:if test="${userRole.name=='user' and editable=='true'}">
     <form action="controller" class="cmxform" id="loadXML_form" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend><fmt:message key='report.label.load_xml'/></legend>
@@ -18,29 +19,39 @@
     </form>
 </c:if>
 
+<fieldset>
+    <legend><fmt:message key='legend.report_info'/></legend>
+    <span id="reportStatusSpan">
+    <c:if test="${reportComment!=null}">
+        Current report status:
+        <label id="statusLabel"><fmt:message key='report.status.${reportStatus}'/></label>
+        Comment:
+        <label id="commentLabel">${reportComment}</label>
+    </c:if>
+    </span>
+</fieldset>
+
 <c:if test="${userRole.name=='inspector'}">
-    <form action="controller" class="cmxform" id="updateStatus_form" method="post">
-        <input type="hidden" name="command" value='updateReportStatus'/>
-        <input type="hidden" name="reportId" value="${reportId}"/>
-        <select name="status" onchange=showComment(this)>
-            <c:forEach var="status" items="${statusTypes}" varStatus="loop">
-                <c:choose>
-                    <c:when test="${status.id != reportStatusId}">
-                        <option value="${status.id}">
-                            <fmt:message key='report.status.${status.name}'/>
-                        </option>
-                    </c:when>
-                    <c:otherwise>
-                        <option selected value="${status.id}">
-                            <fmt:message key='report.status.${status.name}'/>
-                        </option>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-        </select>
-        <input class="comment" id="comment" type="text" name="comment" value="Your comment">
-        <input class="aButton" id="updateStatusBtn" type="submit" name="Update status">
-    </form>
+        <span id="changeStatusSpan">
+        <form action="controller" id="updateStatusForm" method="post">
+
+            <input type="hidden" name="command" value='updateReportStatus'/>
+            <input type="hidden" name="reportId" value="${reportId}"/>
+
+            <label id="statusSelectLabel" for="statusSelect"> Change status to:</label>
+
+            <select id="statusSelect" name="status" onchange=showComment(this)>
+                <c:forEach var="status" items="${statusTypes}" varStatus="loop">
+                    <option value="${status.id}">
+                        <fmt:message key='report.status.${status.name}'/>
+                    </option>
+                </c:forEach>
+            </select>
+
+            <input class="comment" id="comment" type="text" name="comment" value="Your comment">
+            <input id="updateStatusBtn" type="submit" name="Update status">
+        </form>
+            </span>
 </c:if>
 <%--<script>--%>
 <%--    const submitpdf = function (element) {--%>

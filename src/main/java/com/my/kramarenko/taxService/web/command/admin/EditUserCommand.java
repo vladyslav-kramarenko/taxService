@@ -5,8 +5,8 @@ import com.my.kramarenko.taxService.exception.CommandException;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
 import com.my.kramarenko.taxService.web.Path;
+import com.my.kramarenko.taxService.web.Util;
 import com.my.kramarenko.taxService.web.command.Command;
-import com.my.kramarenko.taxService.web.command.util.UserUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
@@ -15,7 +15,7 @@ import java.io.Serial;
 import java.util.Objects;
 import java.util.Optional;
 
-import static com.my.kramarenko.taxService.Util.resetAvailableError;
+import static com.my.kramarenko.taxService.web.Util.resetAvailableError;
 
 /**
  * View settings command.
@@ -61,7 +61,7 @@ public class EditUserCommand extends Command {
             UserDAO userManager = DBManager.getInstance().getUserDAO();
             userId = Integer.parseInt(request.getParameter("userId"));
             User editableUser = userManager.getUser(userId).orElseThrow();
-            UserUtil.setUserFields(editableUser, request);
+            Util.setUserFieldsFromRequest(editableUser, request);
 //            String password = request.getParameter("password");
 //            if (password != null && password.length() > 0) {
 //                editableUser.setPassword(PasswordCreator.getPassword(password));

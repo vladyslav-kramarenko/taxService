@@ -31,5 +31,6 @@ public final class Fields {
 	public static final String REPORT_STATUS_ID = "status_id";
 	public static final String REPORT_STATUS_NANE = "status_name";
 	public static final String REPORT_TYPE_ID = "type_id";
+	public static final String REPORT_COMMENT = "comment";
 	public static final String REPORT_TYPE_NAME = "type_name";
 }

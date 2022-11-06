@@ -1,6 +1,7 @@
 package com.my.kramarenko.taxService.web.command.util;
 
 import com.my.kramarenko.taxService.db.enums.Status;
+import com.my.kramarenko.taxService.web.Util;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -14,7 +15,7 @@ class ReportUtilTest {
     void getChosenStatusMap() {
         Map<Integer, Status> statusMap = getStatusMap();
         String[] chosedId = {"1", "3"};
-        Map<Status, Boolean> resultMap = ReportUtil.getChosenStatusMap(statusMap, chosedId);
+        Map<Status, Boolean> resultMap = Util.getChosenStatusMap(statusMap, chosedId);
         assertEquals(statusMap.size(), resultMap.size());
         assertEquals(true, resultMap.get(statusMap.get(1)));
         assertEquals(true, resultMap.get(statusMap.get(3)));

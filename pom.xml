@@ -113,6 +113,11 @@
             <artifactId>javax.json</artifactId>
             <version>1.0.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.jasypt</groupId>
+            <artifactId>jasypt</artifactId>
+            <version>1.9.3</version>
+        </dependency>
         <!--        <dependency>-->
         <!--            <groupId>com.itextpdf</groupId>-->
         <!--            <artifactId>html2pdf</artifactId>-->

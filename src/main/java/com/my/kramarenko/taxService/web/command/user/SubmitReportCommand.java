@@ -1,6 +1,6 @@
 package com.my.kramarenko.taxService.web.command.user;
 
-import com.my.kramarenko.taxService.Util;
+import com.my.kramarenko.taxService.web.Util;
 import com.my.kramarenko.taxService.db.dao.ReportDAO;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
 import com.my.kramarenko.taxService.db.entity.User;
@@ -20,7 +20,8 @@ import org.apache.log4j.Logger;
 import javax.xml.stream.XMLStreamException;
 import java.io.*;
 
-import static com.my.kramarenko.taxService.web.command.util.ReportUtil.*;
+import static com.my.kramarenko.taxService.web.Util.getTaxFormFromRequest;
+import static com.my.kramarenko.taxService.web.Util.printXmlToResponse;
 
 /**
  * Login command.
@@ -36,9 +37,6 @@ public class SubmitReportCommand extends Command {
     public String execute(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException {
         LOG.debug("Command starts");
-        if (request.getParameter("downloadXML") != null) {
-            return downloadXml(request, response);
-        }
 
         Status status = getStatus(request);
         if (status == null) {
@@ -62,35 +60,21 @@ public class SubmitReportCommand extends Command {
                 reportDAO.addReport(status, user, taxForm, reportForm);
             }
         } catch (DBException e) {
-            LOG.error(e.getMessage(),e);
+            LOG.error(e.getMessage(), e);
             throw new ServletException("Cannot submit the report", e);
         }
         return Path.COMMAND_REPORT_LIST;
     }
 
-    private static String downloadXml(HttpServletRequest request, HttpServletResponse response) throws ServletException {
-        String reportTypeId = request.getParameter("reportTypeId");
-        ReportForm reportForm = ReportFormContainer.getForm(reportTypeId);
-        TaxForm taxForm = getTaxFormFromRequest(reportForm, request);
-        LOG.trace(taxForm);
-        try {
-            String xml = new WriteXmlStAXController().writeToString(taxForm, reportForm);
-            printXmlToResponse(xml, response);
-            return null;
-        } catch (XmlException | XMLStreamException e) {
-            LOG.error(e.getMessage(),e);
-            throw new ServletException("Can't create download link", e);
-        }
-    }
-
     private static Status getStatus(HttpServletRequest request) {
+        String command = request.getParameter("command");
         String save = request.getParameter("save");
         String send = request.getParameter("send");
-        if (send != null) {
+        if (command.equals("submitReport")) {
             LOG.trace("action = " + send);
             return Status.SUBMITTED;
         }
-        if (save != null) {
+        if (command.equals("saveReport")) {
             LOG.trace("action = " + save);
             return Status.DRAFT;
         }

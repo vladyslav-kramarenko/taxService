@@ -75,14 +75,3 @@ const init = function () {
 }
 init();
 console.log("finish js")
-
-// // onload = function () {
-//     document.getElementById('R001G3').addEventListener('input', calculate8);
-//     document.getElementById('R002G3').addEventListener('input', listener247);
-//     document.getElementById('R003G3').addEventListener('input', calculate8);
-//     document.getElementById('R004G3').addEventListener('input', listener247);
-//     document.getElementById('R005G3').addEventListener('input', listener5);
-//     document.getElementById('R006G3').addEventListener('input', listener6);
-//     document.getElementById('R007G3').addEventListener('input', listener247);
-//     document.getElementById('R013G3').addEventListener('input', calculate14);
-// // }

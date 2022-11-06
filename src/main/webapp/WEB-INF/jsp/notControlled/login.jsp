@@ -12,11 +12,11 @@
     <div id="individual" class="tabcontent">
         <form id="login_form" action="controller" method="post">
             <input type="hidden" name="command" value="login"/>
-            <fieldset>
+            <fieldset class="roundFieldset">
                 <legend>
                     <fmt:message key="login_jsp.label.email"/>
                 </legend>
-                <input id="email" name="email" required/><br/>
+                <input id="email" type="email" name="email" required/><br/>
             </fieldset>
             <br/>
             <fieldset>

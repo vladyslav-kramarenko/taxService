@@ -45,6 +45,16 @@ public class Report {
     private String typeId;
     private String xmlPath;
 
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    private String comment;
+
     public void setId(int id) {
         this.id = id;
     }

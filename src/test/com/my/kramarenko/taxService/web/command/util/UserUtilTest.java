@@ -1,6 +1,6 @@
 package com.my.kramarenko.taxService.web.command.util;
 
-import com.my.kramarenko.taxService.Util;
+import com.my.kramarenko.taxService.web.Util;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.util.UtilForTests;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +21,11 @@ class UserUtilTest {
         assertEquals(1, Util.getIntValue(0, "  1 "));
     }
 
+    /**
+     * Generate simple list {1,2,3}
+     *
+     * @return simple List example
+     */
     private static List<String> generateInputList() {
         List<String> list = new ArrayList<>();
         list.add("1");
@@ -80,7 +85,7 @@ class UserUtilTest {
         Mockito.when(request.getParameter("patronymic")).thenReturn(patronymic);
         Mockito.when(request.getParameter("phone")).thenReturn(phone);
 
-        UserUtil.setUserFields(user, request);
+        Util.setUserFieldsFromRequest(user, request);
 
         assertEquals(phone,user.getPhone());
         assertEquals(patronymic,user.getPatronymic());

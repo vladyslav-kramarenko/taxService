@@ -39,7 +39,7 @@ public class CommandAccessFilter implements Filter {
             LOG.trace("Filter finished");
             chain.doFilter(request, response);
         } else {
-            String errorMessage = "You do not have permission to access the requested resource";
+            String errorMessage = "error.no_permission";
             LOG.error("Set the request attribute: errorMessage --> "
                     + errorMessage);
             response.sendRedirect(Path.COMMAND_LOGIN + "&error=" + errorMessage);
@@ -143,5 +143,4 @@ public class CommandAccessFilter implements Filter {
         }
         return list;
     }
-
 }

@@ -1,25 +1,13 @@
-$(document).ready(function() {
-    $("#login_form").validate({
-        rules: {
-            email: {
-                required: true,
-                email: true
-            },
-            password: {
-                required: true
-            }
+$("#login_form").validate({
+    messages: {
+        email: {
+            required: "Please enter 1 email",
+            email: "Please enter a valid email address"
         },
-
-        messages: {
-            email: {
-                required: "Please enter email",
-                email: "Please enter a valid email address"
-            },
-            password: {
-                required: "Please enter password"
-            }
+        password: {
+            required: "Please enter password"
         }
-    });
+    }
 });
 $(function () {
     $("#log").buttonset();

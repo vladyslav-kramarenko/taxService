@@ -9,10 +9,10 @@
 <%@ include file="/WEB-INF/jspf/head.jspf" %>
 <body>
 <%@ include file="/WEB-INF/jspf/menu.jspf" %>
-<script src="js/pages/reportList.js"></script>
 <div id="main">
     <div id="newReport">
         <c:if test="${userRole.id==2}">
+            <br>
             <form id="newReportForm">
                 <input type="hidden" name="command" value="editReport">
                 <select name="reportTypeId" id="newReportType" class="select">
@@ -27,25 +27,38 @@
             </form>
         </c:if>
     </div>
-
-    <form action="controller" method="get">
-        <mylib2:recordsPerPageChooserTag pageCommand="reportList"
-                                         pageQuantity="1,2,10,20"
-                                         recordsPerPage="${recordsPerPage}"
-        />
-    </form>
     <span id="filter">
+
+<table>
         <form id="filterForm" action="controller" method="get"> <input type="hidden" name="command" value="reportList"/>
+
         <input type="hidden" name="recordsPerPage" value="${recordsPerPage}">
-        <c:if test="${userRole.id!=2}">
-            <label for="userFilter"><fmt:message key='label.filter_by_user'/>: </label>
-            <input id="userFilter" name="userFilter" value="${userFilter}" type="text" onchange="this.form.submit()">
-            <br>
-        </c:if>
-             <label for="typeFilter"><fmt:message key='label.filter_by_type'/>: </label>
-            <input id="typeFilter" name="typeFilter" value="${typeFilter}" type="text" onchange="this.form.submit()">
-            <br>
-            <label><fmt:message key='label.filter_by_status'/>: </label>
+
+            <c:if test="${userRole.id!=2}">
+                <tr>
+                    <td>
+                <label class="filterLabel" for="userFilter"><fmt:message key='label.filter_by_user'/>: </label>
+                    </td>
+                    <td>
+                <input id="userFilter" name="userFilter" value="${userFilter}" type="text"
+                       onchange="this.form.submit()">
+                    </td>
+                </tr>
+            </c:if>
+            <tr>
+                <td>
+                    <label class="filterLabel" for="typeFilter"><fmt:message key='label.filter_by_type'/>: </label>
+                </td>
+                <td>
+                    <input id="typeFilter" name="typeFilter" value="${typeFilter}" type="text"
+                           onchange="this.form.submit()">
+                </td>
+            </tr>
+            <tr>
+                <td>
+            <label class="filterLabel"><fmt:message key='label.filter_by_status'/>: </label>
+                </td>
+                <td>
             <c:forEach var="entry" items="${chosenStatusMap}">
                 <fmt:message key='report.status.${entry.key.name}'/>
                 <c:choose>
@@ -61,42 +74,18 @@
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
-<%--        <c:forEach var="st" items="${statusFilterList}">--%>
-<%--            ${st.status.name}--%>
-<%--            <c:choose>--%>
-<%--                <c:when test="${st.selected}">--%>
-<%--                    <input type="checkbox" name="chosen_status_id"--%>
-<%--                           value="${st.status.id}" checked--%>
-<%--                           onChange="this.form.submit();"/>--%>
-<%--                </c:when>--%>
-<%--                <c:otherwise>--%>
-<%--                    <input type="checkbox" name="chosen_status_id"--%>
-<%--                           value="${st.status.id}"--%>
-<%--                           onChange="this.form.submit();"/>--%>
-<%--                </c:otherwise>--%>
-<%--            </c:choose>--%>
-<%--        </c:forEach>--%>
-        <%--        <br/>--%>
-        <%--        <label for="sort">--%>
-        <%--            <fmt:message key='label.sort'/>:--%>
-        <%--        </label>--%>
-        <%--        <select name="sort" id="sort" class="select" onChange="this.form.submit();">--%>
-        <%--            <c:forEach var="sortType" items="${sortTypes}">--%>
-        <%--                <c:choose>--%>
-        <%--                    <c:when test="${sortType.name != sort}">--%>
-        <%--                        <option value="${sortType.name}">--%>
-        <%--                            <fmt:message key='button.sort.${sortType.name}'/>--%>
-        <%--                        </option>--%>
-        <%--                    </c:when>--%>
-        <%--                    <c:otherwise>--%>
-        <%--                        <option selected value="${sort}">--%>
-        <%--                            <fmt:message key='button.sort.${sort}'/></option>--%>
-        <%--                    </c:otherwise>--%>
-        <%--                </c:choose>--%>
-        <%--            </c:forEach>--%>
-        <%--        </select>--%>
-
+                </td>
         </form>
+                <td>
+                    <form action="controller" method="get">
+                        <mylib2:recordsPerPageChooserTag pageCommand="reportList"
+                                                         pageQuantity="1,2,10,20"
+                                                         recordsPerPage="${recordsPerPage}"
+                        />
+                    </form>
+                </td>
+    </tr>
+</table>
     </span>
     <hr>
     <table id="reportTable" style="width: 100%;">
@@ -107,7 +96,7 @@
             </c:if>
             <td value="asc" onclick='sortTable(2,this);'>
                 <%--                <a href="controller?command=reportList&reportId=${report.id}">Edit</a>--%>
-                Created
+                <fmt:message key='header.created'/>
             </td>
             <td value="asc" onclick='sortTable(3,this);'><fmt:message key='header.last_update'/></td>
             <td value="asc" onclick='sortTable(4,this);'><fmt:message key='header.report_type'/></td>
@@ -123,31 +112,35 @@
                 <td>${report.report.date}</td>
                 <td>${report.report.lastUpdate}</td>
                 <td><fmt:message key='report.type.${report.type.id}'/></td>
-                <td><fmt:message key='report.status.${report.status.name}'/></td>
+                <td>
+                    <span class="status ${report.status.name}">
+                    <fmt:message key='report.status.${report.status.name}'/>
+                </span>
+                </td>
                 <td>
                     <span class="actions">
                         <c:choose>
                             <c:when test="${userRole.id==2}">
                                 <c:choose>
                                     <c:when test="${report.status.id==1}">
-                                        <a class="reportActionButton"
+                                        <a class="reportActionEditButton"
                                            href="controller?command=editReport&reportId=${report.report.id}">
                                             <fmt:message key='button.edit'/>
                                         </a>
-                                        <a class="reportActionButton"
+                                        <a class="reportActionTrashButton"
                                            href="controller?command=deleteReport&reportId=${report.report.id}"
                                            onclick="return confirm(<fmt:message key='label.confirm'/>">
                                             <fmt:message key='button.delete'/>
                                         </a>
                                     </c:when>
                                     <c:when test="${report.status.id!=1}">
-                                        <a class="reportActionButton"
+                                        <a class="reportActionEditButton"
                                            href="controller?command=editReport&reportId=${report.report.id}">
                                             <fmt:message key='button.show'/>
                                         </a>
                                         <c:choose>
                                             <c:when test="${report.status.id==2}">
-                                                <a class="reportActionButton"
+                                                <a class="reportActionCancelButton"
                                                    href="controller?command=cancelReport&reportId=${report.report.id}"
                                                    onclick="return confirm(<fmt:message key='label.confirm'/>)">
                                                     <fmt:message key='button.cancel'/>
@@ -157,9 +150,12 @@
                                     </c:when>
                                 </c:choose>
                             </c:when>
-                            <%--                            <c:otherwise>--%>
-                            <%--                                <a href="controller?command=editReport&reportId=${report.report.id}">Show</a>--%>
-                            <%--                            </c:otherwise>--%>
+                            <c:otherwise>
+                                <a class="reportActionEditButton"
+                                   href="controller?command=editReport&reportId=${report.report.id}">
+                                    <fmt:message key='button.show'/>
+                                </a>
+                            </c:otherwise>
                         </c:choose>
                     </span>
                 </td>
@@ -168,7 +164,7 @@
     </table>
 </div>
 <mylib:paginationFooter pageCommand="reportList"/>
-
+<script src="js/pages/reportList.js"></script>
 </body>
 <%@ include file="/WEB-INF/jspf/footer.jspf" %>
 </html>
