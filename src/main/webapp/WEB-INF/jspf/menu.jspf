@@ -11,7 +11,7 @@
         </c:when>
         <c:when test="${userRole.name == 'inspector'}">
             <a href="controller?command=statistic" id="reportsByUser">
-                <fmt:message key="header_jspf.anchor.statistic"/>
+                <fmt:message key="header_jspf.anchor.user_statistic"/>
             </a>
             <a href="controller?command=reportStatistic" id="reportsByType">
                 <fmt:message key="header_jspf.anchor.report_statistic"/>
