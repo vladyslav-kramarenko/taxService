@@ -35,7 +35,6 @@ public class CommandContainer {
         commands.put("updateLocale", new UpdateLocaleCommand());
         commands.put("downloadReport", new PdfDownloadCommand());
         commands.put("resetPassword", new ResetPasswordCommand());
-        commands.put("viewReport", new ShowReportCommand());
 
 //        commands.put("complete", new CompleteCommand());
         commands.put("viewSettings", new ViewSettingsCommand());
