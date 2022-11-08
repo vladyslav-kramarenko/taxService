@@ -4,7 +4,8 @@ import com.my.kramarenko.taxService.web.command.admin.AllUsersCommand;
 import com.my.kramarenko.taxService.web.command.admin.DeleteUserCommand;
 import com.my.kramarenko.taxService.web.command.admin.EditUserCommand;
 import com.my.kramarenko.taxService.web.command.common.*;
-import com.my.kramarenko.taxService.web.command.inspector.StatisticCommand;
+import com.my.kramarenko.taxService.web.command.inspector.ReportStatisticCommand;
+import com.my.kramarenko.taxService.web.command.inspector.UserStatisticCommand;
 import com.my.kramarenko.taxService.web.command.inspector.UpdateReportStatus;
 import com.my.kramarenko.taxService.web.command.outOfControl.LoginCommand;
 import com.my.kramarenko.taxService.web.command.outOfControl.RegistrationCommand;
@@ -51,7 +52,8 @@ public class CommandContainer {
 
         // inspector commands
         commands.put("updateReportStatus", new UpdateReportStatus());
-        commands.put("statistic", new StatisticCommand());
+        commands.put("statistic", new UserStatisticCommand());
+        commands.put("reportStatistic", new ReportStatisticCommand());
 
         //user & inspector commands
         commands.put("editReport", new ReportCommand());

@@ -23,8 +23,8 @@ public final class Path {
     public static final String PAGE_ALL_USERS = "/WEB-INF/jsp/admin/all_users.jsp";
     public static final String PAGE_EDIT_USER = "/WEB-INF/jsp/admin/userSettings.jsp";
     // INSPECTOR
-    public static final String INSPECTOR_REPORT = "/WEB-INF/jsp/inspector/inspectorReport.jsp";
-    public static final String PAGE_STATISTICS = "/WEB-INF/jsp/inspector/statistics.jsp";
+    public static final String PAGE_STATISTIC = "/WEB-INF/jsp/inspector/userStatistics.jsp";
+    public static final String PAGE_REPORT_STATISTIC = "/WEB-INF/jsp/inspector/reportStatistic.jsp";
     // COMMANDS
     public static final String COMMAND_LOGIN = "controller?command=login";
     public static final String COMMAND_LOAD_XML = "controller?command=loadXML";
@@ -35,7 +35,8 @@ public final class Path {
     public static final String COMMAND_EDIT_USER = "controller?command=editUser";
     public static final String COMMAND_REPORT = "controller?command=editReport";
     public static final String COMMAND_REPORT_LIST = "controller?command=reportList";
-    public static final String COMMAND_STATISTICS = "controller?command=statistic";
+    public static final String COMMAND_USER_STATISTIC = "controller?command=statistic";
+    public static final String COMMAND_REPORT_STATISTIC = "controller?command=reportStatistic";
     public static final String COMMAND_DELETE_REPORT = "controller?command=deleteReport";
     //    OTHER
     public static final String XML_PATH = "/files/";

@@ -1,7 +1,7 @@
 package com.my.kramarenko.taxService.db.mySQL;
 
 import com.my.kramarenko.taxService.db.DbUtil;
-import com.my.kramarenko.taxService.db.dto.UserStatisticDTO;
+import com.my.kramarenko.taxService.db.dto.StatisticDTO;
 import com.my.kramarenko.taxService.db.entity.Report;
 import com.my.kramarenko.taxService.db.enums.Status;
 import org.apache.log4j.Logger;
@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.my.kramarenko.taxService.db.mySQL.requestFields.*;
@@ -41,15 +42,24 @@ public class ReportManager {
         return reportsList;
     }
 
-    public static List<UserStatisticDTO> getFilterUserReportStatistics(Connection con, String pattern) throws SQLException {
-        List<UserStatisticDTO> reportsList;
+    public static List<StatisticDTO> getFilterUserReportStatistics(Connection con, String pattern) throws SQLException {
+        return getFilterStatistics(con,pattern,SQL_SELECT_FILTER_USERS_REPORTS_STATISTICS);
+    }
+
+    public static List<StatisticDTO> getFilterReportTypeStatistics(Connection con, String pattern) throws SQLException {
+        return getFilterStatistics(con,pattern,SQL_SELECT_FILTER_REPORTS_STATISTICS);
+
+    }
+
+    public static List<StatisticDTO> getFilterStatistics(Connection con, String pattern,String sql) throws SQLException {
+        List<StatisticDTO> reportsList;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            pstmt = con.prepareStatement(SQL_SELECT_FILTER_USERS_REPORTS_STATISTICS);
+            pstmt = con.prepareStatement(sql);
             pstmt.setString(1, pattern);
             rs = pstmt.executeQuery();
-            reportsList = parseUserStatisticsDTOResultSet(rs);
+            reportsList = parseStatisticDTOResultSet(rs);
         } finally {
             DbUtil.close(rs);
             DbUtil.close(pstmt);
@@ -57,12 +67,20 @@ public class ReportManager {
         return reportsList;
     }
 
-    public static List<UserStatisticDTO> getAllUserReportStatistics(Connection con) throws SQLException {
-        List<UserStatisticDTO> reportsList;
+    public static List<StatisticDTO> getAllUserReportStatistics(Connection con) throws SQLException {
+        return getStatistic(con,SQL_SELECT_ALL_USERS_REPORTS_STATISTICS);
+    }
+
+    public static List<StatisticDTO> getAllReportTypeStatistics(Connection con) throws SQLException {
+        return getStatistic(con,SQL_SELECT_ALL_REPORTS_STATISTICS);
+    }
+
+    public static List<StatisticDTO> getStatistic(Connection con,String sql) throws SQLException {
+        List<StatisticDTO> reportsList;
         try (Statement stmt = con.createStatement();
-             ResultSet rs = stmt.executeQuery(SQL_SELECT_ALL_USERS_REPORTS_STATISTICS)) {
-            LOG.trace(SQL_SELECT_ALL_USERS_REPORTS_STATISTICS);
-            reportsList = parseUserStatisticsDTOResultSet(rs);
+             ResultSet rs = stmt.executeQuery(sql)) {
+            LOG.trace(sql);
+            reportsList = parseStatisticDTOResultSet(rs);
         }
         return reportsList;
     }
@@ -137,29 +155,6 @@ public class ReportManager {
         return reportsList;
     }
 
-//    public static List<Report> getPatternUserReportsWithStatuses(Connection con, String pattern, List<Status> statuses) throws SQLException {
-//        List<Report> reportsList;
-//        PreparedStatement pstmt = null;
-//        ResultSet rs = null;
-//        try {
-//            String parameters = statuses.stream().map(x -> "?").collect(Collectors.joining(","));
-//            String sql = SQL_SELECT_USER_REPORTS_WITH_STATUSES.replace("%", parameters);
-//
-//            pstmt = con.prepareStatement(sql);
-//            pstmt.setInt(1, userId);
-//            for (int i = 2; i < statuses.size() + 2; i++) {
-//                pstmt.setInt(i, statuses.get(i - 2).getId());
-//            }
-//            LOG.trace(pstmt);
-//            rs = pstmt.executeQuery();
-//            reportsList = parseResultSet(rs);
-//        } finally {
-//            DbUtil.close(rs);
-//            DbUtil.close(pstmt);
-//        }
-//        return reportsList;
-//    }
-
     /**
      * Parse resultSet for select query
      *
@@ -190,17 +185,17 @@ public class ReportManager {
      * @return list of users
      * @throws SQLException
      */
-    private static List<UserStatisticDTO> parseUserStatisticsDTOResultSet(ResultSet rs) throws SQLException {
-        List<UserStatisticDTO> result = new LinkedList<>();
-        UserStatisticDTO report = null;
+    private static List<StatisticDTO> parseStatisticDTOResultSet(ResultSet rs) throws SQLException {
+        List<StatisticDTO> result = new LinkedList<>();
+        StatisticDTO report = null;
         while (rs.next()) {
-            int userId = rs.getInt(Fields.ENTITY_ID);
-            if (result.size() == 0 || userId != result.get(result.size() - 1).getUserId()) {
-                report = new UserStatisticDTO();
+            String userId = rs.getString(Fields.ENTITY_ID);
+            if (result.size() == 0 || !Objects.equals(userId, result.get(result.size() - 1).getId())) {
+                report = new StatisticDTO();
                 result.add(report);
             }
-            report.setUserId(userId);
-            report.setCompanyName(rs.getString(Fields.USER_COMPANY_NAME));
+            report.setId(userId);
+            report.setName(rs.getString(Fields.ENTITY_NAME));
             report.increaseStatistic(Status.getStatus(rs.getInt(Fields.REPORT_STATUS_ID)).getName().toUpperCase());
         }
         return result;
@@ -245,31 +240,4 @@ public class ReportManager {
             DbUtil.close(pstmt);
         }
     }
-
-//    public static void setReportStatusAndXmlPath(Connection con, Report report) throws SQLException {
-//        PreparedStatement pstmt = null;
-//        try {
-//            pstmt = con.prepareStatement(SQL_SET_REPORT_STATUS_AND_XML_PATH);
-//            int k = 1;
-//            pstmt.setString(k++, report.getXmlPath());
-//            pstmt.setInt(k++, report.getStatusId());
-//            pstmt.setInt(k, report.getId());
-//            pstmt.executeUpdate();
-//        } finally {
-//            DBManager.getInstance().close(pstmt);
-//        }
-//    }
-
-//    public static void setUserReport(Connection con, User user, Report report) throws SQLException {
-//        PreparedStatement pstmt = null;
-//        try {
-//            pstmt = con.prepareStatement(SQL_SET_USER_REPORT);
-//            int k = 1;
-//            pstmt.setInt(k++, user.getId());
-//            pstmt.setInt(k, report.getId());
-//            pstmt.executeUpdate();
-//        } finally {
-//            DBManager.getInstance().close(pstmt);
-//        }
-//    }
 }

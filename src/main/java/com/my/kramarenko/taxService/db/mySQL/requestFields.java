@@ -19,18 +19,29 @@ public class requestFields {
             "AND status_id IN (%) "+
             "AND type_id IN (SELECT type.id FROM type WHERE LOCATE(?, type.name) > 0)";
 
-    public static final String SQL_SELECT_ALL_USERS_REPORTS_STATISTICS = "SELECT user.id, user.company_name, report.status_id\n" +
+    public static final String SQL_SELECT_ALL_USERS_REPORTS_STATISTICS = "SELECT user.id, user.company_name as name, report.status_id\n" +
             "FROM report " +
             "JOIN user_report ON report.id=user_report.report_id " +
             "JOIN user ON user.id=user_report.user_id " +
             "order by user.id";
 
-    public static final String SQL_SELECT_FILTER_USERS_REPORTS_STATISTICS = "SELECT user.id, user.company_name, report.status_id\n" +
+    public static final String SQL_SELECT_ALL_REPORTS_STATISTICS = "SELECT type.id, type.name, report.status_id\n" +
+            "FROM report " +
+            "JOIN type ON report.type_id=type.id " +
+            "order by type.id";
+
+    public static final String SQL_SELECT_FILTER_USERS_REPORTS_STATISTICS = "SELECT user.id, user.company_name as name, report.status_id\n" +
             "FROM report \n" +
             "JOIN user_report ON report.id=user_report.report_id " +
             "JOIN user ON user.id=user_report.user_id " +
             "WHERE LOCATE(?, user.company_name) > 0 " +
             "order by user.id";
+
+    public static final String SQL_SELECT_FILTER_REPORTS_STATISTICS = "SELECT type.id, type.name, report.status_id\n" +
+            "FROM report \n" +
+            "JOIN type ON report.type_id=type.id " +
+            "WHERE LOCATE(?, type.name) > 0 " +
+            "order by type.id";
     public static final String SQL_SELECT_REPORT = "SELECT * FROM report WHERE id =?";
     public static final String SQL_INSERT_INTO_REPORTS = "INSERT INTO report (status_id,type_id,xml) VALUES(?, ?, ?)";
     public static final String SQL_SET_REPORT_STATUS_AND_XML_PATH = "UPDATE report SET xml=?, status_id=? WHERE id=?";

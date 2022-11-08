@@ -1,6 +1,6 @@
 package com.my.kramarenko.taxService.db.dao;
 
-import com.my.kramarenko.taxService.db.dto.UserStatisticDTO;
+import com.my.kramarenko.taxService.db.dto.StatisticDTO;
 import com.my.kramarenko.taxService.db.mySQL.ReportManager;
 import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.db.DbUtil;
@@ -159,8 +159,8 @@ public class ReportDAO {
         return report;
     }
 
-    public List<UserStatisticDTO> getFilterUserReportStatistics(String pattern) throws DBException {
-        List<UserStatisticDTO> statistics;
+    public List<StatisticDTO> getFilterUserReportStatistics(String pattern) throws DBException {
+        List<StatisticDTO> statistics;
         try (Connection con = ds.getConnection()) {
             con.setAutoCommit(true);
             if (pattern == null || pattern.length() == 0) {
@@ -169,6 +169,24 @@ public class ReportDAO {
             } else {
                 LOG.trace("search pattern = " + pattern);
                 statistics = ReportManager.getFilterUserReportStatistics(con, pattern);
+            }
+        } catch (SQLException e) {
+            LOG.error(e.getMessage(),e);
+            throw new DBException("Cannot get users statistics", e);
+        }
+        return statistics;
+    }
+
+    public List<StatisticDTO> getFilterReportStatistics(String pattern) throws DBException {
+        List<StatisticDTO> statistics;
+        try (Connection con = ds.getConnection()) {
+            con.setAutoCommit(true);
+            if (pattern == null || pattern.length() == 0) {
+                LOG.trace("search pattern is empty");
+                statistics = ReportManager.getAllReportTypeStatistics(con);
+            } else {
+                LOG.trace("search pattern = " + pattern);
+                statistics = ReportManager.getFilterReportTypeStatistics(con, pattern);
             }
         } catch (SQLException e) {
             LOG.error(e.getMessage(),e);

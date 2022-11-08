@@ -348,3 +348,8 @@ fieldset {
 footer{
     background-color: white;
 }
+
+.filterInput{
+    box-sizing: border-box;
+    width: 100%;
+}

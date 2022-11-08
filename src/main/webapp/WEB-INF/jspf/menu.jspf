@@ -10,9 +10,12 @@
             </a> &nbsp;
         </c:when>
         <c:when test="${userRole.name == 'inspector'}">
-            <a href="controller?command=statistic" id="users">
-                <fmt:message key="header_jspf.anchor.statistics"/>
-            </a> &nbsp;
+            <a href="controller?command=statistic" id="reportsByUser">
+                <fmt:message key="header_jspf.anchor.statistic"/>
+            </a>
+            <a href="controller?command=reportStatistic" id="reportsByType">
+                <fmt:message key="header_jspf.anchor.report_statistic"/>
+            </a>
         </c:when>
         <c:when test="${userRole.name == 'user' }">
         </c:when>

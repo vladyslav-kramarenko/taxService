@@ -1,44 +1,42 @@
 package com.my.kramarenko.taxService.db.dto;
 
-import com.my.kramarenko.taxService.db.enums.Status;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserStatisticDTO implements Serializable {
-    private int userId;
-    private String companyName;
+public class StatisticDTO implements Serializable {
+    private String id;
+    private String name;
 
     private Map<String, Integer> statistic;
 
-    public UserStatisticDTO() {
+    public StatisticDTO() {
         statistic = new HashMap<>();
     }
 
     @Override
     public String toString() {
-        return "UserStatisticDTO{" +
-                "user_id=" + userId +
-                ", company_name='" + companyName + '\'' +
+        return "StatisticDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", " + statistic +
                 '}';
     }
 
-    public int getUserId() {
-        return userId;
+    public String getId() {
+        return id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getCompanyName() {
-        return companyName;
+    public String getName() {
+        return name;
     }
 
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setName(String companyName) {
+        this.name = companyName;
     }
 
     public Map<String, Integer> getStatistic() {

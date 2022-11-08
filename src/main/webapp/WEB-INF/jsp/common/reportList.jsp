@@ -30,33 +30,38 @@
     <span id="filter">
 
 <table>
-        <form id="filterForm" action="controller" method="get"> <input type="hidden" name="command" value="reportList"/>
-
-        <input type="hidden" name="recordsPerPage" value="${recordsPerPage}">
-
+        <form id="filterForm" action="controller" method="get">
+            <input type="hidden" name="command" value="reportList"/>
+            <input type="hidden" name="recordsPerPage" value="${recordsPerPage}">
             <c:if test="${userRole.id!=2}">
                 <tr>
                     <td>
-                <label class="filterLabel" for="userFilter"><fmt:message key='label.filter_by_user'/>: </label>
+                        <label class="filterLabel" for="userFilter">
+                            <fmt:message key='label.filter_by_user'/>:
+                        </label>
                     </td>
                     <td>
-                <input id="userFilter" name="userFilter" value="${userFilter}" type="text"
-                       onchange="this.form.submit()">
+                        <input class="filterInput" id="userFilter" name="userFilter" value="${userFilter}" type="text"
+                               onchange="this.form.submit()">
                     </td>
                 </tr>
             </c:if>
             <tr>
                 <td>
-                    <label class="filterLabel" for="typeFilter"><fmt:message key='label.filter_by_type'/>: </label>
+                    <label class="filterLabel" for="typeFilter">
+                        <fmt:message key='label.filter_by_type'/>:
+                    </label>
                 </td>
                 <td>
-                    <input id="typeFilter" name="typeFilter" value="${typeFilter}" type="text"
+                    <input class="filterInput" id="typeFilter" name="typeFilter" value="${typeFilter}" type="text"
                            onchange="this.form.submit()">
                 </td>
             </tr>
             <tr>
                 <td>
-            <label class="filterLabel"><fmt:message key='label.filter_by_status'/>: </label>
+            <label class="filterLabel">
+                <fmt:message key='label.filter_by_status'/>:
+            </label>
                 </td>
                 <td>
             <c:forEach var="entry" items="${chosenStatusMap}">

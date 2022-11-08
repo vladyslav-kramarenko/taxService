@@ -12,6 +12,20 @@ $(function () {
             primary: "ui-icon-person"
         }
     });
+    $("#reportsByUser").button({
+        text: true,
+        icons: {
+            primary: "ui-icon-person"
+        }
+    });
+    $("#reportsByType").button({
+        text: true,
+        icons: {
+            primary: "ui-icon-person"
+        }
+    });
+
+
     $("#login").button({
         text: true,
         icons: {
