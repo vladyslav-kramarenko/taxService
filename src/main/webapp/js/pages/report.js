@@ -13,4 +13,6 @@ $(function () {
     $("#sendReportBtn").button({});
     $("#downloadXnlBtn").button({});
     // $("#statusSelect").selectmenu({});
+
+    statusLabel
 });

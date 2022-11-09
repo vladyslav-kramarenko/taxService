@@ -1,9 +1,10 @@
 package com.my.kramarenko.taxService.db.mySQL;
 
-import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.db.entity.User;
+import com.my.kramarenko.taxService.db.entity.UserDetails;
+import com.my.kramarenko.taxService.db.enums.LegalType;
 import com.my.kramarenko.taxService.db.enums.Role;
-import com.my.kramarenko.taxService.web.command.util.UserUtil;
+import com.my.kramarenko.taxService.web.Util;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -77,11 +78,10 @@ class LowLevelUserManagerTest {
             User user = generateUser();
 
             UserManager.addUser(con, user);
-            user.setPhone("00000000");
+            user.setCode("00000000");
             UserManager.updateUser(con, user);
             User user1 = UserManager.getUser(con, user.getId()).get();
-            assertEquals(user.getPhone(), user1.getPhone());
-
+            assertEquals(user.getCode(), user1.getCode());
             UserManager.deleteUser(con, user.getId());
 
             con.commit();
@@ -181,17 +181,23 @@ class LowLevelUserManagerTest {
 
     public static User generateUser() {
         User user = new User();
-        user.setIndividual(1);
+        user.setLegalType(LegalType.Physical.getId());
         user.setRoleId(Role.USER.getId());
-        user.setPhone("0987654321");
         user.setEmail("testemail@test.com");
         user.setBanned(false);
         user.setPassword("password");
-        user.setFirstName("First name");
-        user.setLastName("Last name");
-        user.setPatronymic("Patronymic");
         user.setCode("123456789");
-        user.setCompanyName(UserUtil.createCompanyName(user));
+        UserDetails userDetails = generateUserDetails();
+        user.setCompanyName(Util.createCompanyName(userDetails));
         return user;
+    }
+
+    public static UserDetails generateUserDetails() {
+        UserDetails userDetails = new UserDetails();
+        userDetails.setPhone("0987654321");
+        userDetails.setFirstName("First name");
+        userDetails.setLastName("Last name");
+        userDetails.setPatronymic("Patronymic");
+        return userDetails;
     }
 }

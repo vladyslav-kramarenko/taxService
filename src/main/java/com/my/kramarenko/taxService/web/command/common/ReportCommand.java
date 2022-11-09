@@ -1,5 +1,6 @@
 package com.my.kramarenko.taxService.web.command.common;
 
+import com.my.kramarenko.taxService.db.entity.UserDetails;
 import com.my.kramarenko.taxService.db.enums.Role;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
 import com.my.kramarenko.taxService.exception.DBException;
@@ -64,7 +65,8 @@ public class ReportCommand extends Command {
             status = statusMap.get(report.getStatusId());//Status.getStatus(report.getStatusId());
             request.setAttribute("reportComment", report.getComment());
         } else {
-            request.setAttribute("HTEL", user.getPhone());
+            UserDetails userDetails=DBManager.getInstance().getUserDAO().getUserDetails(user.getId());
+            request.setAttribute("HTEL", userDetails.getPhone());
         }
 
         request.setAttribute("reportStatus", status);

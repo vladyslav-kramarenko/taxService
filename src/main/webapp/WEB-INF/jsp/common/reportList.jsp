@@ -17,9 +17,11 @@
                 <input type="hidden" name="command" value="editReport">
                 <select name="reportTypeId" id="newReportType" class="select">
                     <c:forEach var="reportType" items="${reportTypeList}">
+                        <c:if test="${reportType.legalType==user.legalType}">
                         <option value="${reportType.id}">
                             <fmt:message key='report.type.${reportType.id}'/>
                         </option>
+                        </c:if>
                     </c:forEach>
                 </select>
                 <input class="aButton" type="submit" id="newReportBtn" name="newReport"

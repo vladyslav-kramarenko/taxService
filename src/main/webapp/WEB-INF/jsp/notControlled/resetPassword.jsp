@@ -36,6 +36,7 @@
         </form>
     </div>
 </div>
+<script src="https://www.google.com/recaptcha/api.js"></script>
 <script type="text/javascript" src="js/pages/resetPassword.js"></script>
 </body>
 <%@ include file="/WEB-INF/jspf/footer.jspf" %>

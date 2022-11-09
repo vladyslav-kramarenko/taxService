@@ -21,7 +21,7 @@
     <div id="individual" class="tabcontent">
         <form id="registration_form_individual" action="controller" method="post">
             <input type="hidden" name="command" value="registration"/>
-            <input type="hidden" name="is_individual" value="true"/>
+            <input type="hidden" name="legalType" value="1"/>
             <fieldset>
                 <legend>
                     <fmt:message key="user.email"/>*
@@ -64,6 +64,7 @@
                 </legend>
                 <input type="tel" name="phone" placeholder="000-000-0000" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>
             </fieldset>
+            <br>
             <div class="g-recaptcha"
                  data-sitekey="6LeCWdkiAAAAABblWg_dmJHRAaP9EUHsq8uQ7x4w"></div>
             <br>
@@ -75,7 +76,7 @@
     <div id="company" class="tabcontent">
         <form id="registration_form_company" action="controller" method="post">
             <input type="hidden" name="command" value="registration"/>
-            <input type="hidden" name="is_individual" value="false"/>
+            <input type="hidden" name="legalType" value="2"/>
             <fieldset>
                 <legend>
                     <fmt:message key="user.email"/>*
@@ -104,8 +105,9 @@
                 <legend>
                     <fmt:message key="user.phone"/>
                 </legend>
-                <input type="tel" name="phone"/>
+                <input type="tel" name="phone" placeholder="000-000-0000" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"/>
             </fieldset>
+            <br>
             <div class="g-recaptcha"
                  data-sitekey="6LeCWdkiAAAAABblWg_dmJHRAaP9EUHsq8uQ7x4w"></div>
             <br>
@@ -114,6 +116,7 @@
         </form>
     </div>
 </div>
+<script src="https://www.google.com/recaptcha/api.js"></script>
 <script type="text/javascript" src="js/pages/registration.js"></script>
 </body>
 <%@ include file="/WEB-INF/jspf/footer.jspf" %>

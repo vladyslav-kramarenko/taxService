@@ -15,35 +15,23 @@ public class User extends Entity {
 
     private String password;
     private String email;
-    private String phone;
-    private String firstName;
-    private String lastName;
-    private String patronymic;
     private String code;
     private int roleId;
 
     private String companyName;
     private boolean isBanned = false;
-    private boolean isIndividual = true;
+    private int legalType;
 
 
     public User() {
     }
 
-    public boolean isIndividual() {
-        return isIndividual;
+    public int getLegalType() {
+        return legalType;
     }
 
-    public void setIndividual(boolean individual) {
-        isIndividual = individual;
-    }
-
-    public void setIndividual(int individual) {
-        isIndividual = individual == 1;
-    }
-
-    public void setIndividual(String individual) {
-        isIndividual = Boolean.parseBoolean(individual);
+    public void setLegalType(int legalType) {
+        this.legalType = legalType;
     }
 
     public String getCompanyName() {
@@ -64,14 +52,6 @@ public class User extends Entity {
 
     public void setBanned(int banned) {
         isBanned = banned == 1;
-    }
-
-    public String getPatronymic() {
-        return patronymic;
-    }
-
-    public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
     }
 
     public String getCode() {
@@ -96,19 +76,6 @@ public class User extends Entity {
         this.email = email;
     }
 
-    /**
-     * @return the phone
-     */
-    public String getPhone() {
-        return phone;
-    }
-
-    /**
-     * @param phone the phone to set
-     */
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 
     public String getPassword() {
         return password;
@@ -118,21 +85,6 @@ public class User extends Entity {
         this.password = password;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public int getRoleId() {
         return roleId;
@@ -155,7 +107,7 @@ public class User extends Entity {
 
     @Override
     public int hashCode() {
-        int result = getId()+email.hashCode();
+        int result = getId() + email.hashCode();
         result = 31 * result + (code != null ? code.hashCode() : 0);
         return result;
     }
@@ -165,9 +117,8 @@ public class User extends Entity {
         return "User [" +
                 "companyName=" + companyName +
                 ", code=" + code + ", " +
-                ", is Individual=" + isIndividual +
+                ", Legal type id=" + legalType +
                 ", roleId=" + roleId +
-                ", e-mail=" + email +
-                ", phone=" + phone + "]";
+                ", e-mail=" + email + "]";
     }
 }

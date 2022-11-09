@@ -34,7 +34,7 @@
                             </label>
                         </td>
                         <td class="leftAlignmentTD">
-                            <input id="first_name" value="${user.firstName}" name="first_name">
+                            <input id="first_name" value="${userDetails.firstName}" name="first_name">
                         </td>
                     </tr>
                     <tr>
@@ -44,7 +44,7 @@
                             </label>
                         </td>
                         <td class="leftAlignmentTD">
-                            <input id="last_name" value="${user.lastName}" name="last_name">
+                            <input id="last_name" value="${userDetails.lastName}" name="last_name">
                         </td>
                     </tr>
                     <tr>
@@ -54,7 +54,7 @@
                             </label>
                         </td>
                         <td class="leftAlignmentTD">
-                            <input id="patronymic" value="${user.patronymic}" name="patronymic">
+                            <input id="patronymic" value="${userDetails.patronymic}" name="patronymic">
                         </td>
                     </tr>
 
@@ -92,7 +92,7 @@
                     </label>
                 </td>
                 <td class="leftAlignmentTD">
-                    <input id="phone" type="tel" value="${user.phone}" name="phone">
+                    <input id="phone" type="tel" value="${userDetails.phone}" name="phone" placeholder="000-000-0000" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
                 </td>
             </tr>
             <tr>

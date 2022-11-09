@@ -1,5 +1,7 @@
 package com.my.kramarenko.taxService.web.command.outOfControl;
 
+import com.my.kramarenko.taxService.db.entity.UserDetails;
+import com.my.kramarenko.taxService.db.enums.LegalType;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
 import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.db.PasswordCreator;
@@ -61,6 +63,8 @@ public class RegistrationCommand extends Command {
 
         LOG.trace("Request parameter: registration --> " + email);
         User user = createUserBean(request);
+        UserDetails userDetails = new UserDetails();
+        Util.setUserDetailsFieldsFromRequest(userDetails, request);
 
         if (user.getPassword() == null || user.getPassword().isEmpty()) {
             return forwardError("error.empty_credentials");
@@ -71,29 +75,28 @@ public class RegistrationCommand extends Command {
             return forwardError("error.email_forbidden");
         }
         try {
-            return createUser(user, request);
+            return createUser(user, userDetails, request);
         } catch (DBException e) {
             LOG.error(e.getMessage(), e);
             return forwardError("error.can_not_create_user");
         }
-//                setRequestAttributes(request, user);
     }
 
-    private String createUser(User user, HttpServletRequest request) throws DBException {
+    private String createUser(User user, UserDetails userDetails, HttpServletRequest request) throws DBException {
         HttpSession session = request.getSession();
         LOG.trace("everything is ok => write user to DB");
         user.setPassword(PasswordCreator.getPassword(user.getPassword()));
         Util.setUserFieldsFromRequest(user, request);
 
-        LOG.debug("isIndividual = " + user.isIndividual());
-        if (user.isIndividual()) {
-            user.setCompanyName(createCompanyName(user));
+        LOG.debug("legalType = " + user.getLegalType());
+        if (user.getLegalType() == LegalType.Physical.getId()) {
+            user.setCompanyName(createCompanyName(userDetails));
             LOG.debug("create company name:" + user.getCompanyName());
         }
 
         user.setRoleId(Role.USER.getId());
         UserDAO userManager = DBManager.getInstance().getUserDAO();
-        userManager.addUser(user);
+        userManager.addUser(user, userDetails);
 
         ServletContext sc = request.getServletContext();
         Map<Integer, Role> roleMap = (Map<Integer, Role>) sc.getAttribute("roleMap");
@@ -118,9 +121,7 @@ public class RegistrationCommand extends Command {
         LOG.trace("Set the session attribute: user --> " + user);
         Role role = roleMap.get(user.getRoleId());
         session.setAttribute("userRole", role);
-//        LOG.trace("Set the session attribute: userRole --> "
-//                + role.getName());
-        LOG.info("User " + user + " logged as "
+        LOG.info("User " + user.getEmail() + " logged as "
                 + role.getName());
     }
 

@@ -3,6 +3,7 @@ package com.my.kramarenko.taxService.web;
 import com.my.kramarenko.taxService.db.dao.UserDAO;
 import com.my.kramarenko.taxService.db.entity.Report;
 import com.my.kramarenko.taxService.db.entity.User;
+import com.my.kramarenko.taxService.db.entity.UserDetails;
 import com.my.kramarenko.taxService.db.enums.Status;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
 import com.my.kramarenko.taxService.exception.DBException;
@@ -157,16 +158,23 @@ public class Util {
             while ((readBytes = in.read()) != -1)
                 out.write(readBytes);
         } catch (IOException e) {
-            LOG.error(e.getMessage(),e);
+            LOG.error(e.getMessage(), e);
             throw new XmlException("can't create download link", e);
         }
     }
 
     public static void setUserFieldsFromRequest(User editableUser, HttpServletRequest request) {
         editableUser.setEmail(request.getParameter("email"));
-        editableUser.setIndividual(request.getParameter("is_individual"));
         editableUser.setCode(request.getParameter("code"));
         editableUser.setCompanyName(request.getParameter("company_name"));
+        try {
+            editableUser.setLegalType(Integer.parseInt(request.getParameter("legalType")));
+        } catch (Exception e) {
+            LOG.trace("legal type is empty");
+        }
+    }
+
+    public static void setUserDetailsFieldsFromRequest(UserDetails editableUser, HttpServletRequest request) {
         editableUser.setFirstName(request.getParameter("first_name"));
         editableUser.setLastName(request.getParameter("last_name"));
         editableUser.setPatronymic(request.getParameter("patronymic"));
@@ -191,13 +199,13 @@ public class Util {
         else return "";
     }
 
-    public static String createCompanyName(User user) {
+    public static String createCompanyName(UserDetails userDetails) {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(getValue(user.getLastName()));
+        stringBuilder.append(getValue(userDetails.getLastName()));
         stringBuilder.append(" ");
-        stringBuilder.append(getValue(user.getFirstName()));
+        stringBuilder.append(getValue(userDetails.getFirstName()));
         stringBuilder.append(" ");
-        stringBuilder.append(getValue(user.getPatronymic()));
+        stringBuilder.append(getValue(userDetails.getPatronymic()));
         return stringBuilder.toString();
     }
 }

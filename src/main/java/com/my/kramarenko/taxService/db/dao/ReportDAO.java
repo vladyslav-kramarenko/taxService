@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.my.kramarenko.taxService.db.mySQL.ReportManager.setReportStatusAndXmlPath;
+import static com.my.kramarenko.taxService.db.mySQL.ReportManager.setUserReport;
 import static com.my.kramarenko.taxService.db.mySQL.requestFields.*;
 
 public class ReportDAO {
@@ -88,7 +89,7 @@ public class ReportDAO {
             con.commit();
         } catch (SQLException e) {
             DbUtil.rollback(con);
-            LOG.error(e.getMessage(),e);
+            LOG.error(e.getMessage(), e);
             throw new DBException("Cannot obtain reports with statuses by user id", e);
         } finally {
             DbUtil.close(con);
@@ -111,7 +112,7 @@ public class ReportDAO {
             con.commit();
         } catch (SQLException e) {
             DbUtil.rollback(con);
-            LOG.error(e.getMessage(),e);
+            LOG.error(e.getMessage(), e);
             throw new DBException("Cannot obtain reports with statuses by user id", e);
         } finally {
             DbUtil.close(con);
@@ -138,7 +139,7 @@ public class ReportDAO {
             con.commit();
         } catch (SQLException e) {
             DbUtil.rollback(con);
-            LOG.error(e.getMessage(),e);
+            LOG.error(e.getMessage(), e);
             throw new DBException("Cannot obtain reports with statuses by user id", e);
         } finally {
             DbUtil.close(con);
@@ -153,7 +154,7 @@ public class ReportDAO {
             con.setAutoCommit(true);
             report = ReportManager.getReport(con, reportId);
         } catch (SQLException e) {
-            LOG.error(e.getMessage(),e);
+            LOG.error(e.getMessage(), e);
             throw new DBException("Cannot get the report", e);
         }
         return report;
@@ -171,7 +172,7 @@ public class ReportDAO {
                 statistics = ReportManager.getFilterUserReportStatistics(con, pattern);
             }
         } catch (SQLException e) {
-            LOG.error(e.getMessage(),e);
+            LOG.error(e.getMessage(), e);
             throw new DBException("Cannot get users statistics", e);
         }
         return statistics;
@@ -189,7 +190,7 @@ public class ReportDAO {
                 statistics = ReportManager.getFilterReportTypeStatistics(con, pattern);
             }
         } catch (SQLException e) {
-            LOG.error(e.getMessage(),e);
+            LOG.error(e.getMessage(), e);
             throw new DBException("Cannot get users statistics", e);
         }
         return statistics;
@@ -282,37 +283,24 @@ public class ReportDAO {
 
 
     public void deleteReport(int id) throws DBException {
-        Connection con;
-        PreparedStatement preparedStatement;
-        try {
-            con = ds.getConnection();
-            preparedStatement = con.prepareStatement(SQL_DELETE_REPORT);
+//        Connection con;
+//        PreparedStatement preparedStatement;
+        try (Connection con = ds.getConnection()) {
+//            con = ds.getConnection();
             Report report = ReportManager.getReport(con, id);
-            if (report.getStatusId() == 3) {
+            if (report.getStatusId() == Status.ACCEPTED.getId()) {
                 LOG.error("Can't delete accepted report");
-                throw new IllegalStateException();
+                throw new DBException("Can't delete accepted report");
             } else {
-                preparedStatement.setInt(1, id);
-                preparedStatement.executeUpdate();
+                ReportManager.deleteReport(con, id);
+//                preparedStatement = con.prepareStatement(SQL_DELETE_REPORT);
+//                preparedStatement.setInt(1, id);
+//                preparedStatement.executeUpdate();
                 con.commit();
             }
         } catch (SQLException e) {
-            LOG.error(e.getMessage(),e);
+            LOG.error(e.getMessage(), e);
             throw new DBException("Can't delete the report", e);
-        }
-    }
-
-
-    public void setUserReport(Connection con, User user, Report report) throws SQLException {
-        PreparedStatement pstmt = null;
-        try {
-            pstmt = con.prepareStatement(SQL_SET_USER_REPORT);
-            int k = 1;
-            pstmt.setInt(k++, user.getId());
-            pstmt.setInt(k, report.getId());
-            pstmt.executeUpdate();
-        } finally {
-            DbUtil.close(pstmt);
         }
     }
 }

@@ -22,8 +22,7 @@ public final class Fields {
 	public static final String USER_EMAIL = "email";
 	public static final String USER_COMPANY_NAME = "company_name";
 	public static final String USER_ROLE_ID = "role_id";
-	public static final String USER_IS_INDIVIDUAL = "is_individual";
-	public static final String REPORT_IS_INDIVIDUAL = "is_individual";
+	public static final String LEGAL_TYPE_ID = "legal_type_id";
 	public static final String USER_IS_BANNED = "banned";
 	public static final String REPORT_DATE = "date";
 	public static final String REPORT_LAST_UPDATE = "last_update";

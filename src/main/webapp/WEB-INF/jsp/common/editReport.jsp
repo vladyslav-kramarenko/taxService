@@ -22,15 +22,15 @@
 <fieldset>
     <legend><fmt:message key='legend.report_info'/></legend>
     <span id="reportStatusSpan">
-    <c:if test="${reportComment!=null}">
         Current report status:
-        <label id="statusLabel"><fmt:message key='report.status.${reportStatus}'/></label>
+        <label class="statusInfo ${reportStatus}" id="statusLabel"><fmt:message key='report.status.${reportStatus}'/></label>
+    <c:if test="${reportComment!=null}">
         Comment:
         <label id="commentLabel">${reportComment}</label>
     </c:if>
     </span>
 </fieldset>
-
+<br>
 <c:if test="${userRole.name=='inspector'}">
         <span id="changeStatusSpan">
         <form action="controller" id="updateStatusForm" method="post">

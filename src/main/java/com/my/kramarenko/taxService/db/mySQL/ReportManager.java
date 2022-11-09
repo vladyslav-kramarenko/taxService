@@ -3,6 +3,7 @@ package com.my.kramarenko.taxService.db.mySQL;
 import com.my.kramarenko.taxService.db.DbUtil;
 import com.my.kramarenko.taxService.db.dto.StatisticDTO;
 import com.my.kramarenko.taxService.db.entity.Report;
+import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Status;
 import org.apache.log4j.Logger;
 
@@ -33,6 +34,13 @@ public class ReportManager {
         return report;
     }
 
+    public static void deleteReport(Connection con, int reportId) throws SQLException {
+        try (PreparedStatement pstmt = con.prepareStatement(SQL_DELETE_USER)) {
+            pstmt.setInt(1, reportId);
+            pstmt.executeUpdate();
+        }
+    }
+
     public static List<Report> getAllReports(Connection con) throws SQLException {
         List<Report> reportsList;
         try (Statement stmt = con.createStatement();
@@ -43,15 +51,15 @@ public class ReportManager {
     }
 
     public static List<StatisticDTO> getFilterUserReportStatistics(Connection con, String pattern) throws SQLException {
-        return getFilterStatistics(con,pattern,SQL_SELECT_FILTER_USERS_REPORTS_STATISTICS);
+        return getFilterStatistics(con, pattern, SQL_SELECT_FILTER_USERS_REPORTS_STATISTICS);
     }
 
     public static List<StatisticDTO> getFilterReportTypeStatistics(Connection con, String pattern) throws SQLException {
-        return getFilterStatistics(con,pattern,SQL_SELECT_FILTER_REPORTS_STATISTICS);
+        return getFilterStatistics(con, pattern, SQL_SELECT_FILTER_REPORTS_STATISTICS);
 
     }
 
-    public static List<StatisticDTO> getFilterStatistics(Connection con, String pattern,String sql) throws SQLException {
+    public static List<StatisticDTO> getFilterStatistics(Connection con, String pattern, String sql) throws SQLException {
         List<StatisticDTO> reportsList;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -68,14 +76,14 @@ public class ReportManager {
     }
 
     public static List<StatisticDTO> getAllUserReportStatistics(Connection con) throws SQLException {
-        return getStatistic(con,SQL_SELECT_ALL_USERS_REPORTS_STATISTICS);
+        return getStatistic(con, SQL_SELECT_ALL_USERS_REPORTS_STATISTICS);
     }
 
     public static List<StatisticDTO> getAllReportTypeStatistics(Connection con) throws SQLException {
-        return getStatistic(con,SQL_SELECT_ALL_REPORTS_STATISTICS);
+        return getStatistic(con, SQL_SELECT_ALL_REPORTS_STATISTICS);
     }
 
-    public static List<StatisticDTO> getStatistic(Connection con,String sql) throws SQLException {
+    public static List<StatisticDTO> getStatistic(Connection con, String sql) throws SQLException {
         List<StatisticDTO> reportsList;
         try (Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
@@ -234,6 +242,20 @@ public class ReportManager {
             int k = 1;
             pstmt.setString(k++, report.getXmlPath());
             pstmt.setInt(k++, report.getStatusId());
+            pstmt.setInt(k, report.getId());
+            pstmt.executeUpdate();
+        } finally {
+            DbUtil.close(pstmt);
+        }
+    }
+
+
+    public static void setUserReport(Connection con, User user, Report report) throws SQLException {
+        PreparedStatement pstmt = null;
+        try {
+            pstmt = con.prepareStatement(SQL_SET_USER_REPORT);
+            int k = 1;
+            pstmt.setInt(k++, user.getId());
             pstmt.setInt(k, report.getId());
             pstmt.executeUpdate();
         } finally {

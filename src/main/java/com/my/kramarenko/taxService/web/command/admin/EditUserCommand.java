@@ -1,6 +1,7 @@
 package com.my.kramarenko.taxService.web.command.admin;
 
 import com.my.kramarenko.taxService.db.dao.UserDAO;
+import com.my.kramarenko.taxService.db.entity.UserDetails;
 import com.my.kramarenko.taxService.exception.CommandException;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
@@ -45,10 +46,13 @@ public class EditUserCommand extends Command {
             }
             int userId = Integer.parseInt(request.getParameter("userId"));
             Optional<User> user = DBManager.getInstance().getUserDAO().getUser(userId);
+            UserDetails userDetails = DBManager.getInstance().getUserDAO().getUserDetails(userId);
             request.setAttribute("userEdit", user.get());
+            request.setAttribute("userDetailsEdit", userDetails);
+
             request.getSession().setAttribute("page", Path.COMMAND_ALL_USERS);
         } catch (Exception e) {
-            LOG.error(e.getMessage(),e);
+            LOG.error(e.getMessage(), e);
             throw new CommandException("Can't show user's info page", e);
         }
         LOG.trace("Command finished");
@@ -60,20 +64,25 @@ public class EditUserCommand extends Command {
         try {
             UserDAO userManager = DBManager.getInstance().getUserDAO();
             userId = Integer.parseInt(request.getParameter("userId"));
+
             User editableUser = userManager.getUser(userId).orElseThrow();
             Util.setUserFieldsFromRequest(editableUser, request);
+
+            UserDetails userDetails=new UserDetails();
+            userDetails.setUserId(userDetails.getUserId());
+            Util.setUserDetailsFieldsFromRequest(userDetails,request);
+
 //            String password = request.getParameter("password");
 //            if (password != null && password.length() > 0) {
 //                editableUser.setPassword(PasswordCreator.getPassword(password));
 //            }
-            userManager.updateUser(editableUser);
-            return Path.COMMAND_EDIT_USER + "&userId=" + userId+ "&error=User info is updated";
+            userManager.updateUser(editableUser,userDetails);
+            return Path.COMMAND_EDIT_USER + "&userId=" + userId + "&error=User info is updated";
         } catch (Exception e) {
-            LOG.error(e.getMessage(),e);
+            LOG.error(e.getMessage(), e);
             if (userId != -1) {
                 return Path.COMMAND_EDIT_USER + "&userId=" + userId + "&error=Can't update user's info";
-            }
-            else {
+            } else {
                 throw new CommandException("Can't update user's info", e);
             }
         }

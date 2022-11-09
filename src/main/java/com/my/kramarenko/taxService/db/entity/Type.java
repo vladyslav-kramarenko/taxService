@@ -3,13 +3,13 @@ package com.my.kramarenko.taxService.db.entity;
 public class Type {
     private String id;
     private String name;
-    private int isIndividual;
-    public int getIsIndividual() {
-        return isIndividual;
+    private int legalType;
+    public int getLegalType() {
+        return legalType;
     }
 
-    public void setIsIndividual(int isIndividual) {
-        this.isIndividual = isIndividual;
+    public void setLegalType(int legalType) {
+        this.legalType = legalType;
     }
 
     public String getId() {

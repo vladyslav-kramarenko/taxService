@@ -1,5 +1,6 @@
 package com.my.kramarenko.taxService.web.command.common;
 
+import com.my.kramarenko.taxService.db.entity.UserDetails;
 import com.my.kramarenko.taxService.db.mySQL.DBManager;
 import com.my.kramarenko.taxService.exception.CommandException;
 import com.my.kramarenko.taxService.exception.DBException;
@@ -45,11 +46,20 @@ public class ViewSettingsCommand extends Command {
             }
         }
 
-        resetAvailableError(request);
+        try {
+            resetAvailableError(request);
 
-        request.getSession().setAttribute("page", Path.PAGE_SETTINGS);
-        LOG.trace("Command finished");
-        return Path.PAGE_SETTINGS;
+            User user = (User) request.getSession().getAttribute("user");
+            UserDetails userDetails = DBManager.getInstance().getUserDAO().getUserDetails(user.getId());
+
+            request.setAttribute("userDetails", userDetails);
+            request.getSession().setAttribute("page", Path.PAGE_SETTINGS);
+            LOG.trace("Command finished");
+            return Path.PAGE_SETTINGS;
+        } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
+            throw new CommandException("error.not_found", e);
+        }
     }
 
     /**
@@ -71,16 +81,24 @@ public class ViewSettingsCommand extends Command {
             try {
                 LOG.trace("current password == user password");
                 Util.setUserFieldsFromRequest(userInSession, request);
+                UserDetails userDetails = new UserDetails();
+                userDetails.setUserId(userInSession.getId());
+                Util.setUserDetailsFieldsFromRequest(userDetails, request);
+
                 if (password != null && password.length() > 0) {
                     userInSession.setPassword(PasswordCreator.getPassword(password));
                 } else {
                     userInSession.setPassword(userInSession.getPassword());
                 }
+
                 UserDAO userManager = DBManager.getInstance().getUserDAO();
-                userManager.updateUser(userInSession);
+
+                userManager.updateUser(userInSession, userDetails);
+
                 session.setAttribute("user", userInSession);
+                session.setAttribute("userDetails", userDetails);
             } catch (DBException e) {
-                LOG.error(e.getMessage(),e);
+                LOG.error(e.getMessage(), e);
                 throw new CommandException(e.getMessage(), e);
             }
         } else {

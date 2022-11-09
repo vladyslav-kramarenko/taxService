@@ -55,7 +55,7 @@ public class MailCreator {
         String oldPassword = user.getPassword();
         try {
             user.setPassword(PasswordCreator.getPassword(password));
-            DBManager.getInstance().getUserDAO().updateUser(user);
+            DBManager.getInstance().getUserDAO().updateUserPassword(user);
         } catch (Exception e) {
             throw new ServletException("Can't reset password", e);
         }
@@ -70,7 +70,7 @@ public class MailCreator {
             LOG.trace(e.getMessage());
             try {
                 user.setPassword(oldPassword);
-                DBManager.getInstance().getUserDAO().updateUser(user);
+                DBManager.getInstance().getUserDAO().updateUserPassword(user);
             } catch (DBException ex) {
                 LOG.error(ex.getMessage());
             }

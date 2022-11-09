@@ -196,6 +196,10 @@ footer {
     border: none;
 }
 
+/*.g-recaptcha{*/
+/*    height: 78px;*/
+/*}*/
+
 .tab button {
     width: 200px;
     height: 30px;
@@ -255,14 +259,6 @@ footer {
     background: #f5f0e5;
     border: 1px solid #f5ad66;
     text-decoration: none;
-}
-
-#saveReportBtn {
-    width: 150px;
-}
-
-#sendReportBtn {
-    width: 150px;
 }
 
 #topLoginButtons {
@@ -329,6 +325,12 @@ fieldset {
     border-radius: 6px;
     border-style: solid;
     display: block;
+}
+
+.statusInfo{
+    padding: 2px;
+    border-radius: 6px;
+    border-style: solid;
 }
 .accepted {
     background-color: lightgreen;

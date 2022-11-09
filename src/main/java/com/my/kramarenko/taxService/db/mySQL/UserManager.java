@@ -3,6 +3,7 @@ package com.my.kramarenko.taxService.db.mySQL;
 import com.my.kramarenko.taxService.db.DbUtil;
 import com.my.kramarenko.taxService.db.dao.UserDAO;
 import com.my.kramarenko.taxService.db.entity.User;
+import com.my.kramarenko.taxService.db.entity.UserDetails;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -34,6 +35,21 @@ public class UserManager {
     }
 
     /**
+     * @param con         database connection
+     * @param userDetails userDetails to add
+     * @throws SQLException throwable exception
+     */
+    public static void addUserDetails(Connection con, UserDetails userDetails) throws SQLException {
+        try (PreparedStatement pstmt = con.prepareStatement(SQL_INSERT_INTO_USER_DETAILS,
+                Statement.RETURN_GENERATED_KEYS)) {
+            int k = fillUserDetailsFields(userDetails, pstmt);
+            pstmt.setInt(k, userDetails.getUserId());
+            LOG.trace(pstmt);
+            pstmt.executeUpdate();
+        }
+    }
+
+    /**
      * Update user
      *
      * @param con  database connection
@@ -50,18 +66,40 @@ public class UserManager {
         }
     }
 
+    /**
+     * Update user details
+     *
+     * @param con         database connection
+     * @param userDetails user details to update
+     * @throws SQLException
+     */
+    public static void updateUserDetails(Connection con, UserDetails userDetails) throws SQLException {
+        try (PreparedStatement pstmt = con.prepareStatement(SQL_UPDATE_USER_DETAILS)) {
+            int k = fillUserDetailsFields(userDetails, pstmt);
+            pstmt.setInt(k, userDetails.getUserId());
+            System.out.println(pstmt);
+            pstmt.executeUpdate();
+            LOG.trace("user details were successfully updated");
+        }
+    }
+
     private static int fillUserFields(User user, PreparedStatement pstmt) throws SQLException {
         int k = 1;
         pstmt.setString(k++, user.getPassword());
-        pstmt.setString(k++, user.getFirstName());
-        pstmt.setString(k++, user.getLastName());
-        pstmt.setString(k++, user.getPatronymic());
         pstmt.setString(k++, user.getCode());
         pstmt.setString(k++, user.getCompanyName());
-        pstmt.setInt(k++, user.isIndividual() ? 1 : 0);
+        pstmt.setInt(k++, user.getLegalType());
         pstmt.setInt(k++, user.getRoleId());
         pstmt.setString(k++, user.getEmail());
-        pstmt.setString(k++, user.getPhone());
+        return k;
+    }
+
+    private static int fillUserDetailsFields(UserDetails userDetails, PreparedStatement pstmt) throws SQLException {
+        int k = 1;
+        pstmt.setString(k++, userDetails.getFirstName());
+        pstmt.setString(k++, userDetails.getLastName());
+        pstmt.setString(k++, userDetails.getPatronymic());
+        pstmt.setString(k++, userDetails.getPhone());
         return k;
     }
 
@@ -116,26 +154,28 @@ public class UserManager {
         while (rs.next()) {
             User user = new User();
             user.setId(rs.getInt(Fields.ENTITY_ID));
-            user.setFirstName(rs.getString(Fields.USER_FIRST_NAME));
-            user.setLastName(rs.getString(Fields.USER_LAST_NAME));
-            user.setPatronymic(rs.getString(Fields.USER_PATRONYMIC));
+//            user.setFirstName(rs.getString(Fields.USER_FIRST_NAME));
+//            user.setLastName(rs.getString(Fields.USER_LAST_NAME));
+//            user.setPatronymic(rs.getString(Fields.USER_PATRONYMIC));
+//            user.setPhone(rs.getString(Fields.USER_PHONE));
 //			user.setLogin(rs.getString(Fields.USER_LOGIN));
             user.setPassword(rs.getString(Fields.USER_PASSWORD));
             user.setCode(rs.getString(Fields.USER_CODE));
-            user.setPhone(rs.getString(Fields.USER_PHONE));
             user.setEmail(rs.getString(Fields.USER_EMAIL));
             user.setCompanyName(rs.getString(Fields.USER_COMPANY_NAME));
             user.setRoleId(rs.getInt(Fields.USER_ROLE_ID));
             user.setBanned(rs.getInt(Fields.USER_IS_BANNED));
-            user.setIndividual(rs.getInt(Fields.USER_IS_INDIVIDUAL));
+            user.setLegalType(rs.getInt(Fields.LEGAL_TYPE_ID));
             result.add(user);
         }
         return result;
     }
 
+
     public static Optional<User> getUser(Connection con, int userId) throws SQLException {
         return getUserById(con, SQL_SELECT_USER_BY_ID, userId);
     }
+
 
     private static Optional<User> getUserById(Connection con, String SQL, int id) throws SQLException {
         PreparedStatement pstmt = null;
@@ -146,6 +186,28 @@ public class UserManager {
             rs = pstmt.executeQuery();
             List<User> list = parseResultSet(rs);
             return list.size() > 0 ? Optional.ofNullable(list.get(0)) : Optional.empty();
+        } finally {
+            DbUtil.close(rs);
+            DbUtil.close(pstmt);
+        }
+    }
+
+    public static UserDetails getUserDetailsById(Connection con, int id) throws SQLException {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            pstmt = con.prepareStatement(SQL_SELECT_USER_DETAILS_BY_ID);
+            pstmt.setInt(1, id);
+            rs = pstmt.executeQuery();
+            UserDetails userDetails = new UserDetails();
+            if (rs.next()) {
+                userDetails.setUserId(rs.getInt(Fields.USER_ID));
+                userDetails.setFirstName(rs.getString(Fields.USER_FIRST_NAME));
+                userDetails.setLastName(rs.getString(Fields.USER_LAST_NAME));
+                userDetails.setPatronymic(rs.getString(Fields.USER_PATRONYMIC));
+                userDetails.setPhone(rs.getString(Fields.USER_PHONE));
+            }
+            return userDetails;
         } finally {
             DbUtil.close(rs);
             DbUtil.close(pstmt);

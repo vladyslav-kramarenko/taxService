@@ -1,5 +1,6 @@
 package com.my.kramarenko.taxService.web.command.user;
 
+import com.my.kramarenko.taxService.db.enums.Status;
 import com.my.kramarenko.taxService.exception.XmlException;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.Path;
@@ -33,6 +34,9 @@ public class LoadXMLCommand extends Command {
     public String execute(HttpServletRequest request,
                           HttpServletResponse response) throws XmlException {
         LOG.debug("Command starts");
+
+        request.setAttribute("reportStatus", Status.DRAFT);
+
         if (request.getMethod().equals("POST")) {
             try {
                 Part part = request.getPart("file");
@@ -46,6 +50,7 @@ public class LoadXMLCommand extends Command {
                 LOG.trace("file loaded");
                 HttpSession session = request.getSession();
                 session.setAttribute(TAX_FORM_ATTRIBUTE_NAME, taxForm);
+
                 return Path.COMMAND_LOAD_XML + "&" + REPORT_TYPE_ID_ATTRIBUTE_NAME + "=" + typeId;
             } catch (XmlException | IOException | ServletException e) {
                 LOG.error(e.getMessage(),e);
@@ -59,6 +64,7 @@ public class LoadXMLCommand extends Command {
 
         String typeId = request.getParameter(REPORT_TYPE_ID_ATTRIBUTE_NAME);
         request.setAttribute(REPORT_TYPE_ID_ATTRIBUTE_NAME, typeId);
+
         request.setAttribute("editable", true);
         setParameters(taxForm, request);
 

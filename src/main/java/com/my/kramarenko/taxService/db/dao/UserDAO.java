@@ -1,5 +1,6 @@
 package com.my.kramarenko.taxService.db.dao;
 
+import com.my.kramarenko.taxService.db.entity.UserDetails;
 import com.my.kramarenko.taxService.db.mySQL.UserManager;
 import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.db.entity.User;
@@ -81,6 +82,25 @@ public class UserDAO {
         }
     }
 
+    /**
+     * Search user details by id
+     *
+     * @param userId user id
+     * @return user details
+     * @throws DBException
+     */
+
+    public UserDetails getUserDetails(int userId) throws DBException {
+        try (Connection con = ds.getConnection()) {
+            con.setAutoCommit(true);
+            return UserManager.getUserDetailsById(con, userId);
+        } catch (SQLException e) {
+            String message = "Cannot obtain user details by id";
+            LOG.error(message, e);
+            throw new DBException(message, e);
+        }
+    }
+
 
     public Optional<User> getUserByReportId(int reportId) throws DBException {
         try (Connection con = ds.getConnection()) {
@@ -100,11 +120,12 @@ public class UserDAO {
      * @throws DBException
      */
 
-    public void updateUser(User user) throws DBException {
+    public void updateUser(User user,UserDetails userDetails) throws DBException {
         LOG.trace(user);
         try (Connection con = ds.getConnection()) {
-            con.setAutoCommit(true);
             UserManager.updateUser(con, user);
+            UserManager.updateUserDetails(con,userDetails);
+            con.commit();
         } catch (SQLException e) {
             String message = "Cannot update a user";
             LOG.error(message, e);
@@ -112,6 +133,25 @@ public class UserDAO {
         }
     }
 
+
+    /**
+     * Update user
+     *
+     * @param user user to update
+     * @throws DBException
+     */
+
+    public void updateUserPassword(User user) throws DBException {
+        LOG.trace(user);
+        try (Connection con = ds.getConnection()) {
+            UserManager.updateUser(con, user);
+            con.commit();
+        } catch (SQLException e) {
+            String message = "Cannot update a user";
+            LOG.error(message, e);
+            throw new DBException(message, e);
+        }
+    }
 
     /**
      * Update user role
@@ -179,9 +219,11 @@ public class UserDAO {
      * @throws DBException
      */
 
-    public void addUser(User user) throws DBException {
+    public void addUser(User user, UserDetails userDetails) throws DBException {
         try (Connection con = ds.getConnection()) {
             UserManager.addUser(con, user);
+            userDetails.setUserId(user.getId());
+            UserManager.addUserDetails(con,userDetails);
             con.commit();
         } catch (SQLException e) {
             String message = "Cannot create a user";

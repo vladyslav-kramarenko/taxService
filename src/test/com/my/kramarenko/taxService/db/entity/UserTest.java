@@ -7,18 +7,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserTest {
 
     @Test
-    void IndividualTest() {
-        User user = new User();
-        user.setIndividual("true");
-        assertTrue(user.isIndividual());
-        user.setIndividual(0);
-        assertFalse(user.isIndividual());
-        user.setIndividual(true);
-        assertTrue(user.isIndividual());
-    }
-
-
-    @Test
     void testEquals() {
         User user1 = new User();
         user1.setEmail("email");

@@ -1,5 +1,6 @@
 package com.my.kramarenko.taxService.web.command.util;
 
+import com.my.kramarenko.taxService.db.entity.UserDetails;
 import com.my.kramarenko.taxService.web.Util;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.util.UtilForTests;
@@ -64,11 +65,12 @@ class UserUtilTest {
     void setUserFieldsTest() {
         User user = new User();
         user.setId(0);
+        UserDetails userDetails = new UserDetails(user.getId());
 
         HttpServletRequest request = UtilForTests.setMockito();
 
         String email = "123@123";
-        String is_individual = "true";
+        int legalType = 1;
         String code = "123456";
         String company_name = "company name";
         String first_name = "first name";
@@ -77,7 +79,7 @@ class UserUtilTest {
         String phone = "0987654321";
 
         Mockito.when(request.getParameter("email")).thenReturn(email);
-        Mockito.when(request.getParameter("is_individual")).thenReturn(is_individual);
+        Mockito.when(request.getParameter("legalType")).thenReturn(String.valueOf(legalType));
         Mockito.when(request.getParameter("code")).thenReturn(code);
         Mockito.when(request.getParameter("company_name")).thenReturn(company_name);
         Mockito.when(request.getParameter("first_name")).thenReturn(first_name);
@@ -86,14 +88,16 @@ class UserUtilTest {
         Mockito.when(request.getParameter("phone")).thenReturn(phone);
 
         Util.setUserFieldsFromRequest(user, request);
+        Util.setUserDetailsFieldsFromRequest(userDetails, request);
 
-        assertEquals(phone,user.getPhone());
-        assertEquals(patronymic,user.getPatronymic());
-        assertEquals(last_name,user.getLastName());
-        assertEquals(first_name,user.getFirstName());
+        assertEquals(phone,userDetails.getPhone());
+        assertEquals(patronymic,userDetails.getPatronymic());
+        assertEquals(last_name,userDetails.getLastName());
+        assertEquals(first_name,userDetails.getFirstName());
+
         assertEquals(company_name,user.getCompanyName());
         assertEquals(code,user.getCode());
-        assertEquals(true,user.isIndividual());
+        assertEquals(legalType,user.getLegalType());
         assertEquals(email,user.getEmail());
     }
 }
