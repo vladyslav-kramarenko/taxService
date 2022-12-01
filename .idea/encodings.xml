@@ -2,14 +2,14 @@
 <project version="4">
   <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/db/DBManager.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/db/bean/StatusBean.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/db/dao/UserDAO.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/db/entity/Entity.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/db/entity/User.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/db/enums/Role.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/db/enums/SortType.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/db/mySQL/DBManager.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/db/mySQL/Fields.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/db/mySQL/dao/UserDAOMySQL.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/Path.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/command/Command.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/my/kramarenko/taxService/web/command/CommandContainer.java" charset="UTF-8" />

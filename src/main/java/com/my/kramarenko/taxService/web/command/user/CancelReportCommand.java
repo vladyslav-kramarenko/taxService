@@ -2,7 +2,7 @@ package com.my.kramarenko.taxService.web.command.user;
 
 import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.db.enums.Status;
-import com.my.kramarenko.taxService.db.mySQL.DBManager;
+import com.my.kramarenko.taxService.db.DBManager;
 import com.my.kramarenko.taxService.web.Path;
 import com.my.kramarenko.taxService.web.command.Command;
 import jakarta.servlet.ServletException;

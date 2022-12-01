@@ -2,7 +2,7 @@ package com.my.kramarenko.taxService.web.command.common;
 
 import com.my.kramarenko.taxService.db.entity.UserDetails;
 import com.my.kramarenko.taxService.db.enums.Role;
-import com.my.kramarenko.taxService.db.mySQL.DBManager;
+import com.my.kramarenko.taxService.db.DBManager;
 import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.exception.XmlException;
 import com.my.kramarenko.taxService.db.entity.Report;

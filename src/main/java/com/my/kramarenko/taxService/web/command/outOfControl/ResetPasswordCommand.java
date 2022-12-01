@@ -2,7 +2,7 @@ package com.my.kramarenko.taxService.web.command.outOfControl;
 
 import com.my.kramarenko.taxService.web.Util;
 import com.my.kramarenko.taxService.db.entity.User;
-import com.my.kramarenko.taxService.db.mySQL.DBManager;
+import com.my.kramarenko.taxService.db.DBManager;
 import com.my.kramarenko.taxService.exception.CommandException;
 import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.exception.XmlException;

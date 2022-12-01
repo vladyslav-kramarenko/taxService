@@ -44,6 +44,8 @@
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.36" />
           <element id="library" level="project" name="Maven: org.apache.commons:commons-lang3:3.12.0" />
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1.1" />
+          <element id="library" level="project" name="Maven: org.glassfish:javax.json:1.0.2" />
+          <element id="library" level="project" name="Maven: org.jasypt:jasypt:1.9.3" />
         </element>
       </element>
       <element id="directory" name="META-INF">

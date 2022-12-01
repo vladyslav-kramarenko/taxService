@@ -5,7 +5,7 @@ import com.my.kramarenko.taxService.db.entity.Report;
 import com.my.kramarenko.taxService.db.entity.Type;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Status;
-import com.my.kramarenko.taxService.db.mySQL.DBManager;
+import com.my.kramarenko.taxService.db.DBManager;
 import com.my.kramarenko.taxService.exception.DBException;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;

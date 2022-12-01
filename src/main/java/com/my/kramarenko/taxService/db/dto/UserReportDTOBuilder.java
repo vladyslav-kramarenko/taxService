@@ -1,12 +1,13 @@
 package com.my.kramarenko.taxService.db.dto;
 
 import com.my.kramarenko.taxService.db.dao.ReportDAO;
+import com.my.kramarenko.taxService.db.mySQL.dao.ReportDAOMySQL;
 import com.my.kramarenko.taxService.db.entity.Report;
 import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.db.entity.Type;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.enums.Status;
-import com.my.kramarenko.taxService.db.mySQL.DBManager;
+import com.my.kramarenko.taxService.db.DBManager;
 import org.apache.log4j.Logger;
 
 import java.util.*;

@@ -1,13 +1,6 @@
 package com.my.kramarenko.taxService.web.command.common;
 
-import com.my.kramarenko.taxService.db.dao.ReportDAO;
-import com.my.kramarenko.taxService.db.entity.User;
-import com.my.kramarenko.taxService.db.enums.Status;
-import com.my.kramarenko.taxService.db.mySQL.DBManager;
-import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.exception.XmlException;
-import com.my.kramarenko.taxService.web.Path;
-import com.my.kramarenko.taxService.web.Util;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.xml.WriteXmlStAXController;
 import com.my.kramarenko.taxService.xml.entity.TaxForm;

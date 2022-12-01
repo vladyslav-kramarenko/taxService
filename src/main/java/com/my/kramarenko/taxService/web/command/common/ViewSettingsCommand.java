@@ -1,12 +1,13 @@
 package com.my.kramarenko.taxService.web.command.common;
 
+import com.my.kramarenko.taxService.db.dao.UserDAO;
 import com.my.kramarenko.taxService.db.entity.UserDetails;
-import com.my.kramarenko.taxService.db.mySQL.DBManager;
+import com.my.kramarenko.taxService.db.DBManager;
 import com.my.kramarenko.taxService.exception.CommandException;
 import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.db.PasswordCreator;
 import com.my.kramarenko.taxService.db.entity.User;
-import com.my.kramarenko.taxService.db.dao.UserDAO;
+import com.my.kramarenko.taxService.db.mySQL.dao.UserDAOMySQL;
 import com.my.kramarenko.taxService.web.Util;
 import com.my.kramarenko.taxService.web.command.Command;
 import com.my.kramarenko.taxService.web.Path;

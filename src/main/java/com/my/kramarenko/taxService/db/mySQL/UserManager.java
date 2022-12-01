@@ -1,9 +1,9 @@
 package com.my.kramarenko.taxService.db.mySQL;
 
 import com.my.kramarenko.taxService.db.DbUtil;
-import com.my.kramarenko.taxService.db.dao.UserDAO;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.entity.UserDetails;
+import com.my.kramarenko.taxService.db.mySQL.dao.UserDAOMySQL;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -15,7 +15,7 @@ import static com.my.kramarenko.taxService.db.mySQL.requestFields.*;
 
 public class UserManager {
 
-    private static final Logger LOG = Logger.getLogger(UserDAO.class);
+    private static final Logger LOG = Logger.getLogger(UserDAOMySQL.class);
 
     /**
      * @param con  database connection

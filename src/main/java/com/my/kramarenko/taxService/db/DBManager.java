@@ -1,13 +1,17 @@
-package com.my.kramarenko.taxService.db.mySQL;
+package com.my.kramarenko.taxService.db;
 
+import com.my.kramarenko.taxService.db.dao.ReportDAO;
+import com.my.kramarenko.taxService.db.dao.TypeDAO;
+import com.my.kramarenko.taxService.db.dao.UserDAO;
+import com.my.kramarenko.taxService.db.mySQL.dao.ReportDAOMySQL;
+import com.my.kramarenko.taxService.db.mySQL.dao.TypeDAOMySQL;
+import com.my.kramarenko.taxService.db.mySQL.dao.UserDAOMySQL;
 import org.apache.log4j.Logger;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
-
-import com.my.kramarenko.taxService.db.dao.*;
 
 /**
  * Create and control database connection
@@ -39,9 +43,9 @@ public final class DBManager {
             Context initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:/comp/env");
             DataSource ds = (DataSource) envContext.lookup("jdbc/taxService");
-            reportManager = new ReportDAO(ds);
-            typeManager = new TypeDAO(ds);
-            userManager = new UserDAO(ds);
+            reportManager = new ReportDAOMySQL(ds);
+            typeManager = new TypeDAOMySQL(ds);
+            userManager = new UserDAOMySQL(ds);
         } catch (NamingException e) {
             throw new IllegalStateException("Cannot obtain a datasource", e);
         }

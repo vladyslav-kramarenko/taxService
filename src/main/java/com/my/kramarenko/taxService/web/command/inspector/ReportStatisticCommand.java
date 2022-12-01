@@ -1,7 +1,7 @@
 package com.my.kramarenko.taxService.web.command.inspector;
 
 import com.my.kramarenko.taxService.db.dto.StatisticDTO;
-import com.my.kramarenko.taxService.db.mySQL.DBManager;
+import com.my.kramarenko.taxService.db.DBManager;
 import com.my.kramarenko.taxService.exception.CommandException;
 import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.web.Path;

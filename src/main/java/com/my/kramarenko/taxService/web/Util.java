@@ -1,11 +1,12 @@
 package com.my.kramarenko.taxService.web;
 
 import com.my.kramarenko.taxService.db.dao.UserDAO;
+import com.my.kramarenko.taxService.db.mySQL.dao.UserDAOMySQL;
 import com.my.kramarenko.taxService.db.entity.Report;
 import com.my.kramarenko.taxService.db.entity.User;
 import com.my.kramarenko.taxService.db.entity.UserDetails;
 import com.my.kramarenko.taxService.db.enums.Status;
-import com.my.kramarenko.taxService.db.mySQL.DBManager;
+import com.my.kramarenko.taxService.db.DBManager;
 import com.my.kramarenko.taxService.exception.DBException;
 import com.my.kramarenko.taxService.exception.XmlException;
 import com.my.kramarenko.taxService.web.command.LastPage;
