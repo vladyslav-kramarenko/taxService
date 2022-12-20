@@ -27,6 +27,7 @@
             <td><mylib2:recordsPerPageChooserTag pageCommand="statistic"
                                                  pageQuantity="1,2,10,20"
                                                  recordsPerPage="${recordsPerPage}"
+                                                 localeName="${sessionScope['jakarta.servlet.jsp.jstl.fmt.locale.session']}"
             />
         </tr>
     </table>

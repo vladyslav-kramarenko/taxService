@@ -19,9 +19,18 @@
     <mylib2:recordsPerPageChooserTag pageCommand="allUsers"
                                      pageQuantity="1,2,10,20"
                                      recordsPerPage="${recordsPerPage}"
+                                     localeName="${sessionScope['jakarta.servlet.jsp.jstl.fmt.locale.session']}"
     />
 
 </form>
+<span>
+1-${pageContext.response.locale}
+2-${pageContext.request.locale}
+3-${pageContext.request.locale.language}
+4-${sessionScope.get('defaultLocale')}
+5-${sessionScope.get('locale')}
+6-${sessionScope['jakarta.servlet.jsp.jstl.fmt.locale']}
+    </span>
 <table>
     <thead>
     <tr class="header">

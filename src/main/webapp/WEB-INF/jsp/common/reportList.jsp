@@ -18,9 +18,9 @@
                 <select name="reportTypeId" id="newReportType" class="select">
                     <c:forEach var="reportType" items="${reportTypeList}">
                         <c:if test="${reportType.legalType==user.legalType}">
-                        <option value="${reportType.id}">
-                            <fmt:message key='report.type.${reportType.id}'/>
-                        </option>
+                            <option value="${reportType.id}">
+                                <fmt:message key='report.type.${reportType.id}'/>
+                            </option>
                         </c:if>
                     </c:forEach>
                 </select>
@@ -83,14 +83,15 @@
             </c:forEach>
                 </td>
         </form>
-                <td>
-                    <form action="controller" method="get">
+    <td>
+        <form action="controller" method="get">
                         <mylib2:recordsPerPageChooserTag pageCommand="reportList"
                                                          pageQuantity="1,2,10,20"
                                                          recordsPerPage="${recordsPerPage}"
+                                                         localeName="${sessionScope['jakarta.servlet.jsp.jstl.fmt.locale.session']}"
                         />
-                    </form>
-                </td>
+        </form>
+    </td>
     </tr>
 </table>
     </span>
@@ -99,7 +100,7 @@
         <tr class="header">
             <c:if test="${userRole.id!=2}">
                 <td value="asc" onclick='sortTable(0,this);'><fmt:message key='header.user'/></td>
-                <td value="asc" onclick='sortTable(1,this);'>Report ID</td>
+                <td value="asc" onclick='sortTable(1,this);'><fmt:message key='header.report_id'/></td>
             </c:if>
             <td value="asc" onclick='sortTable(2,this);'>
                 <%--                <a href="controller?command=reportList&reportId=${report.id}">Edit</a>--%>
