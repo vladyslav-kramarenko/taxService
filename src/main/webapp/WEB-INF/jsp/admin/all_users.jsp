@@ -23,20 +23,12 @@
     />
 
 </form>
-<span>
-1-${pageContext.response.locale}
-2-${pageContext.request.locale}
-3-${pageContext.request.locale.language}
-4-${sessionScope.get('defaultLocale')}
-5-${sessionScope.get('locale')}
-6-${sessionScope['jakarta.servlet.jsp.jstl.fmt.locale']}
-    </span>
 <table>
     <thead>
     <tr class="header">
         <td>№</td>
         <td><fmt:message key="user.company_name"/></td>
-        <td><fmt:message key="user.phone"/></td>
+        <%--        <td><fmt:message key="user.phone"/></td>--%>
         <td><fmt:message key="user.email"/></td>
         <td><fmt:message key="header.banned"/></td>
         <td><fmt:message key="user.role"/></td>
@@ -47,7 +39,7 @@
         <tr>
             <td>${userItem.id}</td>
             <td>${userItem.companyName}</td>
-            <td>${userItem.phone}</td>
+                <%--            <td>${userItem.phone}</td>--%>
             <td>${userItem.email}</td>
             <td>
                 <form action="controller">

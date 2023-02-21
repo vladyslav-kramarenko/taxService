@@ -16,7 +16,7 @@ public final class Path {
     // COMMON
     public static final String PAGE_REPORT = "/WEB-INF/jsp/common/editReport.jsp";
     public static final String PAGE_USER_REPORT_LIST = "/WEB-INF/jsp/common/reportList.jsp";
-    public static final String PAGE_RESET_PASSWORD = "/WEB-INF/jsp/common/resetPassword.jsp";
+    public static final String PAGE_RESET_PASSWORD = "/WEB-INF/jsp/notControlled/resetPassword.jsp";
     public static final String PAGE_SETTINGS = "/WEB-INF/jsp/common/settings.jsp";
     // ADMIN
     public static final String ADMIN_REPORT = "/WEB-INF/jsp/common/showReport.jsp";
